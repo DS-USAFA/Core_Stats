@@ -1,0 +1,265 @@
+---
+title: "Math 300 NTI Lesson 20"
+subtitle: "Sampling Framework"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Know and correctly use the terminology and notation for the sampling concepts such as population, census, point estimate, biased, etc. 
+
+2. Explain the impact of sample size on the sample distribution and number of replications on the sampling procedure.  
+
+3. Use and explain the terms accuracy and precision as it relates to sampling. 
+
+## Reading 
+
+[Chapter 7.3](https://moderndive.com/7-sampling.html#sampling-framework)
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning checks LC7.8 - 7.20.
+
++ This line from the book is a good summary:
+
+What you have been performing is statistical inference. This is one of the most important concepts in all of statistics. So much so, we included this term in the title of our book: “Statistical Inference via Data Science”. More generally speaking,
+
+- If the sampling of a sample of size *n*  is done at random, then
+- the sample is unbiased and representative of the population of size *N*, thus
+- any result based on the sample can generalize to the population, thus
+- the point estimate is a “good guess” of the unknown population parameter, thus
+- instead of performing a census, we can infer about the population using sampling.
+
++ Try to use the terminology and notation as much as possible from this point on. You can use the bin or red and white balls as an example to go back to so that the students have an example to use. 
+
++ Standard error and standard deviation can get confused. The standard error is simply the standard deviation of the point estimate. 
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 7
+lc <- 7
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+``` 
+
+### LC 7.8 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** In the case of our bowl activity, what is the *population parameter*? Do we know its value?
+  
+  **Solution**: 
+  
+  The *population parameter* in the case of our bowl activity is the population proportion of the red balls in the bowl. Unless we know the exact number of red balls in the bowl, we won't know the value of this population proportion. Without a census, we would not know it.
+
+### LC 7.9 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What would performing a census in our bowl activity correspond to? Why did we not perform a census?
+  
+  **Solution**: 
+  
+  Performing a census in our bowl activity correspond to counting the total number of red balls in all balls, We did not perform a census because it would be too much repetitive work and it is unnecessary if we conduct a proper sample.
+  
+### LC 7.10 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What purpose do *point estimates* serve in general? What is the name of the point estimate specific to our bowl activity? What is its mathematical notation?
+  
+  **Solution**: 
+  
+  *Point estimates* serve to *estimate* an unknown population parameter in the sample. In our bowl activity, our point estimate is the *sample proportion*: the proportion of the shovel's balls that are red. We mathematically denote the sample proportion using $\widehat{p}$.
+
+
+### LC 7.11 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How did we ensure that our tactile samples using the shovel were random?
+
+**Solution**: 
+
+We literally shuffle the sample each time. 
+
+### LC 7.12 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why is it important that sampling be done *at random*?
+
+**Solution**: 
+
+To minimize the possibility of obtaining a biased sample.
+
+
+### LC 7.13 (Objective )
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are we *inferring* about the bowl based on the samples using the shovel?
+
+**Solution**: 
+
+We are *inferring* that the samples in the shovel are representative of the total population in the bin.
+
+### LC 7.14 (Objective )
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What purpose did the *sampling distributions* serve?
+
+**Solution**: 
+
+Using the sampling distributions, for a given sample size $n$, we can make statements about what values we can typically expect for the point estimate. This can then be used to make an inference about the population parameter.  
+
+### LC 7.15 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What does the *standard error* of the sample proportion $\widehat{p}$ quantify? 
+
+**Solution**: 
+
+Standard errors quantify the amount of variation of the sample proportion. We can then use this to find a range of possible values for the population proportion.  
+
+### LC 7.16 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** The table that follows is a version of Table 7.3 matching sample sizes $n$ to different *standard errors* of the sample proportion $\widehat{p}$, but with the rows randomly re-ordered and the sample sizes removed. Fill in the table by matching the correct sample sizes to the correct standard errors. Simply list the order of sample size in your answer. 
+
+```{r comparing-n-3-solution, eval=TRUE, echo=FALSE}
+set.seed(76)
+vp50<-bowl %>% 
+  rep_sample_n(size = 50, reps = 1000) %>%
+  group_by(replicate) %>% 
+  summarize(red = sum(color == "red")) %>% 
+  mutate(prop_red = red / 50, n=50)
+vp100<-bowl %>% 
+  rep_sample_n(size = 100, reps = 1000) %>%
+  group_by(replicate) %>% 
+  summarize(red = sum(color == "red")) %>% 
+  mutate(prop_red = red / 100, n=100)
+vp25<-bowl %>% 
+  rep_sample_n(size = 25, reps = 1000) %>%
+  group_by(replicate) %>% 
+  summarize(red = sum(color == "red")) %>% 
+  mutate(prop_red = red / 25, n=25)
+virtual_prop<-rbind(vp25,vp50,vp100)
+```
+
+
+```{r eval=TRUE, echo=FALSE}
+comparing_n_table <- virtual_prop %>%
+  group_by(n) %>%
+  summarize(sd = sd(prop_red)) %>%
+  mutate(
+    n = str_c("n = ")
+  ) %>%
+  rename(`Sample size` = n, `Standard error of $\\widehat{p}$` = sd) %>%
+  sample_frac(1)
+
+comparing_n_table %>%
+  kable(
+    digits = 3,
+    caption = "Three standard errors of the sample proportion based on n = 25, 50, 100",
+    booktabs = TRUE,
+    escape = FALSE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+**Solution**:
+
+$n$ = $50$, $100$, $25$ respectively. 
+
+
+For the following four learning checks, let the *estimate* be the sample proportion $\widehat{p}$: the proportion of a shovel's balls that were red. It estimates the population proportion $p$: the proportion of the bowl's balls that were red.
+
+### LC 7.17 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the difference between an *accurate* estimate and a *precise* estimate? 
+
+**Solution**:
+
+An *accurate* estimate gives an estimate that on average is close to, but not necessary the exact, actual value. A *precise* estimate has a small sampling variation.
+
+### LC 7.18 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How do we ensure that an estimate is *accurate*? How do we ensure that an estimate is *precise*?
+
+**Solution**:
+
+To ensure that an estimate is *accurate*, we need to have randomization so that the point estimate is representative of the population parameter. To ensure that an estimate is *precise*, we need to make sure the sample size is large enough that the standard error is small. 
+
+### LC 7.19 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** In a real-life situation, we would not take 1000 different samples to infer about a population, but rather only one. Then, what was the purpose of our exercises where we took 1000 different samples?
+
+**Solution**:
+
+For educational purposes, it helps us understand the ideas and terms for this chapter.
+
+### LC 7.19 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Figure 7.13 with the targets shows four combinations of "accurate versus precise" estimates. Draw four corresponding *sampling distributions* of the sample proportion $\widehat{p}$, like the one in the left-most plot in Figure 7-12.
+
+**Solution**:
+```{r, echo=FALSE}
+xlim <- c(-6, 6)
+p1 <- ggplot(data = data.frame(x = xlim), aes(x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean = 0, sd = .5)) +
+  ylab("") +
+  # scale_y_continuous(breaks = NULL)+
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  coord_cartesian(xlim = xlim, ylim = c(0, 0.8)) +
+  ggtitle("High precision, high accuracy")
+
+p2 <- ggplot(data = data.frame(x = xlim), aes(x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean = 2.5, sd = .5)) +
+  ylab("") +
+  # scale_y_continuous(breaks = NULL)+
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  coord_cartesian(xlim = xlim, ylim = c(0, 0.8)) +
+  ggtitle("High precision, low accuracy")
+
+p3 <- ggplot(data = data.frame(x = xlim), aes(x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean = 0, sd = 1.5)) +
+  ylab("") +
+  # scale_y_continuous(breaks = NULL)+
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  coord_cartesian(xlim = xlim, ylim = c(0, 0.8)) +
+  ggtitle("Low precision, high accuracy")
+
+p4 <- ggplot(data = data.frame(x = xlim), aes(x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean = 2.5, sd = 1.5)) +
+  ylab("") +
+  # scale_y_continuous(breaks = NULL)+
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  coord_cartesian(xlim = xlim, ylim = c(0, 0.8)) +
+  ggtitle("Low precision, low accuracy")
+
+library(patchwork)
+(p1 | p2) / (p3 | p4)
+```
+
+
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
