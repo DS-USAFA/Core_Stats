@@ -1,0 +1,182 @@
+
+---
+title: 'Problem Set 03: Simple Linear Regression (30 pts)'
+subtitle: "Authorized Resources: Anyone and anything." 
+mainfont: Arial
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: true
+    css: lab.css
+  pdf_document:
+    latex_engine: xelatex
+    toc: true
+    toc_depth: 2
+---
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE, fig.width = 16/2, fig.height = 9/2)
+```
+
+# Introduction
+
+In this problem set we will work with a data set concerning hate crimes occurring in the US. For more context about these data, you can read a FiveThirtyEight article about these data that appeared in January of 2017: ["Higher Rates Of Hate Crimes Are Tied To Income
+Inequality"](https://fivethirtyeight.com/features/higher-rates-of-hate-crimes-are-tied-to-income-inequality/)
+
+Here are the first three paragraphs of the article for context:
+
+*In the 10 days after the 2016 election, nearly 900 hate incidents were reported to the Southern Poverty Law Center, averaging out to 90 per day. By comparison, about 36,000 hate crimes were reported to the FBI from 2010 through 2015 — an average of 16 per day.*
+
+*The numbers we have are tricky; the data is limited by how it’s collected and can’t definitively tell us whether there were more hate incidents in the days after the election than is typical. What we can do, however, is look for trends within the numbers, such as how hate crimes vary by state, as well as what factors within those states might be tied to hate crime rates.*
+
+*An analysis of FBI and Southern Poverty Law Center data revealed one factor that stood out as a predictor of hate crimes and hate incidents in a given state: income inequality. States with more inequality were more likely to have higher rates of hate incidents per capita. This was true both before and after the election, and the connection held even after we controlled for other relevant variables.*
+
+In this problem set, we will develop a model these data using simple linear regression models with a single explanatory variable. These models are basic, but will allow us to practice using the tools and developing the skills we are learning. 
+
+
+## Markdown File
+
+Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS03_lastname_firstname_section**
+
+Fill in your answers to the exercises below with a corresponding exercise header in your rmarkdown file. Be sure to include text *and* code where necessary.
+
+## Deliverable 
+
+* You will turn in your completed problem set as a **knitted pdf file** to Gradescope. 
+
+* Include a documentation statement.  
+
+* Each exercise is worth 3 points. 
+
+* Be sure to **make a header to label each Exercise**, this means using # followed by the word Exercise and the exercise number. 
+
+* Please type your code to answer the questions in a code chunk (gray part), under the exercise headers and type (**BRIEF**) answers to any interpretation questions in the white part under the headers. 
+
+## Setup
+
+First load the necessary packages 
+
+```{r message=FALSE,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(moderndive)
+library(readr)
+```
+
+Next, load the data set from where it is stored on the web: 
+
+```{r}
+hate_crimes <- read_csv("http://bit.ly/2ItxYg3")
+```
+
+You can take a glimpse at the data like so: 
+
+```{r}
+glimpse(hate_crimes)
+```
+
+Be sure to also examine the data in the RStudio data viewer.
+
+A summary of the data also helps us to understand our data.
+
+```{r}
+summary(hate_crimes)
+```
+
+Notice that 4 states do not have data for the response variable. As a simple fix, let's remove these values. In practice, we would want to investigate the nature of why these states are missing values.
+
+```{r}
+hate_crimes_ps <- hate_crimes %>%
+  select(state, hate_crimes, share_pop_metro, urbanization) %>%
+  na.omit()
+```
+
+**Use `hate_crimes_ps` for all your work in this problem set.**
+
+## About the data set
+Each case/row in these data represents a state in the US. The response variable we will consider is `hate_crimes`, which is the number of hate crimes per 100k individuals in the 10 days after the 2016 US election as measured by the Southern Poverty Law Center (SPLC). 
+
+For this project week we will examine the explanatory strength of variables that represent the urbanization of the state. The first is numeric, `share_pop_metro` and the second is a categorical variable generated from the first, `urbanization`: 
+
+* `share_pop_metro`: a numeric variable that is the proportion of the state population that lives in a urban metropolitan setting. 
+* `urbanization`: a categorical variable that is classifies the level of urbanization in a state (low or high; split below or above mean)
+
+
+## Hate Crimes and Proportion of Population Living in Metropolitan Area
+
+Let's start by modeling the relationship between:
+
+* $y$: `hate_crimes` per 100K individuals 
+* $x$: Proportion of state's population living in a metropolitan area `share_pop_metro`
+
+1. Create a visualization that will allow you to conduct an "eyeball test" of the relationship between hate crimes per 100K and proportion of the population that lives in a metropolitan area. Include appropriate axes labels and a title. 
+
+1. Now run a model that examines the relationship between hate crime rates and the proportion of the population living in a metro area. Generate a regression table.
+
+
+
+1. The regression equation for this model is the following:
+
+
+$$
+\widehat{y} = 0.117 + 0.242 \times \mbox{prop in metro area} 
+$$
+
+Interpret the slope coefficient in this regression table.
+
+
+1. What value does the model estimate for the average number of hate crimes per 100,000 people in state with a proportion of 0.82 of the population living in a metropolitan area?
+
+
+1. Do you think it is a good idea to predict hate crimes in a state that has 25% of the population living in a metropolitan area, based on this regression equation? Explain your reasoning. 
+
+
+## Hate Crimes and Urbanization
+
+Let's start by modeling the relationship between:
+
+* $y$: `hate_crimes` per 100K individuals 
+* $x$: Categorical variable indicating if a state has a high proportion of the population living in a metropolitan area `urbanization`
+
+
+
+1. Create a visualization, side-by-side boxplots, that will allow you to conduct an "eyeball test" of the relationship between hate crimes per 100K and urbanization. Include appropriate axes labels and a title. 
+
+
+1. Now run a model that examines the relationship between hate crime rates and urbanization. Generate a regression table.
+
+1. What does the intercept mean in this regression table?
+
+
+1. The regression equation for this model is the following:
+
+
+$$
+\widehat{y} = 0.191 + 0.269 \times 1_{\mbox{low support}}(x) + 0.031 \times 1_{\mbox{med support}}(x)
+$$
+
+Find the average value of hate crimes for a state with low urbanization.
+
+1. Based on our model, can we conclude that high level of urbanization cause higher levels of hate crime in a state?
+
+
+# Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+
+
+[//]: (students- please do not delete anything below this line!) 
+
+<style type="text/css">
+h1 { /* Header 1 */
+  color: Blue;
+}}
+</style>
+
