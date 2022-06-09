@@ -1,0 +1,151 @@
+---
+title: "Math 300 Lesson 2 Notes"
+subtitle: "Scatterplot"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Create a scatterplot using the `ggplot()` function.  
+
+2. Interpret the relationship between variables in a scatterplot.
+
+3. Refine and improve scatterplots to illustrate relevant points by prepossessing the data or using functions such as `alpha()` and `geom_jitter()`.  
+
+## Reading 
+
+[Chapter 2 - 2.3](https://moderndive.com/2-viz.html#needed-packages)
+
+## Lesson 
+
+Work through the learning checks LC2.1 - LC2.8. Complete the code when necessary.
+
+
+### Setup  
+
+
+```{r message=FALSE}
+library(nycflights13)
+library(ggplot2)
+library(dplyr)
+```
+
+*We need to create the `alaska_flights` data object.* Complete the code and remove the comment symbol #.
+
+```{r}
+#alaska_flights <- ____________ %>% 
+#  filter(carrier == "______")
+```
+
+
+
+### LC 2.1 (Objective 3)
+
+**(LC 2.1)**  Take a look at both the `flights` and `alaska_flights` data frames by running `View(flights)` and `View(alaska_flights)` in the console. In what respect do these data frames differ? For example, think about the number of rows in each dataset.
+
+**Solution**: 
+
+
+
+*Build the plot for the next set of learning checks.* Complete the code and remove the comment symbol #.
+
+```{r}
+#ggplot(data = _______________, mapping = aes(x = ________________, y = arr_delay)) + 
+#  geom_point()
+```
+
+
+### LC 2.2 (Objective 2)
+
+**(LC 2.2)**  What are some practical reasons why `dep_delay` and `arr_delay` have a positive relationship?
+
+**Solution**: 
+
+
+### LC 2.3 (Objective 2)
+
+**(LC 2.3)**  What variables in the `weather` data frame would you expect to have a negative correlation (i.e. a negative relationship) with `dep_delay`? Why? Remember that we are focusing on numerical variables here. Hint: Explore the `weather` dataset by using the `View()` function. 
+
+**Solution**: 
+
+
+### LC 2.4 (Objective 2)
+
+**(LC 2.4)** Why do you believe there is a cluster of points near (0, 0)? What does (0, 0) correspond to in terms of the Alaskan flights?
+
+**Solution**: 
+
+
+### LC 2.5 (Objective 2)
+
+**(LC 2.5)** What are some other features of the plot that stand out to you?
+
+**Solution**: Different people will answer this one differently. One answer is most flights depart and arrive less than an hour late. 
+
+### LC 2.6 (Objective 1)
+
+**(LC 2.6)** Create a new scatterplot using different variables in the `alaska_flights` data frame by modifying the example above.
+
+*To insert an `R` code chunk into a markdown, there is the pulldown menu but you can also use Ctrl-Alt-I.*
+
+**Solution**: 
+
+```{r}
+# Insert plot code here.
+
+```
+
+### LC 2.7 (Objective 2)
+
+**(LC 2.7)**  Why is setting the `alpha` argument value useful with scatterplots? What further information does it give you that a regular scatterplot cannot?
+
+**Solution**: 
+
+
+### LC 2.8 (Objective 2, 3)
+
+```{r}
+alaska_flights <- flights %>% 
+  filter(carrier == "AS")
+```
+
+```{r noalpha,fig.cap="Figure 1: Arrival delays versus departure delays for Alaska Airlines flights from NYC in 2013.",warning=FALSE}
+#Plot to use for this problem.
+ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) + 
+  geom_point()
+```
+
+```{r alpha,fig.cap="Figure 2: Arrival vs. departure delays scatterplot with alpha = 0.2",warning=FALSE}
+#Second Plot to use for this problem.
+ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) + 
+  geom_point(alpha = 0.2)
+```
+
+
+
+**(LC 2.8)** After viewing the Figure 2 above, give an approximate range of arrival delays and departure delays that occur the most frequently.  How has that region changed compared to when you observed the same plot without the `alpha = 0.2` set in Figure 1?
+
+**Solution**: 
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`

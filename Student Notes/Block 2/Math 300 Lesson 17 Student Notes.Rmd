@@ -1,0 +1,48 @@
+---
+title: "Math 300 Lesson 16 Notes"
+subtitle: "Multiple Regression - Related Topics"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[Chapter 6.4](https://moderndive.com/6-multiple-regression.html#mult-reg-conclusion)
+
+### Setup
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(ISLR)
+``` 
+
+## Lesson 
+
+Time to makeup missed topics and review for exam.
+
++ Review the objectives.
+
++ Rework the learning checks this time without scaffolded code.
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `skimr` package version: `r packageVersion("skimr")`
+  * `palmerpenguins` package version: `r packageVersion("palmerpenguins")`  
+  * `moderndive` package version: `r packageVersion("moderndive")`

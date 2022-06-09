@@ -1,0 +1,124 @@
+---
+title: "Math 300 Lesson 5 Notes"
+subtitle: "filter and summarize"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Use the `filter()` function and logical operators to subset a data frame. 
+
+2. Use the `summarize()` function with appropriate `R` functions to summarize variables in a data frame. 
+
+3. Explain the possible impacts of simply ignoring missing values.
+
+
+## Reading 
+
+[Chapter 3 - 3.3](https://moderndive.com/3-wrangling.html)
+
+## Lesson 
+
+Work through the learning checks LC3.1 - LC3.4. Complete code as necessary. 
+
++ About 80% of your work analyzing data will be data acquisition and wrangling. 
+
++ The order of logical operations in the `filter()` function work from left to right. Parentheses, however, are executed first. Be careful and when in doubt use parentheses. 
+
++ Pay attention to functions that default an `NA` for variables with a missing value. Functions such as `mean()` and `sd()` are examples.
+
++ This [pdf](https://moderndive.github.io/moderndive_labs/static/PS/PS03_pre_lecture.pdf) summarizes the pipe operator and the main data wrangling functions.
+
+### Setup  
+
+```{r message=FALSE}
+library(nycflights13)
+library(ggplot2)
+library(dplyr)
+```
+
+*Notice that order of logical operators doesn't matter in this example but the parentheses help the reading of the code.*
+
+```{r}
+flights %>% 
+  filter(origin == "JFK", (dest == "BTV" | dest == "SEA"), month >= 10) %>%
+  glimpse()
+```
+
+
+```{r}
+flights %>% 
+  filter(origin == "JFK", dest == "BTV" | dest == "SEA", month >= 10) %>%
+  glimpse()
+```
+
+### LC 3.1 (Objective 1)
+
+**(LC 3.1)** What's another way using the "not" operator `!` to filter only the rows that are not going to Burlington, VT nor Seattle, WA in the `flights` data frame? Test this out using the code above.
+
+**Solution**: 
+
+
+
+
+### LC 3.2 (Objective 3) 
+
+
+**(LC 3.2)** Say a doctor is studying the effect of smoking on lung cancer for a large number of patients who have records measured at five year intervals. She notices that a large number of patients have missing data points because the patient has died, so she chooses to ignore these patients in her analysis. What is wrong with this doctor's approach?
+
+**Solution**: 
+
+
+
+### LC 3.3 (Objective 2) 
+
+```{r}
+summary_temp <- weather %>% 
+  summarize(mean = mean(temp, na.rm = TRUE), 
+            std_dev = sd(temp, na.rm = TRUE))
+summary_temp
+```
+
+
+**(LC 3.3)** Modify the above `summarize` function to create `summary_temp` to also use the `n()` summary function: `summarize(count = n())`. What does the returned value correspond to?
+
+**Solution**: 
+
+
+
+### LC 3.4 (Objective 2) 
+
+**(LC 3.4)** Why doesn't the following code work?  Run the code line by line instead of all at once, and then look at the data.  In other words, run `summary_temp <- weather %>% summarize(mean = mean(temp, na.rm = TRUE))` first.
+
+```{r eval=FALSE}
+summary_temp <- weather %>%
+  summarize(mean = mean(temp, na.rm = TRUE)) %>%
+  summarize(std_dev = sd(temp, na.rm = TRUE))
+```
+
+**Solution**: 
+
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`

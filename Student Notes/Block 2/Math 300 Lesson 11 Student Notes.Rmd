@@ -1,0 +1,161 @@
+---
+title: "Math 300 Lesson 11 Notes"
+subtitle: "Simple Linear Regression - Continuous x"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explore the relationship between 2 numerical variables using summary statistics and visualizations in `R`. This includes using the `skimr` package and fitting a best fit line in a scatterplot. 
+
+2. Fit a linear regression model to two variables using the `lm()` function and interpret the output. This includes the interpretation of slope and the use of *association* and not *cause*.    
+
+3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
+
+## Reading 
+
+[Chapter 5 - 5.1](https://moderndive.com/5-regression.html)
+
+## Lesson 
+
+Work through the learning checks LC5.1 - LC5.3. Complete the code as necessary. 
+
++ Regression can be used for explanatory and predictive purposes. It falls on that line between traditional statistics/econometrics and machine learning. In this course we focus on its more traditional use to interpret the relationship between predictors and a response. Math 378 is our machine learning course and expands on linear regression in this framework.   
+
++ Note the many different terms for `x` and `y` in regression. These names come from different fields. For example `y` is called the response, dependent variable, outcome, and output. While `x` is called input, predictor, independent variable, and explanatory variable. Also point out that `y` is numerical while `x` can be numerical or categorical.
+
++ We are using new packages. The `tidyverse` package is a wrapper and actually loads `readr`, `dplyr`, `ggplot2`, and `tidyr`.  
+
++ The interpretation of the slope has the key phrase **average**. For a one unit change in `x`, the average value of `y` changes by the value of the slope. 
+
+
+### Setup
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(gapminder)
+``` 
+
+*Create the data needed for the exercises.*
+
+```{r}
+# Select only the columns needed. Complete the code and remove comment labels
+#evals_ch5 <- evals %>%
+#  select(ID, __________ , bty_avg, ____________)
+```
+
+Let's look at 5 random rows of data.
+
+```{r}
+# Complete the code and remove comment labels
+#set.seed(1234)
+#evals_ch5 %>%
+#  sample_n(size = ___________) 
+```
+
+### LC 5.1 (Objective 1)
+
+**(LC 5.1)** Conduct a new exploratory data analysis with the same outcome variable $y$ being `score` but with `age` as the new explanatory variable $x$. Remember, this involves three things:
+
+- Looking at the raw data values.
+- Computing summary statistics.
+- Creating data visualizations.
+
+What can you say about the relationship between age and teaching scores based on this exploration?
+
+**Solution**: 
+
+- Looking at the raw data values: 
+```{r}
+# Complete the code and remove comment labels
+#glimpse(__________)
+```
+
+- Computing summary statistics:
+
+```{r}
+# Complete the code and remove comment labels
+#evals_ch5 %>%
+#  select(_________, _______) %>%
+#  skim() 
+```  
+
+
+
+- Bivariate summary:
+
+```{r}
+# Complete the code and remove comment labels
+#evals_ch5 %>% 
+#  get_correlation(formula = _________ ~ _____________)
+```
+
+
+- Creating data visualizations:
+
+```{r message=FALSE}
+# Create scatterplot. Complete the code and remove comment labels
+#ggplot(__________, aes(x = ________, y = score)) +
+#  geom_jitter(alpha=_________) +
+#  labs(
+#    x = "__________", y = "Teaching Score",
+#    title = "______________________________") +
+#  geom_smooth(method = "lm", se = ___________) +
+#  theme_classic()
+```
+
+
+
+### LC 5.2 (Objective 2)
+
+**(LC 5.2)** Fit a new simple linear regression using `lm(score ~ age, data = evals_ch5)` where `age` is the new explanatory variable `x`. Get information about the "best-fitting" line from the regression table by applying the `get_regression_table()` function. How do the regression results match up with the results from your earlier exploratory data analysis?
+
+**Solution**:  
+
+```{r}
+# Complete the code and remove comment labels
+# Fit regression model:
+#score_age_model <- lm(__________ ~ __________, data = ____________)
+# Get regression table:
+#get_regression_table(score_age_model)
+```  
+
+
+
+### LC 5.3 (Objective 3)
+
+**(LC 5.3)** Generate a data frame of the residuals of the model where you used `age` as the explanatory $x$ variable.
+
+**Solution**: 
+
+```{r eval=FALSE}
+
+``` 
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `skimr` package version: `r packageVersion("skimr")`
+  * `gapminder` package version: `r packageVersion("gapminder")`  
+  * `moderndive` package version: `r packageVersion("moderndive")`

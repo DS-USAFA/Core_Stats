@@ -1,0 +1,72 @@
+---
+title: "Math 300 Lesson 9 Notes"
+subtitle: "Case Study and Review"
+author: "YOUR NAME"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Read data into `R` and get into tidy format.  
+
+## Reading 
+
+[Chapter 4.3 - 4.5](https://moderndive.com/4-tidy.html#case-study-tidy)
+
+## Lesson 
+
+Work through the learning checks LC4.4 - LC4.5.
+
++ You can use the GUI to get the code to read the Excel file from the web. Then post the code into your rmarkdown file. Remember, to knit the file it has to read the data into the temporary workspace.  
+
+### Setup
+
+
+```{r message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(tidyr)
+library(nycflights13)
+library(fivethirtyeight)
+``` 
+
+### LC 4.4 (Objective 1)
+
+**(LC 4.4)**  Convert the `dem_score` data frame into a tidy data frame and assign the name of `dem_score_tidy` to the resulting long-formatted data frame.
+
+**Solution**: 
+
+
+### LC 4.5 (Objective 1)
+
+**(LC 4.5)**  Read in the life expectancy data stored at <https://moderndive.com/data/le_mess.csv> and convert it to a tidy data frame. 
+
+**Solution**: 
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `tidyr` package version: `r packageVersion("tidyr")`
+  * `readr` package version: `r packageVersion("readr")`  
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`
+  * `fivethirtyeight` package version: `r packageVersion("fivethirtyeight")`  
