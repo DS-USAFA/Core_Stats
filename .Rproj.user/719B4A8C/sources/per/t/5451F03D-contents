@@ -1,0 +1,96 @@
+---
+title: "Math 300 NTI Lesson 21"
+subtitle: "Case Study"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Given a sampling scenario, discuss issues such as accuracy and precision as they relate to generalization to the population of interest.
+
+## Reading 
+
+[Chapter 7.4](https://moderndive.com/7-sampling.html#sampling-case-study)
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning checks LC7.21 - 7.24.
+
++ Walk through the comparison of the poll to the bowl activity. Step 4 is interesting, can using the phone numbers provide a representative sample of the population? This could be biased based on the assumption of having a phone and second access to all phone numbers. This may not be a random sample. 
+
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 7
+lc <- 20
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+``` 
+
+
+
+Comment on the representativeness of the following *sampling methodologies*:
+
+### LC 7.21 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** The Royal Air Force wants to study how resistant all their airplanes are to bullets. They study the bullet holes on all the airplanes on the tarmac after an air battle against the Luftwaffe (German Air Force).
+
+**Solution**:
+
+The airplanes on the tarmac after an air battle against the Luftwaffe is not a good representation of all airplanes, because the airplanes which were attacked in less resistant areas did not make it back to the tarmac. This is called *survival bias*. Survivor's bias or survival bias is the logical error of concentrating on the people or things that made it past some selection process and overlooking those that did not, typically because of their lack of visibility. This can lead to false conclusions in several different ways. It is a form of selection bias.
+
+### LC 7.22 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Imagine it is 1993, a time when almost all households had landlines. You want to know the average number of people in each household in your city. You randomly pick out 500 phone numbers from the phone book and conduct a phone survey.
+
+**Solution**:
+
+This is not a good representation, because: (1) adults are more likely to pickup phone calls; (2) households with more people are more likely to have people to be available to pickup phone calls; (3) we are not certain whether all households are in the phone book. 
+
+
+### LC 7.23 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** You want to know the prevalence of illegal downloading of TV shows among students at a local college.  You get the emails of 100 randomly chosen students and ask them, "How many times did you download a pirated TV show last week?".
+
+**Solution**:
+
+This is not a good representation, because it is very likely that students will lie in this survey to stay out of trouble. So we may not get honest data. This is called *volunteer bias*: systematic error due to differences between those who choose to participate in studies and those who do not.
+
+### LC 7.24 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** A local college administrator wants to know the average income of all graduates in the last 10 years. So they get the records of five randomly chosen graduates, contact them, and obtain their answers. 
+
+**Solution**:
+
+The sample is representative since it is a random sample. The sample is small so will have high sample variability. Also 10 years is a large window where the average may be more influenced by the more recent graduates. Thus will a small sample we may get poor represenation of the population of interest.  
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`

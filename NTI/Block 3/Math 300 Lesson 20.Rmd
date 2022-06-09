@@ -210,7 +210,7 @@ To ensure that an estimate is *accurate*, we need to have randomization so that 
 
 For educational purposes, it helps us understand the ideas and terms for this chapter.
 
-### LC 7.19 (Objective 3)
+### LC 7.20 (Objective 3)
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Figure 7.13 with the targets shows four combinations of "accurate versus precise" estimates. Draw four corresponding *sampling distributions* of the sample proportion $\widehat{p}$, like the one in the left-most plot in Figure 7-12.
 
