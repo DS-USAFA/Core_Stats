@@ -1,0 +1,124 @@
+---
+title: "Math 300 Lesson 22 Notes"
+subtitle: "CLT, Normal Distribution"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explain the central limit theorem.  
+
+2. For a normal distribution, use `R` to find probabilities and percentiles. 
+
+## Reading 
+
+[Chapter 7.4](https://moderndive.com/7-sampling.html#sampling-conclusion-central-limit-theorem)
+
+[Appendix A.2](https://moderndive.com/A-appendixA.html#appendix-normal-curve)
+
+
+## Lesson 
+
+Work through the learning checks LCA.1 - LCA.2.
+
++ The central limit theorem is difficult. The key idea is that if we create a point estimate that is using summation, then the **distribution of this point estimate** tends to be normal. The larger he sample, the closer the distribution is to being normal. If we are finding a mean, then the larger the sample, the smaller the standard error.
+
++ Use `R` to find probabilities. This implies the use of `pnorm()` and `qnorm()`. 
+
+***
+
+Let's do a simulation.
+
+Suppose we record the time of arrival of 4 friends.
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+```
+
+
+```{r}
+set.seed(316)
+(time<-round(runif(4,5,6),2))
+```
+We are generating 4 random numbers in the interval 5 to 6. We record these and find the average.
+
+```{r}
+mean(time)
+```
+
+This is just one value. What is the distribution of the mean if we were to repeat this? Since this is a simulation, we can do this many, many times and plot the distribution of the mean. Don't worry about the code for doing this.
+
+```{r}
+# Repeat this 1000 times
+rep_data<-tibble(ave=replicate(1000,mean(round(runif(4,5,6),2))))
+```
+
+
+```{r}
+summary(rep_data)
+```
+
+```{r message=FALSE,warning=FALSE}
+ggplot(rep_data,aes(x=ave)) +
+  geom_histogram() +
+  xlim(5.1,5.9) +
+  theme_classic()
+```
+
+Notice how this distribution of is approximately normal. That is the central limit theorem. If we used 10 points per sample instead of 4, the standard error would be smaller. 
+
+```{r}
+# Repeat this 1000 times
+rep_data2<-tibble(ave=replicate(1000,mean(round(runif(10,5,6),2))))
+```
+
+
+```{r message=FALSE,warning=FALSE}
+ggplot(rep_data2,aes(x=ave)) +
+  geom_histogram() +
+  xlim(5.1,5.9) +
+  theme_classic()
+```
+
+- Run the code again, but change the sample size.
+
+
+***
+
+### LC A.1 (Objective 2)
+
+**(LCA.1)** What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?
+
+**Solution:**
+
+### LC A.2 (Objective 2)
+
+**(LCA.1)** What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?
+
+**Solution:**
+
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+

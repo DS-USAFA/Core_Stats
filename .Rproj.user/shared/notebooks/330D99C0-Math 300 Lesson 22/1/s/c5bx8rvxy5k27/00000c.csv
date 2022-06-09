@@ -1,0 +1,4 @@
+"0","ggplot(rep_data,aes(x=ave)) +"
+"0","  geom_histogram() +"
+"0","  xlim(5.1,5.9) +"
+"0","  theme_classic()"

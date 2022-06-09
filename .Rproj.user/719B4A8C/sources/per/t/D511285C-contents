@@ -1,0 +1,169 @@
+---
+title: "Math 300 NTI Lesson 22"
+subtitle: "CLT, Normal Distribution"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explain the central limit theorem.  
+
+2. For a normal distribution, use `R` to find probabilities and percentiles. 
+
+## Reading 
+
+[Chapter 7.4](https://moderndive.com/7-sampling.html#sampling-conclusion-central-limit-theorem)
+
+[Appendix A.2](https://moderndive.com/A-appendixA.html#appendix-normal-curve)
+
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning checks LCA.1 - LCA.2.
+
++ The central limit theorem is difficult. The key idea is that if we create a point estimate that is using summation, then the **distribution of this point estimate** tends to be normal. The larger he sample, the closer the distribution is to being normal. If we are finding a mean, then the larger the sample, the smaller the standard error.
+
++ Use `R` to find probabilities. This implies the use of `pnorm()` and `qnorm()`. You will need to spend time on the use of this functions. 
+
+***
+
+Let's do a simulation.
+
+Suppose we record the time of arrival of 4 friends.
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+```
+
+
+```{r}
+set.seed(316)
+(time<-round(runif(4,5,6),2))
+```
+We are generating 4 random numbers in the interval 5 to 6. We record these and find the average.
+
+```{r}
+mean(time)
+```
+
+This is just one value. What is the distribution of the mean if we were to repeat this? Since this is a simulation, we can do this many, many times and plot the distribution of the mean. Don't worry about the code for doing this.
+
+```{r}
+# Repeat this 1000 times
+rep_data<-tibble(ave=replicate(1000,mean(round(runif(4,5,6),2))))
+```
+
+
+```{r}
+summary(rep_data)
+```
+
+```{r message=FALSE,warning=FALSE}
+ggplot(rep_data,aes(x=ave)) +
+  geom_histogram() +
+  xlim(5.1,5.9) +
+  theme_classic()
+```
+
+Notice how this distribution of is approximately normal. That is the central limit theorem. If we used 10 points per sample instead of 4, the standard error would be smaller. 
+
+```{r}
+# Repeat this 1000 times
+rep_data2<-tibble(ave=replicate(1000,mean(round(runif(10,5,6),2))))
+```
+
+
+```{r message=FALSE,warning=FALSE}
+ggplot(rep_data2,aes(x=ave)) +
+  geom_histogram() +
+  xlim(5.1,5.9) +
+  theme_classic()
+```
+
+- Run the code again, but change the sample size.
+
+
+```{r, include=FALSE, purl=FALSE}
+chap <- "A"
+lc <- 0
+```
+
+***
+
+### LC A.1 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?
+
+**Solution:**
+
+* Less than 3: 3 is one standard deviation less than the mean of 6, since $\frac{3 - \mu}{\sigma} = \frac{3-6}{3} = -1$. Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.  
+
+```{r}
+pnorm(3,mean=6,sd=3)
+```
+
+
+* Greater than 12: 12 is two standard deviations greater than the mean of 6, since $\frac{12 - \mu}{\sigma} = \frac{12-6}{3} = +2$, we compute the area to the right of z = +2 in Figure A.2: 2.35% + 0.15% = 2.5%.
+
+```{r}
+pnorm(12,mean=6,sd=3,lower.tail = FALSE)
+```
+
+
+* Between 0 and 12: 0 is two standard deviations less than the mean of 6, since $\frac{0 - \mu}{\sigma} = \frac{0-6}{3} = -2$. Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.
+
+
+```{r}
+pnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)
+```
+
+### LC A.2 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?
+
+**Solution:**
+
+* 2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: $\mu - 2 \cdot\sigma = 6 - 2 \cdot 3 = 0$.
+
+```{r}
+qnorm(.025,mean=6,sd=3)
+```
+This is not 0 since the figure is an approximation.
+
+* 97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: $\mu + 2 \cdot\sigma = 6 + 2 \cdot 3 = 12$.
+
+```{r}
+qnorm(.975,mean=6,sd=3)
+```
+
+
+* 100th percentile: $+\infty$. In other words, 100% of values will be less than positive infinity. 
+
+```{r}
+qnorm(1,mean=6,sd=3)
+```
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+
