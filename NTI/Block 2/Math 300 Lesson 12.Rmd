@@ -1,0 +1,205 @@
+---
+title: "Math 300 NTI Lesson 12"
+subtitle: "Simple Linear Regression - Discrete x"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explore the relationship between 2 variables, one numerical and one categorical, using summary statistics and visualizations in `R`.  
+
+2. Fit a linear regression model to two variables, one numerical and one categorical, using the `lm()` function and interpret the output. This includes the interpretation of baseline mean and offsets.    
+
+3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
+
+## Reading 
+
+[Chapter 5.2](https://moderndive.com/5-regression.html#model2)
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning checks LC5.4 - LC5.7.
+
++ The response `y` is the numeric variable. Math 378 discusses cases where the response is categorical. Understanding the regression output here is important. There is no line just a baseline average and offsets from that.   
+
++ The regression output will still predict the **mean** value of the response variable.  
+
++ The baseline is an **average** and is the first level of the factor based on alphabetic order.
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 5
+lc <- 3
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(gapminder)
+``` 
+
+*Create the data needed for the exercises.*
+
+```{r}
+gapminder2007 <- gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp, continent, gdpPercap)
+```
+
+Let's look at 5 random rows of data.
+
+```{r}
+set.seed(1234)
+gapminder2007 %>%
+  sample_n(size = 5) 
+```
+
+
+### LC 5.4 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Conduct a new exploratory data analysis with the same explanatory variable $x$ being `continent` but with `gdpPercap` as the new outcome variable $y$. Remember, this involves three things:
+
+- Most crucially: Looking at the raw data values.
+- Computing summary statistics, such as means, medians, and interquartile ranges.
+- Creating data visualizations.
+
+What can you say about the differences in GDP per capita between continents based on this exploration?
+
+**Solution**: 
+
+- Looking at the raw data values: 
+```{r}
+glimpse(gapminder2007)
+```
+
+- Computing summary statistics, such as means, medians, and interquartile ranges:
+
+
+```{r, include=FALSE}
+my_skim<-skim_with(numeric = sfl(hist = NULL))
+```
+
+
+```{r}
+gapminder2007 %>%
+  select(gdpPercap, continent) %>%
+  my_skim() %>%
+  print()
+```
+
+
+
+- Creating data visualizations:
+
+```{r}
+ggplot(gapminder2007, aes(x = continent, y = gdpPercap)) +
+  geom_boxplot() +
+  labs(
+    x = "Continent", y = "GPD per capita",
+    title = "GDP by continent") +
+  theme_bw()
+```
+
+Based on this exploration, it seems that GDP's are very different among different continents, in terms of medians, variation, and symmetry. At a minimum this means that continent might be an important predictor for an area's **mean** GDP. 
+
+### LC 5.5 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Fit a new linear regression using `lm(gdpPercap ~ continent, data = gapminder2007)` where `gdpPercap` is the new outcome variable $y$. Get information about the "best-fitting" line from the regression table by applying the `get_regression_table()` function. How do the regression results match up with the results from your previous exploratory data analysis?
+
+**Solution**: 
+
+```{r}
+# Fit regression model:
+gdp_model <- lm(gdpPercap ~ continent, data = gapminder2007)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(gdp_model)
+```
+
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{gdpPercap}} &= b_0 + b_{\text{Amer}}\cdot\mathbb{1}_{\mbox{Amer}}(x) + b_{\text{Asia}}\cdot\mathbb{1}_{\mbox{Asia}}(x) + \\
+& \qquad b_{\text{Euro}}\cdot\mathbb{1}_{\mbox{Euro}}(x) + b_{\text{Ocean}}\cdot\mathbb{1}_{\mbox{Ocean}}(x)\\
+&= 3089 + 7914\cdot\mathbb{1}_{\mbox{Amer}}(x) + 9384\cdot\mathbb{1}_{\mbox{Asia}}(x) + \\
+& \qquad 21965\cdot\mathbb{1}_{\mbox{Euro}}(x) + 26721\cdot\mathbb{1}_{\mbox{Ocean}}(x)
+\end{aligned}
+$$
+
+In our previous exploratory data analysis, it seemed that continent is a statistically significant predictor for an area's **mean** GDP. Here, by fitting a new linear regression using `lm(gdpPercap ~ continent, data = gapminder2007)` where `gdpPercap` is the new outcome variable $y$, we are able to write an equation to predict **average** `gdpPercap` using the continent as a predictor. Therefore, the regression results matches with the results from your previous exploratory data analysis. 
+
+### LC 5.6 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Using either the sorting functionality of RStudio's spreadsheet viewer or using the data wrangling tools you learned in Chapter \@ref(wrangling), identify the five countries with the five smallest (most negative) residuals? What do these negative residuals say about their life expectancy relative to their continents?
+
+**Solution**: 
+
+We switched by to life expectancy. We need the model.
+
+```{r}
+lifeExp_model <- lm(lifeExp ~ continent, data = gapminder2007)
+```
+
+
+Let's use `R`.
+
+```{r}
+get_regression_points(lifeExp_model, ID = "country") %>%
+  arrange(residual) %>%
+  slice_head(n=5)
+```
+
+We can identify that the five countries with the five smallest (most negative) residuals are: Afghanistan, Swaziland, Mozambique, Haiti, and Zambia.
+
+These negative residuals indicate that these data points have the biggest negative deviations from their group means. This means that these five countries' average life expectancies are the lowest compared to their respective continents' average life expectancies. For example, the residual for Afghanistan is $-26.9$ and it is the smallest residual. This means that the average life expectancy of Afghanistan is $26.9$ years lower than the average life expectancy of its continent, Asia. 
+
+### LC 5.7 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Repeat this process, but identify the five countries with the five largest (most positive) residuals. What do these positive residuals say about their life expectancy relative to their continents?
+
+**Solution**: 
+
+Using `R`.
+
+```{r}
+get_regression_points(lifeExp_model, ID = "country") %>%
+  arrange(desc(residual)) %>%
+  slice_head(n=5)
+```
+
+We can identify that the five countries with the five largest (most positive) residuals are: Reunion, Libya, Tunisia, Mauritius, and Algeria. 
+
+These positive residuals indicate that the data points are above the regression line with the longest distance. This means that these five countries' average life expectancies are the highest comparing to their respective continents' average life expectancies. For example, the residual for Reunion is $21.636$ and it is the largest residual. This means that the average life expectancy of Reunion is $21.636$ years higher than the average life expectancy of its continent, Africa. 
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `skimr` package version: `r packageVersion("skimr")`
+  * `gapminder` package version: `r packageVersion("gapminder")`  
+  * `moderndive` package version: `r packageVersion("moderndive")`

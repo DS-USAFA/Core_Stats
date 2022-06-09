@@ -1,0 +1,130 @@
+---
+title: "Math 300 NTI Lesson 9"
+subtitle: "Case Study and Review"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Read data into `R` and get into tidy format.  
+
+## Reading 
+
+[Chapter 4.3 - 4.5](https://moderndive.com/4-tidy.html#case-study-tidy)
+
+## Lesson 
+
+Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.
+
+Work through the learning checks LC4.4 - LC4.5.
+
++ You can use the GUI to get the code to read the Excel file from the web. Then post the code into your rmarkdown file. Remember, to knit the file it has to read the data into the temporary workspace.  
+
++ Save time to review for the GR.  
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 4
+lc <- 3
+```
+
+```{r message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(tidyr)
+library(nycflights13)
+library(fivethirtyeight)
+``` 
+
+### LC 4.4 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Convert the `dem_score` data frame into a tidy data frame and assign the name of `dem_score_tidy` to the resulting long-formatted data frame.
+
+**Solution**: 
+
+```{r}
+# Get the data
+library(readxl)
+url <- "https://moderndive.com/data/dem_score.xlsx"
+destfile <- "dem_score.xlsx"
+curl::curl_download(url, destfile)
+dem_score <- read_excel(destfile)
+```
+
+```{r}
+head(dem_score)
+``` 
+
+```{r}
+dem_score_tidy <- dem_score %>%
+  pivot_longer(
+    names_to = "year", values_to = "democracy_score",
+    cols = -country
+  )
+```
+
+```{r}
+head(dem_score_tidy)
+```
+
+Let's now compare the `dem_score` and `dem_score_tidy`. `dem_score` has democracy score information for each year in columns, whereas in `dem_score_tidy` there are explicit variables `year` and `democracy_score`. While both representations of the data contain the same information, it is easier to use `ggplot()` to create plots using the `dem_score_tidy` data frame.
+
+### LC 4.5 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Read in the life expectancy data stored at <https://moderndive.com/data/le_mess.csv> and convert it to a tidy data frame. 
+
+**Solution**: The code is similar
+
+```{r message=FALSE}
+life_expectancy <- read_csv("https://moderndive.com/data/le_mess.csv")
+```
+
+```{r}
+head(life_expectancy)
+```
+
+
+```{r}
+life_expectancy_tidy <- life_expectancy %>%
+  pivot_longer(
+    names_to = "year",
+    values_to = "life_expectancy",
+    cols = -country
+  )
+```
+
+We observe the same construct structure with respect to `year` in `life_expectancy` vs `life_expectancy_tidy` as we did in `dem_score` vs `dem_score_tidy`:
+
+```{r}
+head(life_expectancy_tidy)
+```
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `tidyr` package version: `r packageVersion("tidyr")`
+  * `readr` package version: `r packageVersion("readr")`  
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`
+  * `fivethirtyeight` package version: `r packageVersion("fivethirtyeight")`  

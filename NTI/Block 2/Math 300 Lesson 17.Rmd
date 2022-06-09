@@ -1,0 +1,51 @@
+---
+title: "Math 300 NTI Lesson 17"
+subtitle: "Review"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Reading 
+
+[Chapter 6.4](https://moderndive.com/6-multiple-regression.html#mult-reg-conclusion)
+
+## Lesson 
+
+Time to makeup missed topics and review for exam.
+
++ Review the objectives.
+
++ Rework the learning checks this time without scaffolded code.
+
+### Setup
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(ISLR)
+``` 
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `skimr` package version: `r packageVersion("skimr")`
+  * `moderndive` package version: `r packageVersion("moderndive")`

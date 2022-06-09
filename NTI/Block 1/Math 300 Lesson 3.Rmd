@@ -1,0 +1,259 @@
+---
+title: "Math 300 NTI Lesson 3"
+subtitle: "Linegraphs, Histograms and Facets"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Understand and wrangle data in preparation for plotting.
+
+2. Explain when it is appropriate to use a linegraphs, histogram, and facets. 
+
+3. Create and interpret a linegraphs using the `ggplot()` function.  
+
+4. Create and interpret a histogram using the `ggplot()` function.
+
+5. Use facets to improve the visual presentation of data and then interpret plots that use facets.  
+
+## Reading 
+
+[Chapter 2.4 - 2.6](https://moderndive.com/2-viz.html#linegraphs)
+
+## Lesson 
+
+Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions.
+
+Work through the learning checks LC2.9 - LC2.21. Because you have so many learning checks, you might not want to use a pair and share learning strategy for each one. You can pick and choose. 
+
++ You want to emphasize that we are starting to look at different plots. These plots change based on the nature of our data. For the linegraph, the variable we choose to put on the x-axis has a sequential nature, usually time.  For the histogram we want to understand the distribution of a single quantitative variable. Facets allow us to bring in another variable, usually categorical. 
+
++ We will be using `filter()` again to create a subset of data but we are putting in an **and** condition. This is the setup for LC2.9, so walk them through it. 
+
+
+### Setup  
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 2
+lc <- 8
+```
+
+```{r message=FALSE}
+library(nycflights13)
+library(ggplot2)
+library(dplyr)
+```
+
+*We need to create the `early_january_weather` data object. You may want to walk them through this code.*
+
+*Use ?weather to understand the variables.*
+
+```{r}
+glimpse(weather)
+```
+
+
+```{r}
+# This code finds the flights from EWR between January 1 up 
+# to and including January 15
+early_january_weather <- weather %>% 
+  filter(origin == "EWR" & month == 1 & day <= 15)
+```
+
+
+
+### LC 2.9 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Take a look at both the `weather` and `early_january_weather` data frames by running `View(weather)` and `View(early_january_weather)` in the console. In what respect do these data frames differ?
+
+**Solution**: *The rows of `early_january_weather` are a subset of `weather`.*  
+
+```{r}
+str(weather)
+```
+
+```{r}
+str(early_january_weather)
+```
+
+
+### LC 2.10 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** `View()` the `flights` data frame again. Why does the `time_hour` variable uniquely identify the hour of the measurement whereas the `hour` variable does not? 
+
+**Solution**: Because to uniquely identify an hour, we need the `year`/`month`/`day`/`hour` sequence, whereas there are only 24 possible `hour`'s.
+
+
+```{r}
+str(flights)
+```
+
+
+### LC 2.11 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Why should linegraphs be avoided when there is not a clear ordering of the horizontal axis?
+
+**Solution**: Because lines suggest connectedness and ordering.  
+
+### LC 2.12 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why are linegraphs frequently used when time is the explanatory variable?
+
+**Solution**: Because time is sequential: subsequent observations are closely related to each other.
+
+### LC 2.13 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Plot a time series of a variable other than `temp` for Newark Airport in the first 15 days of January 2013.
+
+First let's create the plot in the book. Walk through the code.
+
+```{r}
+ggplot(data = early_january_weather, 
+       mapping = aes(x = time_hour, y = temp)) +
+  geom_line()
+```
+
+
+**Solution**: Humidity is a good one to look at, since this very closely related to the cycles of a day.
+
+```{r}
+ggplot(data = early_january_weather, mapping = aes(x = time_hour, y = humid)) +
+  geom_line()
+```
+
+*Notice the cyclic nature of humid over the course of a day?*
+
+### LC 2.14 (Objective 4)
+
+To understand a histogram, discuss the histogram from the book. 
+
++ Explain the warning and notification. 
++ Explain the options in the `geom_histogram()` function. 
++ Explain that this might be multimodal data.
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(color = "white", fill = "steelblue")
+```
+
++ A list of the available colors
+
+```{r}
+head(colors())
+```
+
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What does changing the number of bins from 30 to 40 tell us about the distribution of temperatures?
+
+**Solution**: The distribution doesn't change much. But by refining the bin width, we see that the temperature data has a high degree of accuracy. What do I mean by accuracy? Looking at the `temp` variable by `View(weather)`, we see that the precision of each temperature recording is 2 decimal places. Increasing the number of bins gives the impression that are more modes in the data because the number of data points in each bin get smaller. Interpretation of histograms depends on the number of bins and the location of the bins. This is why some people prefer density plots. We add one here for reference.
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(bins=40,color = "white", fill = "steelblue")
+```
+
+```{r warning=FALSE}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_density(fill = "steelblue")
+```
+
+
+### LC 2.15 (Objective 4)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Would you classify the distribution of temperatures as symmetric or skewed?
+
+**Solution**: It is rather symmetric, i.e. there are no __long tails__ on only one side of the distribution
+
+
+### LC 2.16 (Objective 4)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What would you guess is the "center" value in this distribution?  Why did you make that choice?
+
+**Solution**: The center is around `r mean(weather$temp, na.rm=TRUE)`&deg;F. By running the `summary()` command, we see that the mean and median are very similar. In fact, when the distribution is symmetric the mean equals the median. It is not true that when the mean equals the median, the distribution is symmetric, so be careful. A simple example is the discrete data below which is skewed but has same mean and median.
+
+```{r}
+temp <- c(3,3,5,5,9)
+```
+
+### LC 2.17 (Objective 4)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Is this data spread out greatly from the center or is it close?  Why?
+
+**Solution**: This can only be answered relatively speaking! It depends on the context of the problem. Let's pick things to be relative to Seattle, WA temperatures:
+
+```{r SEATAC, out.width='40%', echo=FALSE, fig.cap="Annual temperatures at SEATAC Airport.", purl=FALSE,fig.align='center'}
+include_graphics("SEATAC_temperatures.png")
+```
+
+While, it appears that Seattle weather has a similar center of 55&deg;F, its
+temperatures are almost entirely between 35&deg;F and 75&deg;F for a range of
+about 40&deg;F. Seattle temperatures are much less spread out than New York i.e.
+much more consistent over the year. New York on the other hand has much colder
+days in the winter and much hotter days in the summer. Expressed differently,
+the middle 50% of values, as delineated by the **interquartile range** is 30&deg;F.
+
+### LC 2.18 (Objective 5)
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(binwidth = 5, color = "white") +
+  facet_wrap(~ month, nrow = 4)
+```
+
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What other things do you notice about the faceted plot above?  How does a faceted plot help us see relationships between two variables?
+
+**Solution**: 
+
+* Certain months have much more consistent weather (August in particular), while others have crazy variability like January and October, representing changes in the seasons.
+
+* Because we see `temp` recordings split by `month`, we are considering the relationship between these two variables. For example, for summer months, temperatures tend to be higher. 
+
+### LC 2.19 (Objective 5)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What do the numbers 1-12 correspond to in the plot above?  What about 25, 50, 75, 100?
+
+**Solution**: 
+
+* They correspond to the month of the flight. While month is technically a number between 1-12, we're viewing it as a categorical variable here. Specifically, this is an **ordinal categorical** variable since there is an ordering to the categories.
+
+* 25, 50, 75, 100 are temperatures
+
+### LC 2.20 (Objective 2, 5)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** For which types of datasets would these types of faceted plots not work well in comparing relationships between variables? Give an example describing the nature of these variables and other important characteristics.
+
+**Solution**: 
+
+* It would not work if we had a very large number of facets. For example, if we faceted by individual days rather than months, as we would have 365 facets to look at. When considering all days in 2013, it could be argued that we shouldn't care about day-to-day fluctuation in weather so much, but rather month-to-month fluctuations, allowing us to focus on seasonal trends.
+
+### LC 2.21 (Objective 5)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Does the `temp` variable in the `weather` dataset have a lot of variability?  Why do you say that?
+
+**Solution**: Again, like in LC `r paste0("(LC", chap, ".", (lc-4), ")")`, this is a relative question. We would say yes, because in New York City, you have 4 clear seasons with different weather. Whereas in Seattle WA and Portland OR, you have two seasons: summer and rain!
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`

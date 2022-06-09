@@ -1,0 +1,166 @@
+---
+title: "Math 300 NTI Lesson 14"
+subtitle: "Multiple Linear Regression - Numerical & Discrete"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. For numerical and categorical explanatory variables, generate, plot, and explain the interaction model.   
+
+2. For numerical and categorical explanatory variables, generate, plot, and explain the parallel slopes model.   
+
+3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
+
+## Reading 
+
+[Chapter 6 - 6.1](https://moderndive.com/6-multiple-regression.html)
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning check LC6.1. 
+
++ LC6.1 is not enough. We need to work through the example of the book and recreate the work.   
++ Explaining the terms in the interaction model is difficult. Spend time on this. 
+
++ Notice that the line for females stops at the extremes of the observed data in `ggplot2()`. You have to be careful about extrapolating. The assumption of linearity outside of the observed data is risky at best. 
+
++ The use of `+` and `*` in the regression formulas confuses students. These are not arithmetical operations but formula operations. If we want to arithmetically add the predictors we would have to use the identity function `I()`.
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 6
+lc <- 0
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(ISLR)
+``` 
+
+*Recreate the analysis done in the book.*
+
+```{r}
+evals_ch6 <- evals %>%
+  select(ID, score, age, gender)
+```
+
+Let's look at 5 random rows of data.
+
+```{r}
+set.seed(941)
+evals_ch6 %>%
+  sample_n(size = 5)
+```
+
+
+- Interaction Model (Objective 1)
+
+In this model we allow a different slope and intercept for each gender. 
+
+```{r message=FALSE}
+ggplot(evals_ch6, aes(x = age, y = score, color = gender)) +
+  geom_point() +
+  labs(x = "Age", y = "Teaching Score", color = "Gender") +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw()
+```
+
+To get the model in `R`, we use the `*` which is not multiplication but an interaction term in the model formula.
+
+```{r}
+# Fit regression model:
+score_model_interaction <- lm(score ~ age * gender, data = evals_ch6)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(score_model_interaction)
+```
+
+
+Go through and explain this table. From the reading *We say there is an interaction effect if the associated effect of one variable depends on the value of another variable.* 
+
++ What is the intercept for the males?  
++ What is the slope for the males?  
++ Interpret the slope for the female instructors?  
+
+*** 
+
+- Parallel Slopes Model (Objective 2)
+
+The parallel slopes model assumes that there is no interaction between the two explanatory variables. Their impact on the response is not related to the values of the other variable. 
+
+We will use the same data, but just build a different model.
+
+```{r}
+ggplot(evals_ch6, aes(x = age, y = score, color = gender)) +
+  geom_point() +
+  labs(x = "Age", y = "Teaching Score", color = "Gender") +
+  geom_parallel_slopes(se = FALSE) +
+  theme_bw()
+```
+
++ Notice that the line for females stops at the extremes of the observed data.
+
+```{r}
+# Fit regression model:
+score_model_parallel_slopes <- lm(score ~ age + gender, data = evals_ch6)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(score_model_parallel_slopes)
+```
+
++ What is the intercept for the males?  
++ What is the slope for the males?  
++ Interpret the slope for the female instructors?  
+
+### LC 5.4 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Compute the observed values, fitted values, and residuals not for the interaction model as we just did, but rather for the parallel slopes model we saved in `score_model_parallel_slopes`.
+
+**Solution**: 
+```{r}
+regression_points_parallel <- get_regression_points(score_model_parallel_slopes)
+```
+
+
+```{r}
+head(regression_points_parallel)
+```
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `skimr` package version: `r packageVersion("skimr")`
+  * `ISLR` package version: `r packageVersion("ISLR")`  
+  * `moderndive` package version: `r packageVersion("moderndive")`

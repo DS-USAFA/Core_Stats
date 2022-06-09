@@ -1,0 +1,352 @@
+---
+title: "Math 300 NTI Lesson 7"
+subtitle: "join, select, rename, and top_n"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Use the `inner_join()` function to combine data frames to use to explore, explain, and visualize. 
+
+2. Explain how to join data frame to include the use of keys and the advantages and the disadvantages of normal forms. 
+
+3. Use `rename()` and `select()` to reorganize data frames to use to explore, explain, and visualize. This includes all the ways to select columns including helper functions such as `everthing()`, `contains()`, etc. 
+
+4. Use `top_n()` to select a subset of the data frame.
+
+
+## Reading 
+
+[Chapter 3.7 - 3.9](https://moderndive.com/3-wrangling.html#joins)
+
+## Lesson 
+
+Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.
+
+Work through the learning checks LC3.13 - LC3.20.
+
++ We are using an inner join. The important ideas are the **key** variable to join the data frames and the type of join. Figure 3.8 shows an inner join. It only keeps observations that are in each data frame. See [R for Data Science](https://r4ds.had.co.nz/relational-data.html) for more information to include a discussion of outer joins. The following figures can help.
+
+![](join-inner.png)
+
+![](join-outer.png)
+
++ The *keys* don't have to be called the same name and as such will require the use of the `by` option.  
+
++ The use of `everthing()`, `contains()`, `starts_with()`, and `ends_with()` makes the use of `select()` easier. 
+
++ `rename()` creates the new variables and deletes the old. If we used `mutate()` it would keep both variables and we would then need to use `select()`.
+
++ Likewise, `top_n()` could be achieved with `arrange()` and `head()`.
+
++ LC 3.20 is difficult.
+
+### Setup  
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 3
+lc <- 12
+```
+
+```{r message=FALSE}
+library(nycflights13)
+library(ggplot2)
+library(dplyr)
+```
+
+
+### LC 3.13 (Objective 2)
+
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Looking at Figure 3.7, when joining `flights` and `weather` (or, in other words, matching the hourly weather values with each flight), why do we need to join by all of `year`, `month`, `day`, `hour`, and `origin`, and not just `hour`?
+
+**Solution**: Because `hour` is simply a value between 0 and 23; to identify a *specific* hour, we need to know which year, month, day and at which airport.
+
+### LC 3.14 (Objective 1, 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Recreate the data object `named_dests` from the reading. What surprises you about the top 10 destinations from NYC in 2013?
+
+**Solution**: 
+
+*We need to recreate the data object*
+
+```{r}
+named_dests <- flights %>%
+  group_by(dest) %>%
+  summarize(num_flights = n()) %>%
+  arrange(desc(num_flights)) %>%
+  inner_join(airports, by = c("dest" = "faa")) %>%
+  rename(airport_name = name)
+```
+
+
+```{r}
+head(named_dests,n=10)
+```
+
+
+This question is subjective! What surprises us is that very few flights, with the exception of Chicago, go to the middle of the country. Also, there are a high number of flights to Boston. New York and Boston are close to each other. 
+
+### LC 3.15 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are some advantages of data in normal forms?  What are some disadvantages?
+
+**Solution**: When datasets are in normal form, we can easily `_join` them with other datasets! For example, we can join the `flights` data with the `planes` data. Using normal forms keeps the size of files down. For example airlines is only 16 rows. The size of flights is 336,776 and we repeated the airline names over and over in this file, its size could increase. 
+
+### LC 3.16 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are some ways to select all three of the `dest`, `air_time`, and `distance` variables from `flights`?  Give the code showing how to do this in at least three different ways.
+
+**Solution**: 
+
+```{r}
+# The regular way:
+flights %>%
+  select(dest, air_time, distance) %>%
+  head()
+```
+
+
+```{r}
+# Since they are sequential columns in the dataset
+flights %>%
+  select(dest:distance) %>%
+  head()
+```
+
+
+
+```{r}
+# Not as effective, by removing everything else
+flights %>%
+  select(
+    -year, -month, -day, -dep_time, -sched_dep_time, -dep_delay, -arr_time,
+    -sched_arr_time, -arr_delay, -carrier, -flight, -tailnum, -origin,
+    -hour, -minute, -time_hour
+  ) %>%
+  head()
+```
+
+### LC 3.17 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How could one use `starts_with`, `ends_with`, and `contains` to select columns from the `flights` data frame?  Provide three different examples in total: one for `starts_with`, one for `ends_with`, and one for `contains`.
+
+**Solution**: 
+
+```{r}
+# Anything that starts with "d"
+flights %>%
+  select(starts_with("d")) %>%
+  head()
+```
+
+```{r}
+# Anything related to delays:
+flights %>%
+  select(ends_with("delay")) %>%
+  head()
+```
+
+```{r}
+# Anything related to departures:
+flights %>%
+  select(contains("dep")) %>%
+  head()
+```
+
+
+### LC 3.18 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why might we want to use the `select()` function on a data frame?
+
+**Solution**: To narrow down the data frame, to make it easier to view or print such as using `View()` for example.  
+
+### LC 3.19 (Objective 4)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Create a new data frame that shows the top 5 airports with the largest average arrival delays from NYC in 2013.
+
+**Solution**: 
+
+```{r, purl=FALSE}
+top_five <- flights %>%
+  group_by(dest) %>%
+  summarize(avg_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  arrange(desc(avg_delay)) %>%
+  top_n(n = 5)
+```
+
+
+```{r}
+top_five
+```
+
+
+### LC 3.20 (Many objectives of Chapter 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Using the datasets included in the `nycflights13` package, compute the available seat miles for each airline sorted in descending order. After completing all the necessary data wrangling steps, the resulting data frame should have 16 rows (one for each airline) and 2 columns (airline name and available seat miles). Here are some hints:
+
+- **Crucial**: Unless you are very confident in what you are doing, it is worthwhile to not starting coding right away, but rather first sketch out on paper all the necessary data wrangling steps not using exact code, but rather high-level *pseudocode* that is informal yet detailed enough to articulate what you are doing. This way you won't confuse *what* you are trying to do (the algorithm) with *how* you are going to do it (writing `dplyr` code). 
+- Take a close look at all the datasets using the `View()` function: `flights`, `weather`, `planes`, `airports`, and `airlines` to identify which variables are necessary to compute available seat miles.
+- Figure 3.7 above showing how the various datasets can be joined will also be useful. 
+- Consider the data wrangling verbs in Table 3.2 as your toolbox!
+
+**Solution**: 
+
+We need the number of seats, number of flights, miles, and airline. The number of seats in a plane is in the `planes` data frame and we can use `tailnum` as a key. The data frame `flights` the `carrier` and distance flown `distance`. It also has the `tailnum` for a key back to plane. The data frame `airline` has the carrier code and full airline name.
+
+**Psuedo code**
+
++ Subset the flights data frame to include `distance`, `tailnum`, and `carrier`,  
++ Join the result `planes` with only `tailnum` and `seats` which requires a select within the `inner_join()` function, 
++ Join with `airlines`,
++ Create available seat miles variable,
++ Next group by carrier,
++ Sort in descending
+
+Let's piece it together.
+
+```{r}
+flights %>% 
+  select(carrier,distance,tailnum) %>% head()
+```
+
+```{r}
+flights %>% 
+  select(carrier,distance,tailnum) %>% 
+  inner_join(select(planes,seats,tailnum)) %>% head()
+```
+
+```{r}
+flights %>% 
+  select(carrier,distance,tailnum) %>% 
+  inner_join(select(planes,seats,tailnum)) %>% 
+  inner_join(airlines) %>% 
+  mutate(asm=distance*seats) %>%
+  select(name,carrier,asm,distance,seats) %>%
+  head()
+```
+
+```{r}
+flights %>% 
+  select(carrier,distance,tailnum) %>% 
+  inner_join(select(planes,seats,tailnum)) %>% 
+  inner_join(airlines) %>% 
+  mutate(asm=distance*seats) %>%
+  select(name,carrier,asm,distance,seats) %>%
+  group_by(name) %>%
+  summarize(total_asm=sum(asm)) %>%
+  arrange(desc(total_asm))
+```
+
+
+
+**Here is the author's code.**
+
+```{r, purl=FALSE}
+flights %>%
+  inner_join(planes, by = "tailnum") %>%
+  select(carrier, seats, distance) %>%
+  mutate(ASM = seats * distance) %>%
+  group_by(carrier) %>%
+  summarize(ASM = sum(ASM, na.rm = TRUE)) %>%
+  arrange(desc(ASM))
+```
+
+Let's now break this down step-by-step. To compute the available seat miles for a given flight, we need the `distance` variable from the `flights` data frame and the `seats` variable from the `planes` data frame, necessitating a join by the key variable `tailnum`. To keep the resulting data frame easy to view, we'll `select()` only these two variables and `carrier` and use `head()` to keep only the first 6 rows:
+
+```{r, purl=FALSE}
+flights %>%
+  inner_join(planes, by = "tailnum") %>%
+  select(carrier, seats, distance) %>%
+  head()
+```
+
+Now for each flight we can compute the available seat miles `ASM` by multiplying the number of seats by the distance via a `mutate()`:
+
+```{r, purl=FALSE}
+flights %>%
+  inner_join(planes, by = "tailnum") %>%
+  select(carrier, seats, distance) %>%
+  # Added:
+  mutate(ASM = seats * distance) %>%
+  head()
+```
+
+Next we want to sum the `ASM` for each carrier. We achieve this by first grouping by `carrier` and then summarizing using the `sum()` function:
+
+```{r, purl=FALSE}
+flights %>%
+  inner_join(planes, by = "tailnum") %>%
+  select(carrier, seats, distance) %>%
+  mutate(ASM = seats * distance) %>%
+  # Added:
+  group_by(carrier) %>%
+  summarize(ASM = sum(ASM)) %>%
+  head()
+```
+
+However, because for certain carriers certain flights have missing `NA` values, the resulting table also returns `NA`'s. We can eliminate these by adding a `na.rm = TRUE` argument to `sum()`, telling R that we want to remove the `NA`'s in the sum. 
+
+```{r, purl=FALSE}
+flights %>%
+  inner_join(planes, by = "tailnum") %>%
+  select(carrier, seats, distance) %>%
+  mutate(ASM = seats * distance) %>%
+  group_by(carrier) %>%
+  # Modified:
+  summarize(ASM = sum(ASM, na.rm = TRUE)) 
+```
+
+Finally, we `arrange()` the data in `desc()`ending order of `ASM`.
+
+```{r, purl=FALSE}
+flights %>%
+  inner_join(planes, by = "tailnum") %>%
+  select(carrier, seats, distance) %>%
+  mutate(ASM = seats * distance) %>%
+  group_by(carrier) %>%
+  summarize(ASM = sum(ASM, na.rm = TRUE)) %>%
+  # Added:
+  arrange(desc(ASM))
+```
+
+While the above data frame is correct, the IATA `carrier` code is not always useful. For example, what carrier is `WN`? We can address this by joining with the `airlines` dataset using `carrier` is the key variable. While this step is not absolutely required, it goes a long way to making the table easier to make sense of. It is important to be empathetic with the ultimate consumers of your presented data!
+
+
+```{r}
+flights %>%
+  inner_join(planes, by = "tailnum") %>%
+  select(carrier, seats, distance) %>%
+  mutate(ASM = seats * distance) %>%
+  group_by(carrier) %>%
+  summarize(ASM = sum(ASM, na.rm = TRUE)) %>%
+  arrange(desc(ASM)) %>%
+  # Added:
+  inner_join(airlines, by = "carrier") 
+```
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`

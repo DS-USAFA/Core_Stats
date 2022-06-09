@@ -1,0 +1,149 @@
+---
+title: "Math 300 NTI Lesson 8"
+subtitle: "Importing Data"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Import csv and Excel data files into `R`.  
+
+2. Explain and use appropriately the concept of tidy data. 
+
+3. Create a tidy data frame using the appropriate functions in `R`. 
+
+## Reading 
+
+[Chapter 4 - 4.2](https://moderndive.com/4-tidy.html)
+
+## Lesson 
+
+Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.
+
+Work through the learning checks LC4.1 - LC4.3.
+
++ Although this chapter seems straight forward, it is not. Thinking about the form you want the data in means defining the observational unit. Spend time on the examples to help make the point. LC4.1 and LC4.2. In the background papers folder of the course materials, we have Wickham's paper on tidy data, this can give you more insight for class discussions.
+
++ From Wickham's paper: Tidy data is a standard way of mapping the meaning of a dataset to its structure. A dataset is messy or tidy depending on how rows, columns and tables are matched up with observations, variables and types. You must think about your data before analyzing it. 
+
++ The book makes it seem that long data frames are tidy and wide ones are not. Be careful, this can be too simplistic. 
+
++ The `pivot_to_longer()` function is difficult when you first use it. The function arguments can be confusing. The `names_to` and `values_to` are really just asking for the names of columns when done. The `names_to` takes the column names and creates a variable with the assigned name. The `values_to` takes the values in the selected columns and makes them a variable. The `cols` is subtle and can be done in a variety of ways. Practice, run `?pivot_longer` or go to the [tidyverse](https://tidyr.tidyverse.org/dev/articles/pivot.html#pew) for more examples.  
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 4
+lc <- 0
+```
+
+```{r message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(tidyr)
+library(nycflights13)
+library(fivethirtyeight)
+``` 
+
+### Import data 4.1.2 (Objective 1)
+
+Repeat the import of `dem_score.xlxs` into `R`. Experiment with the options in the GUI. Also import `https://moderndive.com/data/dem_score.csv` using the `Import Dataset` icon under the **Envionment** tab.
+
+### LC 4.1 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are common characteristics of "tidy" datasets?
+
+**Solution**: Rows correspond to observations, while columns correspond to variables.  
+
+The data object `drinks_smaller` is tidy if the unit of observation is country. Thus each row is a country. The data object `drinks_smaller_tidy` is tidy if the unit of observation is alcoholic beverage consumption. The first case does not really help us in our analysis since the variables, columns, are all related to different beverages which we typically would want to compare.
+
+### LC 4.2 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What makes "tidy" datasets useful for organizing data?
+
+**Solution**: Tidy datasets are an organized way of viewing data. This format is required for the `ggplot2` and `dplyr` packages for data visualization and wrangling. 
+
+Table 4.3 gives a good example of tidy data and uses the term *unique pieces of information*. 
+
+### LC 4.3 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Take a look the `airline_safety` data frame included in the `fivethirtyeight` data. Run the following:
+
+```{r}
+head(airline_safety)
+```
+
+After reading the help file by running `?airline_safety`, we see that `airline_safety` is a data frame containing information on different airlines companies' safety records. This data was originally reported on the data journalism website FiveThirtyEight.com in Nate Silver's article ["Should Travelers Avoid Flying Airlines That Have Had Crashes in the Past?"](https://fivethirtyeight.com/features/should-travelers-avoid-flying-airlines-that-have-had-crashes-in-the-past/). Let's ignore the `incl_reg_subsidiaries` and `avail_seat_km_per_week` variables for simplicity:
+
+```{r}
+airline_safety_smaller <- airline_safety %>%
+  select(airline, starts_with("fatalities"))
+```
+
+
+```{r}
+head(airline_safety_smaller)
+```
+
+This data frame is not in "tidy" format. How would you convert this data frame to be in "tidy" format, in particular so that it has a variable `fatalities_years` indicating the incident type/year and a variable `count` of the counts?
+
+**Solution**: 
+
+The original data frame has an airline as the unit of observation. But we want an observation to be an airline in a time period. 
+
+This can been done using the `pivot_longer()` function from the `tidyr` package:
+
+```{r}
+airline_safety_smaller_tidy <- airline_safety_smaller %>%
+  pivot_longer(
+    names_to = "fatalities_years",
+    values_to = "count",
+    cols = -airline
+  )
+```
+
+
+```{r}
+head(airline_safety_smaller_tidy)
+```
+
+
+If you look at the resulting `airline_safety_smaller_tidy` data frame in the spreadsheet viewer, you'll see that the variable `fatalities_years` has 2 possible values: `"fatalities_85_99" and fatalities_00_14"` corresponding to the 2 columns of `airline_safety_smaller` we tidied. 
+
+Let's create plot of Air France and United Airlines.
+
+```{r}
+airline_safety_smaller_tidy %>%
+  filter(airline %in% c("United / Continental","Air France")) %>%
+  ggplot(aes(x=airline,y=count,fill=fatalities_years)) +
+  geom_col(position="dodge")
+```
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `tidyr` package version: `r packageVersion("tidyr")`
+  * `readr` package version: `r packageVersion("readr")`  
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`
+  * `fivethirtyeight` package version: `r packageVersion("fivethirtyeight")`  

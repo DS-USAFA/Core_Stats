@@ -1,0 +1,193 @@
+---
+title: "Math 300 NTI Lesson 11"
+subtitle: "Simple Linear Regression - Continuous x"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explore the relationship between 2 numerical variables using summary statistics and visualizations in `R`. This includes using the `skimr` package and fitting a best fit line in a scatterplot. 
+
+2. Fit a linear regression model to two variables using the `lm()` function and interpret the output. This includes the interpretation of slope and the use of *association* and not *cause*.    
+
+3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
+
+## Reading 
+
+[Chapter 5 - 5.1](https://moderndive.com/5-regression.html)
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning checks LC5.1 - LC5.3.
+
++ Regression can be used for explanatory and predictive purposes. It falls on that line between traditional statistics/econometrics and machine learning. In this course we focus on its more traditional use to interpret the relationship between predictors and a response. Math 378 is our machine learning course and expands on linear regression in this framework.   
+
++ Note the many different terms for `x` and `y` in regression. These names come from different fields. For example `y` is called the response, dependent variable, outcome, and output. While `x` is called input, predictor, independent variable, and explanatory variable. Also point out that `y` is numerical while `x` can be numerical or categorical.
+
++ We are using new packages. The `tidyverse` package is a wrapper and actually loads `readr`, `dplyr`, `ggplot2`, and `tidyr`.  
+
++ In the reading, the authors' setup the problem with instructor teaching score as the response, explain why, and beauty score as the explanatory variable. What is the research question? 
+
++ The reading introduces tilde `~` as a formula. You might want to talk about this as we use it in LC 5.1. 
+
++ The interpretation of the slope has the key phrase **average**. For a one unit change in `x`, the average value of `y` changes by the value of the slope. 
+
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 5
+lc <- 0
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(gapminder)
+``` 
+
+*Create the data needed for the exercises.*
+
+```{r}
+evals_ch5 <- evals %>%
+  select(ID, score, bty_avg, age)
+```
+
+Let's look at 5 random rows of data.
+
+```{r}
+set.seed(1234)
+evals_ch5 %>%
+  sample_n(size = 5) 
+```
+
+### LC 5.1 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Conduct a new exploratory data analysis with the same outcome variable $y$ being `score` but with `age` as the new explanatory variable $x$. Remember, this involves three things:
+
+- Looking at the raw data values.
+- Computing summary statistics.
+- Creating data visualizations.
+
+What can you say about the relationship between age and teaching scores based on this exploration?
+
+**Solution**: 
+
+- Looking at the raw data values: 
+```{r}
+glimpse(evals_ch5)
+```
+
+- Computing summary statistics:
+```{r, eval=FALSE}
+my_skim<-skim_with(numeric = sfl(hist = NULL))
+```
+
+
+```{r, include=FALSE}
+my_skim<-skim_with(numeric = sfl(hist = NULL))
+```
+
+```{r}
+evals_ch5 %>%
+  select(score, age) %>%
+  my_skim() %>%
+  print()
+```  
+
+
+(Note that for formatting purposes, the inline histogram that is usually printed with skim() has been removed.)
+
+- Bivariate summary:
+
+```{r}
+evals_ch5 %>% 
+  get_correlation(formula = score ~ age)
+```
+
+
+- Creating data visualizations:
+```{r message=FALSE}
+ggplot(evals_ch5, aes(x = age, y = score)) +
+  geom_jitter(alpha=0.5) +
+  labs(
+    x = "Age", y = "Teaching Score",
+    title = "Scatterplot of relationship of teaching score and age") +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+```
+
+Based on the scatterplot, there does not appear to be a relationship between age and teaching score. If anything, there might be a slight negative linear trend. That is, as age increases, the **average** teaching score decreases slightly. Even thought the correlation coefficient is negative, it is small in absolute value and thus there may be no relationship between the variables.  
+
+### LC 5.2 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Fit a new simple linear regression using `lm(score ~ age, data = evals_ch5)` where `age` is the new explanatory variable `x`. Get information about the "best-fitting" line from the regression table by applying the `get_regression_table()` function. How do the regression results match up with the results from your earlier exploratory data analysis?
+
+**Solution**:  
+
+```{r}
+# Fit regression model:
+score_age_model <- lm(score ~ age, data = evals_ch5)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(score_age_model)
+```
+
+
+$$
+\begin{aligned}
+\widehat{y} &= b_0 + b_1 \cdot x\\
+\widehat{\text{score}} &= b_0 + b_{\text{age}} \cdot\text{age}\\
+&= 4.462 - 0.006\cdot\text{age}
+\end{aligned}
+$$
+
+For every increase of 1 year in `age`, there is an *associated* decrease of 0.006 units of the **average** teaching `score`. It matches with the results from our earlier exploratory data analysis. 
+
+### LC 5.3 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Generate a data frame of the residuals of the model where you used `age` as the explanatory $x$ variable.
+
+**Solution**: 
+
+```{r}
+score_age_regression_points <- get_regression_points(score_age_model)
+```
+
+
+```{r}
+head(score_age_regression_points)
+```
+
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `skimr` package version: `r packageVersion("skimr")`
+  * `gapminder` package version: `r packageVersion("gapminder")`  
+  * `moderndive` package version: `r packageVersion("moderndive")`

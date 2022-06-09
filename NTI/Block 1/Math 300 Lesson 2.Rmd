@@ -1,0 +1,163 @@
+---
+title: "Math 300 NTI Lesson 2"
+subtitle: "Scatterplot"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Create a scatterplot using the `ggplot()` function.  
+
+2. Interpret the relationship between variables in a scatterplot.
+
+3. Refine and improve scatterplots to illustrate relevant points by prepossessing the data or using functions such as `alpha()` and `geom_jitter()`.  
+
+## Reading 
+
+[Chapter 2 - 2.3](https://moderndive.com/2-viz.html#needed-packages)
+
+## Lesson 
+
+Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions.
+
+Work through the learning checks LC2.1 - LC2.8. 
+
++ You want to emphasize that creating plots has two purposes. The first is exploratory, that is to learn about the data and, in particular for scatterplots, the relationship between two quantitative variables. Plots are also used for explanatory purposes. You want to convey to the audience an important or relevant feature of the data. 
+
++ For a scatterplot, we usually want to put the variable we believe to be the predictor or explanatory variable on the x-axis. On the y-axis we put the respone or dependent variable. Sometimes it is not clear which is which and in this case it does not matter which variable goes on which axis. 
+
++ Using the `+` symbol in `ggplot()` can be confusing, but emphasize that we are creating layers. Tell your students to ask themselves what the want `R` to do? And what does `R` need to do this? For a plot, we need data and then we need to tell `R` what the aesthetics and geoms are. The `+` symbol allows us to build in layers.
+
++ You can show them how to insert an `R` code chunk into a markdown. There is the pulldown menu but you can also use Ctrl-Alt-I. Demo this in class. 
+
+### Setup  
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 2
+lc <- 0
+```
+
+```{r message=FALSE}
+library(nycflights13)
+library(ggplot2)
+library(dplyr)
+```
+
+*We need to create the `alaska_flights` data object. You may want to walk them through this code.*
+
+```{r}
+alaska_flights <- flights %>% 
+  filter(carrier == "AS")
+```
+
+```{r}
+head(alaska_flights)
+```
+
+
+*We are using the `str()` function in our solution. You should point this out to them.*
+
+### LC 2.1 (Objective 3)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Take a look at both the `flights` and `alaska_flights` data frames by running `View(flights)` and `View(alaska_flights)` in the console. In what respect do these data frames differ? For example, think about the number of rows in each dataset.
+
+**Solution**: `flights` contains all flight data, while `alaska_flights` contains only data from Alaskan carrier "AS". We can see that flights has `r nrow(flights)` rows while `alaska_flights` has only `r nrow(alaska_flights)`
+
+```{r}
+str(flights)
+```
+
+```{r}
+str(alaska_flights)
+```
+
+*Build the plot for the next set of learning checks.*
+
+```{r}
+ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) + 
+  geom_point()
+```
+
+
+### LC 2.2 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What are some practical reasons why `dep_delay` and `arr_delay` have a positive relationship?
+
+**Solution**: The later a plane departs, typically the later it will arrive.
+
+
+### LC 2.3 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What variables in the `weather` data frame would you expect to have a negative correlation (i.e. a negative relationship) with `dep_delay`? Why? Remember that we are focusing on numerical variables here. Hint: Explore the `weather` dataset by using the `View()` function. 
+
+**Solution**: An example in the `weather` dataset is `visib`, which measure visibility in miles. As visibility increases, we would expect departure delays to decrease. 
+
+### LC 2.4 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why do you believe there is a cluster of points near (0, 0)? What does (0, 0) correspond to in terms of the Alaskan flights?
+
+**Solution**: The point (0,0) means no delay in departure nor arrival. From the point of view of Alaska airlines, this means the flight was on time. It seems most flights are at least close to being on time.
+
+### LC 2.5 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are some other features of the plot that stand out to you?
+
+**Solution**: Different people will answer this one differently. One answer is most flights depart and arrive less than an hour late. 
+
+### LC 2.6 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Create a new scatterplot using different variables in the `alaska_flights` data frame by modifying the example above.
+
+**Solution**: Many possibilities for this one, see the plot below. Is there a pattern in departure delay depending on when the flight is scheduled to depart? Interestingly, there seems to be only two blocks of time where flights depart. 
+
+```{r}
+ggplot(data = alaska_flights, mapping = aes(x = dep_time, y = dep_delay)) +
+  geom_point()
+```
+
+### LC 2.7 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Why is setting the `alpha` argument value useful with scatterplots? What further information does it give you that a regular scatterplot cannot?
+
+**Solution**: It thins out the points so we address overplotting. But more importantly it hints at the (statistical) **density** and **distribution** of the points: where are the points concentrated, where do they occur.
+
+### LC 2.8 (Objective 2, 3)
+
+```{r noalpha,fig.cap="Figure 1: Arrival delays versus departure delays for Alaska Airlines flights from NYC in 2013.",warning=FALSE}
+ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) + 
+  geom_point()
+```
+
+```{r alpha,fig.cap="Figure 2: Arrival vs. departure delays scatterplot with alpha = 0.2",warning=FALSE}
+ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) + 
+  geom_point(alpha = 0.2)
+```
+
+
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** After viewing the Figure 2 above, give an approximate range of arrival delays and departure delays that occur the most frequently.  How has that region changed compared to when you observed the same plot without the `alpha = 0.2` set in Figure 1?
+
+**Solution**: The lower plot suggests that most Alaska flights from NYC depart between 12 minutes early and on time and arrive between 50 minutes early and on time.
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`

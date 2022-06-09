@@ -1,0 +1,132 @@
+---
+title: "Math 300 NTI Lesson 13"
+subtitle: "Simple Linear Regression - Related Topics"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explain and give an example of a confounding variable.   
+
+2.  In linear regression, explain what best fit means and calculate the sum of squared errors.   
+
+## Reading 
+
+[Chapter 5.3 - 5.4](https://moderndive.com/5-regression.html#reg-related-topics)
+
+## Lesson 
+
+This lesson gives you time to catch up on previous material.
+
+Work through the learning check LC5.8.
+
++ The correlation does not imply causation is an important idea, but decision makers and humans in general want to know causation. There are other courses that help, DOE and econometrics. We will not explore   
+
++ If there is time, play the [correlation](https://moderndive.com/5-regression.html#reg-conclusion) game.
+
++ Answer LC questions and have them work on problem set.
+
+### Setup
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 5
+lc <- 7
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+``` 
+
+- Spurious correlations (Objective 1) 
+
+Spend some time talking about confounding variables. The [spurious correlations](http://www.tylervigen.com/spurious-correlations) website may give you some ideas.
+
+***
+
+
+### LC 5.8 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Note in the following plot there are 3 points marked with dots along with:
+
+* The "best" fitting solid regression line `r if_else(is_latex_output(), "", "in blue")`
+* An arbitrarily chosen dotted `r if_else(is_latex_output(), "", "red")` line 
+* Another arbitrarily chosen dashed `r if_else(is_latex_output(), "", "green")` line
+
+```{r, fig.cap="Regression line and two others.", out.width="80%", echo=FALSE, message=FALSE}
+example <- tibble(
+  x = c(0, 0.5, 1),
+  y = c(2, 1, 3)
+)
+
+ggplot(example, aes(x = x, y = y)) +
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
+  geom_hline(yintercept = 2.5, col = "red", linetype = "dotted", size = 1) +
+  geom_abline(
+    intercept = 2, slope = -1, col = "forestgreen",
+    linetype = "dashed", size = 1
+  ) +
+  geom_point(size = 4)
+```  
+
+Compute the sum of squared residuals for each line and show that of these three lines, the regression line `r if_else(is_latex_output(), "", "in blue")` has the smallest value.
+
+**Solution**:  
+
+* The "best" fitting solid regression line `r if_else(is_latex_output(), "", "in blue")`: 
+
+$$
+\sum_{i=1}^{n}(y_i - \widehat{y}_i)^2 = (2.0-1.5)^2+(1.0-2.0)^2+(3.0-2.5)^2 = 1.5
+$$
+
+```{r}
+sum((c(2, 1, 3)-c(1.5,2,2.5))^2)
+```
+
+
+* An arbitrarily chosen dotted `r if_else(is_latex_output(), "", "red")` line: 
+
+$$
+\sum_{i=1}^{n}(y_i - \widehat{y}_i)^2 = (2.0-2.5)^2+(1.00-2.5)^2+(3.0-2.5)^2 = 2.75
+$$
+
+```{r}
+sum((c(2, 1, 3)-c(2.5,2.5,2.5))^2)
+```
+
+
+* Another arbitrarily chosen dashed `r if_else(is_latex_output(), "", "green")` line:
+
+$$
+\sum_{i=1}^{n}(y_i - \widehat{y}_i)^2 = (2.0-2.0)^2+(1.0-1.5)^2+(3.0-1.0)^2 = 4.25
+$$
+
+```{r}
+sum((c(2, 1, 3)-c(2,1.5,1))^2)
+```
+
+As calculated, $1.5 < 2.75 < 4.25$. Therefore, we show that the regression line in blue has the smallest value of the residual sum of squares.
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`

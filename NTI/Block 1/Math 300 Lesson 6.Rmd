@@ -1,0 +1,261 @@
+---
+title: "Math 300 NTI Lesson 6"
+subtitle: "group_by, mutate, and arrange"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Use the `group_by()` function to create aggregated data frames to use with other functions, in particular `summarize()`, to explore, explain, and visualize. 
+
+2. Use the `mutate()` function to create new variables in a data frame to use to explore, explain, and visualize.
+
+3. Use the `arrange()` function to sort data frames to explore, explain, and visualize. 
+
+## Reading 
+
+[Chapter 3.4 - 3.6](https://moderndive.com/3-wrangling.html#groupby)
+
+## Lesson 
+
+Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.
+
+Work through the learning checks LC3.5 - LC3.12.
+
++ We changed the scaffolded code method. We have `eval=FALSE` so that `R` does not try to evaluate the code chunk. They have to remove this and then complete the code.
+
++ It is important to note that the `group_by()` function doesn’t change data frames by itself. Rather it changes the meta-data, or data about the data, specifically the grouping structure. It is only after we apply the `summarize()` function that the data frame changes. The book does a good job explaining meta-data.
+
++ The `group_by()` can be used on more than two variables but they must be in the same call to `group_by()`. 
+
++ Using `arrange()` is straight forward expect the use of `desc()` within the `arrange()` call to sort in decreasing order. 
+
++ As a rough rule of thumb, as long as you are not losing original information that you might need later, it’s acceptable practice to overwrite existing data frames with updated ones.
+
++ LC 3.6 is difficult. Let them explore and wrestle with this question. The warning can be ignored. We will not experiment with the `.groups` option.
+
++ LC 3.12 is more difficult as we combined code. The default use of `geom_boxplot()` works for exploring data but we provided code on how to clean up the x-axis. Discuss this code if you want and have time. 
+
++ The use of `kable()` is only to have the output printed in a form that looks good. This is not something we need to present to the students. 
+
+
+### Setup  
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 3
+lc <- 4
+```
+
+```{r message=FALSE}
+library(nycflights13)
+library(ggplot2)
+library(dplyr)
+```
+
+
+### LC 3.5 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Recall from Chapter 2 when we looked at plots of temperatures by months in NYC. What does the standard deviation column in the `summary_monthly_temp` data frame, which we need to create from the code at the section 3.4, tell us about temperatures in New York City throughout the year?
+
+**Solution**: 
+
+```{r}
+# Code from the book
+summary_temp_by_month <- weather %>%
+  group_by(month) %>%
+  summarize(
+    mean = mean(temp, na.rm = TRUE),
+    std_dev = sd(temp, na.rm = TRUE)
+  )
+```
+
+
+```{r}
+# Output
+summary_temp_by_month
+```
+
+The standard deviation is a quantification of **spread** and **variability**. We
+see that the period in November, December, and January has the most variation in
+weather, so you can expect very different temperatures on different days in those months.
+
+### LC 3.6 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What code would be required to get the mean and standard deviation temperature for each day in 2013 for NYC?
+
+**Solution**: 
+
+```{r}
+summary(weather)
+```
+
+There is only one year 2013 so we don't need to group by it, we could but it would not change anything. 
+
+```{r}
+summary_temp_by_day <- weather %>%
+  group_by(month, day) %>%
+  summarize(
+    mean = mean(temp, na.rm = TRUE),
+    std_dev = sd(temp, na.rm = TRUE)
+  )
+```
+
+
+```{r}
+head(summary_temp_by_day)
+```
+
+
+Note: `group_by(day)` is not enough, because `day` is a value between 1-31. We need to `group_by(year, month, day)` or `group_by(month, day)`.
+
+### LC 3.7 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Recreate `by_monthly_origin`, but instead of grouping via `group_by(origin, month)`, group variables in a different order `group_by(month, origin)`. What differs in the resulting dataset?
+
+**Solution**: 
+
+```{r}
+by_origin_monthly <- flights %>% 
+  group_by(origin, month) %>% 
+  summarize(count = n())
+```
+
+
+```{r}
+head(by_origin_monthly)
+```
+
+
+
+
+
+```{r}
+by_monthly_origin <- flights %>%
+  group_by(month, origin) %>%
+  summarize(count = n()) 
+```
+
+```{r}
+head(by_monthly_origin)
+```
+
+In `by_monthly_origin` the `month` column is now first and the rows are sorted by `month` instead of origin. If you compare the values of `count` in `by_origin_monthly` and `by_monthly_origin` using the `View()` function, you'll see that the values are actually the same, just presented in a different order. 
+
+### LC 3.8 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How could we identify how many flights left each of the three airports for each `carrier`?
+
+**Solution**: We could summarize the count from each airport and carrier using the `n()` function, which *counts rows*.
+
+```{r, purl=FALSE,warning=FALSE,message=FALSE}
+count_flights_by_airport <- flights %>%
+  group_by(origin, carrier) %>%
+  summarize(count = n())
+```
+
+```{r}
+head(count_flights_by_airport,n=10)
+```
+
+Note: the `n()` function counts rows, whereas the `sum(VARIABLE_NAME)` function sums all values of a certain numerical variable `VARIABLE_NAME`.
+
+### LC 3.9 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How does the `filter` operation differ from a `group_by` followed by a `summarize`?
+
+**Solution**: 
+
+* `filter` picks out rows from the original dataset without modifying them, whereas
+* `group_by %>% summarize` computes summaries of numerical variables, and hence
+reports new values.
+
+### LC 3.10 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What do positive values of the `gain` variable in `flights` correspond to?  What about negative values?  And what about a zero value?
+
+**Solution**: 
+
+* Say a flight departed 20 minutes late, i.e. `dep_delay = 20`
+* Then arrived 10 minutes late, i.e. `arr_delay = 10`.
+* Then `gain = dep_delay - arr_delay = 20 - 10  = 10` is positive, so it "made up/gained time in the air."
+* 0 means the departure and arrival delay times were the same, so no time was made up in  the air. We see in most cases that the `gain` is near 0 minutes.
+
+
+### LC 3.11 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Could we create the `dep_delay` and `arr_delay` columns by simply subtracting `dep_time` from `sched_dep_time` and similarly for arrivals?  Try the code out and explain any differences between the result and what actually appears in `flights`.
+
+**Solution**: No because you can't do direct arithmetic on times. The difference in time between 12:03 and 11:59 is 4 minutes, but `1203-1159 = 44`. Plus there are time zones, departure and arrival times are in the local timezone, which cause problems with simple subtraction.
+
+```{r purl=FALSE}
+LC3.11<- flights %>%
+  mutate(time_gain=dep_time-arr_time,gain = dep_delay - arr_delay) %>%
+  select(air_time,dep_time,arr_time,time_gain,dep_delay,arr_delay, gain)
+```
+
+```{r}
+head(LC3.11)
+```
+
+
+### LC 3.12 (Objective 2)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What can we say about the distribution of `gain`?  Describe it in a few sentences using a boxplot and the `gain_summary` data frame values.
+
+**Solution**: We must create the data frame from the notes. We copied the code from the book, we had to copy and combine two chunks of code.
+
+```{r}
+gain_summary <- flights %>%
+  mutate(gain = dep_delay - arr_delay) %>%
+  summarize(
+    min = min(gain, na.rm = TRUE),
+    q1 = quantile(gain, 0.25, na.rm = TRUE),
+    median = quantile(gain, 0.5, na.rm = TRUE),
+    q3 = quantile(gain, 0.75, na.rm = TRUE),
+    max = max(gain, na.rm = TRUE),
+    mean = mean(gain, na.rm = TRUE),
+    sd = sd(gain, na.rm = TRUE),
+    missing = sum(is.na(gain))
+  )
+```
+
+```{r}
+gain_summary
+```
+
+```{r warning=FALSE}
+flights %>%
+  mutate(gain = dep_delay - arr_delay) %>%
+  ggplot(aes(x=1,y=gain)) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = NULL) +
+  theme(axis.title.x = element_blank()) +
+  theme_classic()
+```
+
+
+Most of the time the gain is a little above zero (the median is 7, meaning gain is above 0 at least 50% of the time) and between -50 and 50 minutes. There are some extreme cases however!
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`

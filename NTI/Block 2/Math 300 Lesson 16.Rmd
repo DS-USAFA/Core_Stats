@@ -1,0 +1,216 @@
+---
+title: "Math 300 NTI Lesson 16"
+subtitle: "Multiple Regression - Related Topics"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Find and interpret R-squared.
+
+2. Use R-squared to select the best model.
+
+3. Explain Simpson's paradox and confounding variables. 
+
+
+## Reading 
+
+[Chapter 6.3](https://moderndive.com/6-multiple-regression.html#mult-reg-related-topics)
+
+## Lesson 
+
+There are no learning checks for this lesson, so work through the code and ideas in the reading. 
+
++ The book discusses Occam's razor, which states that given the choice between a complex model and simple model pick the simple. This assumes similar performance. One way to measure performance is with R-squared. This is an internal measure of performance, it uses the data that was used to build the model. In a machine learning class, students can learn other ways to pick a model. 
+
++ R-squared always decreases when we add a variable. Adjusted R-squared puts in a penalty for adding a variable. This penalty is just a heuristic. Analysts often use adjusted R-squared instead of R-squared.   
+
++ We preface our interpretation with the statement, “taking into account all the other explanatory variables in our model” in this section. This means we have to treat the other variables as at a constant value even though collinearity in practice may not allow this. It is only from an interpretation point of view that we use that statement. 
+
++ A phenomenon known as Simpson’s Paradox, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups. The next lesson discusses this in more depth.  
+
+### Setup
+
+```{r message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(ISLR)
+``` 
+
+*Recreate the analysis done in the book.*
+
+```{r}
+model_2_interaction <- lm(average_sat_math ~ perc_disadvan * size, 
+                          data = MA_schools)
+get_regression_table(model_2_interaction)
+```
+
+```{r}
+model_2_parallel_slopes <- lm(average_sat_math ~ perc_disadvan + size, 
+                              data = MA_schools)
+get_regression_table(model_2_parallel_slopes)
+```
+
+In a future lesson we will use the p-value and confidence intervals to determine the statistical importance of an explanatory variable. 
+
+```{r}
+get_regression_summaries(model_2_interaction)
+```
+
+
+```{r}
+get_regression_summaries(model_2_parallel_slopes)
+```
+
+### R-squared  
+
+- Use R-squared to determine the model for the UT Austin teacher evaluation problem. (Objective 1 and 2)
+
+*Get the data*
+
+```{r}
+evals_ch6 <- evals %>%
+  select(ID, score, age, gender)
+```
+
+Let's look at 5 random rows of data.
+
+```{r}
+set.seed(941)
+evals_ch6 %>%
+  sample_n(size = 5)
+```
+
+
+- Interaction Model 
+
+In this model we allow a different slope and intercept for each gender. 
+
+```{r message=FALSE}
+ggplot(evals_ch6, aes(x = age, y = score, color = gender)) +
+  geom_point() +
+  labs(x = "Age", y = "Teaching Score", color = "Gender") +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw()
+```
+
+To get the model in `R`, we use the `*` which is not multiplication but an interaction term in the model formula.
+
+```{r}
+# Fit regression model:
+score_model_interaction <- lm(score ~ age * gender, data = evals_ch6)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(score_model_interaction)
+```
+
+
+*** 
+
+- Parallel Slopes Model 
+
+We will use the same data, but just build a different model.
+
+```{r}
+ggplot(evals_ch6, aes(x = age, y = score, color = gender)) +
+  geom_point() +
+  labs(x = "Age", y = "Teaching Score", color = "Gender") +
+  geom_parallel_slopes(se = FALSE) +
+  theme_bw()
+```
+
++ Notice that the line for females stops at the extremes of the observed data.
+
+```{r}
+# Fit regression model:
+score_model_parallel_slopes <- lm(score ~ age + gender, data = evals_ch6)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(score_model_parallel_slopes)
+```
+
+Now let's use R-squared to pick the model. We will use `rbind()` and `tidyverse` commands to put the results in a nice form. 
+
+```{r}
+get_regression_summaries(score_model_interaction) %>%
+  rbind(get_regression_summaries(score_model_parallel_slopes)) %>%
+  mutate(model=c("Interaction","Parallel Slopes")) %>%
+  select(model,r_squared,adj_r_squared)
+```
+
+Neither model is great since the R-squared is so small, we are only explaining 5 percent of the variation in the teacher score with our model. However, the more complex interaction model is better than the parallel slope model.  
+
+### Simpson's paradox
+
+It is key in modeling to account for lurking variable. This [site](https://towardsdatascience.com/simpsons-paradox-and-interpreting-data-6a0443516765) Simpson's paradox. 
+
+Here is a nice example from the `palmerpenguins` data package.
+
+```{r}
+library(palmerpenguins)
+```
+
+```{r}
+penguin_df<- 
+  palmerpenguins::penguins %>%
+  na.omit()
+```
+
+```{r}
+head(penguin_df)
+```
+
+```{r message=FALSE}
+penguin_df %>%
+  ggplot(aes(x=bill_length_mm, y=bill_depth_mm)) +
+  geom_point() + 
+  labs(x="Length", y="Depth", title="Bill Depth as a function of Bill Length") +
+  theme_classic() +
+  geom_smooth(method = "lm", se = FALSE) 
+```
+
+From this we might as well conclude that the longer the bill, the less deep it is. However, if you drill down from the population level to the species level we see the opposite result.
+
+```{r message=FALSE}
+penguin_df %>%
+  ggplot(aes(x=bill_length_mm, y=bill_depth_mm, 
+             color=species)) +
+  geom_point() + 
+  labs(x="Length", y="Depth", title="Bill Depth as a function of Bill Length") +
+  theme_classic() +
+  geom_smooth(method = "lm", se = FALSE) 
+```
+
+Explain these results in terms of a confounding variable.
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `skimr` package version: `r packageVersion("skimr")`
+  * `palmerpenguins` package version: `r packageVersion("palmerpenguins")`  
+  * `moderndive` package version: `r packageVersion("moderndive")`
