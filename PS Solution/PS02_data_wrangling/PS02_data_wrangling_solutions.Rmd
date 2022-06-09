@@ -1,0 +1,169 @@
+
+---
+title: 'Problem Set 02: Data Wrangling Solutions'
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document: default
+  html_document:
+    theme: lumen
+---
+
+## Documentation 
+
+None.
+
+### R Packages 
+
+Loading the following packages for this problem set:
+```{r warning = F, message = F}
+library(ggplot2)
+library(dplyr)
+```
+
+### The data
+Run the following to load and take a `glimpse` of the data:
+```{r eval = F}
+data(txhousing)
+glimpse(txhousing)
+```
+
+These data are about housing in Texas. Each row is monthly data for a given city in Texas in a given year. There are multiple years of data for each city. 
+
+***
+
+## Exercise 1
+
+After running all the code above in the console, take a look at the data using `str()`, `glimpse()`, or `View()`. In your report include that last 10 lines of the data file. 
+
+```{r}
+tail(txhousing,n=10)
+```
+
+***
+
+## Exercise 2
+Take a look at the variable descriptions by typing ?txhousing into the **console**. What is the `inventory` variable in this data set?
+
+**Answer: The number of months of inventory; the amount of time it would take to sell all current listings at current pace of sales.**
+
+***
+
+## Exercise 3
+Write a code chunk to remove the inventory variable. Save the results in a data frame called `txhousing`. Confirm in the data viewer that the variable has been removed. 
+
+```{r }
+txhousing <- txhousing %>% 
+  select(-inventory)
+```
+
+***
+
+## Exercise 4
+Make a data set called `midland_sub` that includes data only from the city of Midland in 2007 & 2014. Print the first 3 rows of `midland_sub`.
+
+```{r }
+midland_sub <- txhousing %>% filter(city == "Midland", year == 2007 | year == 2014)
+```
+
+```{r}
+head(midland_sub,n=3)
+```
+
+***
+
+## Exercise 5
+Add a column **to the `midland_sub` data set** called `prct_sold` that calculates the percentage of `listings` that were `sold` (`sales/listings * 100`). Be sure to **save** the results also as a data frame called `midland_sub`. Print the first 3 rows of `midland_sub`.
+
+```{r }
+midland_sub <- midland_sub %>% 
+  mutate(prct_sold = sales/listings *100) 
+```
+
+```{r}
+head(midland_sub,n=2)
+```
+
+
+***
+
+## Exercise 6
+Calculate the **median** percentage of listings that were sold in Midland **in each month of the year** based on your `midland_sub` data set. Save the results of the calculation in an data frame called `midland_summary`. 
+
+
+```{r }
+midland_summary <- midland_sub %>% 
+  filter(year==2014) %>%
+  group_by(month) %>%
+  summarize(median_prct_sold = median(prct_sold))
+```
+
+```{r}
+midland_summary
+```
+
+***
+
+## Exercise 7
+Arrange the `midland_summary` in `desc`ending order based on the average percentage of listings, so you can see **which month** had the greatest **average** percentage of listings sold.  You do not need to save the results. 
+
+```{r }
+midland_summary  %>% 
+  arrange(desc(median_prct_sold))
+```
+
+***
+
+
+## Exercise 8
+In August of 2010, what city had the fewest houses listed for sale? (show code and text; do not print out all 46 rows of the data frame.)
+
+
+**Answer: San Marcos**
+
+```{r eval = F}
+txhousing %>% 
+  filter(year == 2010, month == 8) %>%
+  arrange(listings) %>%
+  head()
+```
+
+***
+
+## Exercise 9
+In 2013, in which month were the most houses sold in Texas? (show code and text)
+
+**Answer: August**
+
+
+```{r }
+txhousing %>% 
+  filter(year == 2013) %>%
+  group_by(month) %>%
+  summarize(top_sales = max(sales)) %>%
+  arrange(desc(top_sales))
+```
+
+
+***
+
+## Exercise 10
+
+Generate a single table that shows the total number of houses sold in **Galveston** in **2009 and 2010** (total over the entire period), & the total number of houses sold in **Amarillo** in **2009 and 2010** (total over the entire period). This calculation requires a number of steps, so it might help you to first write out on paper the different steps you will need to take. That will help you set out a "blueprint" for tackling the problem.
+
+
+```{r }
+txhousing %>% 
+  filter(city == "Galveston"| city == "Amarillo") %>%
+  filter(year == 2009 | year == 2010) %>%
+  group_by(city) %>%
+  summarize(total_sales = sum(sales))
+```
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `dplyr` package version: `r packageVersion("dplyr")`
+  * `ggplot2` package version: `r packageVersion("ggplot2")`
+
