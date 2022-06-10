@@ -1,0 +1,2 @@
+"0","virtual_resampled_means %>% "
+"0","  summarize(mean_of_means = mean(mean_year))"

@@ -1,0 +1,7 @@
+"0","#Set a seed for reproducibility of results. "
+"0","set.seed(84337)"
+"0","# Samples of size 50 repeated 1000 times"
+"0","virtual_resampled_means <- pennies_sample %>% "
+"0","  rep_sample_n(size = 50, replace = TRUE, reps = 1000) %>% "
+"0","  group_by(replicate) %>% "
+"0","  summarize(mean_year = mean(year))"

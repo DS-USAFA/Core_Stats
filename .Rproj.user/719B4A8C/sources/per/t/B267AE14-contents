@@ -1,0 +1,185 @@
+---
+title: "Math 300 NTI Lesson 23"
+subtitle: "Bootstrap Introduction"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explain the concept of a bootstrap distribution using proper terminology and notation.  
+
+2. Use `R`, to find the bootstrap distribution of the sample statistic.
+
+
+## Reading 
+
+[Chapter 8 - 8.2](https://moderndive.com/8-confidence-intervals.html
+
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning checks LC 8.1 - LC 8.2.
+
++ This is a great deal of material. We think it is worth going through the bootstrap example from the reading and talking about the steps. Have the students recreate the notes.
+
++ The bootstrap samples with replacement. You must sample as you did with the original sample. If you sampled 50 data points in the original sample, sample 50 in the bootstrap sample.
+
++ The key idea of the bootstrap is that it gives an estimate of the standard error of a point estimate.  
+
++ The bootstrap assumes that original sample is representative of the population. 
+
+***
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(moderndive)
+```
+
+### Re-create Ideas from Reading
+
+Here is the original data.
+
+```{r}
+head(pennies_sample)
+```
+
+
+
+```{r}
+pennies_sample %>% 
+  summarize(mean_year = mean(year))
+```
+
+```{r}
+ggplot(pennies_sample, aes(x = year)) +
+  geom_histogram(binwidth = 10, color = "white") +
+  theme_classic()
+```
+
+
+In our sample, the average year of minting was 1995.44. It is not an integer since it is an average. 
+
+- What is the population of interest? 
+- What is the population parameter?
+- What is the point estimate?
+
+Now if we sampled with replacement from this sample, we would get a bootstrap sample. this was done 35 times.
+
+```{r}
+head(pennies_resamples)
+```
+
+- Explain this tibble. 
+- Is it tidy? 
+- How was the data obtained? 
+- What is a bootstrap sample in this tibble?
+
+```{r}
+pennies_resamples %>%
+  filter(replicate==1) %>%
+  ggplot(aes(x = year)) +
+  geom_histogram(binwidth = 10, color = "white") +
+  theme_classic()
+```
+
+- Compare the above histogram with the following histogram. What is the difference?
+
+```{r}
+pennies_resamples %>% 
+  group_by(name) %>% 
+  summarize(mean_year = mean(year)) %>%
+  ggplot(aes(x = mean_year)) +
+  geom_histogram(binwidth = 1, color = "white", boundary = 1990) +
+  theme_classic()
+```
+
+Now let's use the computer to find the bootstrap distribution. (Objective 2)
+
+```{r}
+head(pennies_sample)
+```
+
+```{r}
+#Set a seed for reproducibility of results. 
+set.seed(84337)
+# Samples of size 50 repeated 1000 times. This is the bootstrap distribution of the mean
+virtual_resampled_means <- pennies_sample %>% 
+  rep_sample_n(size = 50, replace = TRUE, reps = 1000) %>% 
+  group_by(replicate) %>% 
+  summarize(mean_year = mean(year))
+```
+
+
+```{r}
+head(virtual_resampled_means)
+```
+
+```{r}
+# The bootstrap distribution
+ggplot(virtual_resampled_means, aes(x = mean_year)) +
+  geom_histogram(binwidth = 1, color = "white", boundary = 1990) +
+  labs(x = "sample mean") +
+  theme_classic()
+```
+
+A couple of things to note is that it looks normal, by the CLT, and it is centered on the original sample mean. 
+
+```{r}
+virtual_resampled_means %>% 
+  summarize(mean_of_means = mean(mean_year))
+```
+
+
+***
+
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 8
+lc <- 0
+```
+
+### LC 8.1 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the chief difference between a bootstrap distribution and a sampling distribution?
+
+**Solution**:
+
+A bootstrap sample is a sample obtained from the original sample by sampling with replacement. The original sample is used as a estimate of the population. Thus the bootstrap distribution is obtained by generating bootstrap samples and finding the point estimate from each bootstrap sample. The sampling distribution is what you would obtain if you repeated sampling from the population and found the point estimated on each sample.
+
+### LC 8.2 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Looking at the bootstrap distribution for the sample mean in Figure 8.14, between what two values would you say *most* values lie?
+
+**Solution**:
+
+*Most* values lie in the range of 1990 to 2000. This concept will lead us to a confidence interval.  
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+

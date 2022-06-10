@@ -1,0 +1,6 @@
+"0","pennies_resamples %>% "
+"0","  group_by(name) %>% "
+"0","  summarize(mean_year = mean(year)) %>%"
+"0","  ggplot(aes(x = mean_year)) +"
+"0","  geom_histogram(binwidth = 1, color = ""white"", boundary = 1990) +"
+"0","  theme_classic()"
