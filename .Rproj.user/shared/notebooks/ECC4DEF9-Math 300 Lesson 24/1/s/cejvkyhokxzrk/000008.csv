@@ -1,0 +1,4 @@
+"0","bootstrap_dist %>%"
+"0","  summarize(center=mean(ave),"
+"0","            lower=center-sd(ave)*qnorm(.975),"
+"0","            upper=center+sd(ave)*qnorm(.975))"

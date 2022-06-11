@@ -1,0 +1,129 @@
+---
+title: "Math 300 Lesson 24 Notes"
+subtitle: "Understanding Confidence Intervals"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Explain how to construct a confidence interval using both the percentile method and the standard error method including assumptions.    
+
+2. Explain the impact of changing the confidence level of the resulting confidence interval. 
+
+
+## Reading 
+
+[Chapter 8.3](https://moderndive.com/8-confidence-intervals.html#ci-build-up)
+
+
+## Lesson 
+
+Work through the learning checks LC 8.3 - LC 8.4.
+
++ All confidence intervals have the same interpretation. It is the construction that may differ.
+
++ The reason we use an interval is because an point estimate has variation. Once we know the sampling distribution, we can construct an interval. Using the bootstrap gives us an estimate of the sampling distribution of the point estimate. 
+
++ We are going to do a look ahead and use `R` to construct the percentile method confidence interval.  
+
++ The percentile method is easier to understand but tends to be biased. There are many methods to adjust for this but for the purpose of this course both methods are acceptable. 
+
+***
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(moderndive)
+```
+
+
+### Review
+
+As a review, let's construct the bootstrap distribution of the sample mean for our pennies data. This requires use to use our skills on wrangling data frames.
+
+```{r}
+head(pennies_sample)
+```
+
+Create a bootstrap distribution of the sample mean.
+
+```{r}
+set.seed(52249)
+# bootstrap_dist <- ____________ %>%
+#   rep_sample_n(size = ______, replace = ___________, reps = ______) %>%
+#   group_by(______) %>%
+#   summarize(____________)
+```
+
+```{r}
+# bootstrap_dist %>%
+#   ggplot(aes(x=__________)) +
+#   geom_histogram(binwidth = 1, 
+#                  color = "black", 
+#                  boundary = 1990, 
+#                  fill = "cyan") +
+#   theme_classic()
+```
+
+```{r}
+# Percentil Method
+# bootstrap_dist %>%
+#   summarize(center=mean(ave),
+#             lower=quantile(ave,probs=_______),
+#             upper=quantile(ave,probs=________))
+```
+
+This distribution tends to be a little skewed to the right. 
+
+The standard error method.
+
+```{r}
+# Standard Error Method
+# bootstrap_dist %>%
+#   summarize(center=_________,
+#             lower=_______-_______*qnorm(______),
+#             upper=_______+______*qnorm(_______))
+```
+
+
+### LC 8.3 (Objective 1)
+
+**(LC 8.3)** What condition about the bootstrap distribution must be met for us to be able to construct confidence intervals using the standard error method?
+
+**Solution**: 
+
+
+
+### LC 8.4 (Objective 2)
+
+**(LC 8.4)** Say we wanted to construct a 68% confidence interval instead of a 95% confidence interval for $\mu$. Describe what changes are needed to make this happen. Hint: we suggest you look at Appendix A.2 on the normal distribution.
+
+**Solution**: 
+
+
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+

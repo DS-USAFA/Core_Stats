@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Reading 
 
-[Chapter 8 - 8.2](https://moderndive.com/8-confidence-intervals.html
+[Chapter 8 - 8.2](https://moderndive.com/8-confidence-intervals.html)
 
 
 ## Lesson 

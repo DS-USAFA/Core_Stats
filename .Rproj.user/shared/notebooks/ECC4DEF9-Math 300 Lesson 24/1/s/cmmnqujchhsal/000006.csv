@@ -1,0 +1,4 @@
+"0","bootstrap_dist %>%"
+"0","  ggplot(aes(x=ave)) +"
+"0","  geom_histogram(binwidth = 1, color = ""black"", boundary = 1990, fill = ""cyan"") +"
+"0","  theme_classic()"
