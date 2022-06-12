@@ -1,0 +1,10 @@
+"0","pennies_sample %>% "
+"0","  specify(formula=year~NULL) %>% "
+"0","  generate(reps = 1000) %>% "
+"0","  calculate(stat = ""mean"") %>%"
+"0","  head()"
+"2","Setting `type = ""bootstrap""` in `generate()`.
+"
+"1","Response: year (numeric)"
+"1","
+"

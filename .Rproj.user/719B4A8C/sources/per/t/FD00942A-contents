@@ -1,0 +1,220 @@
+---
+title: "Math 300 NTI Lesson 25"
+subtitle: "Constructing Confidence Intervals"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. construct bootstrap percentile and standard error confidence intervals for a single mean or median using the `infer` package.
+
+## Reading 
+
+[Chapter 8.4](https://moderndive.com/8-confidence-intervals.html#bootstrap-process)
+
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning check LC 8.5.
+
++ We will be using the `infer` package to create the bootstrap confidence intervals. Last lesson we used `rep_sample_n()`. The `infer` package will be used for inference in the rest of the course.
+
++ The `infer` package gives a framework to think about and conduct inference. It makes hypothesis testing and confidence interval construction more structured and puts computational resources at the center versus mathematical tools.
+
++ the `infer` package uses the verbs `specify()`, `generate()`, `calculate()`, and `visualize()` to complete the construction process.
+
+
+***
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(infer)
+```
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 8
+lc <- 4
+```
+
+### Review
+
+As a review, let's construct the bootstrap distribution of the sample mean for our pennies data. This requires use to use our skills on wrangling data frames.
+
+```{r}
+head(pennies_sample)
+```
+
+
+```{r}
+set.seed(52249)
+bootstrap_dist<-pennies_sample %>%
+  rep_sample_n(size = 50, replace = TRUE, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarize(ave=mean(year))
+```
+
+```{r}
+bootstrap_dist %>%
+  ggplot(aes(x=ave)) +
+  geom_histogram(binwidth = 1, color = "black", boundary = 1990, fill = "cyan") +
+  theme_classic()
+```
+
+```{r}
+bootstrap_dist %>%
+  summarize(center=mean(ave),
+            lower=quantile(ave,probs=0.25),
+            upper=quantile(ave,probs=.975))
+```
+
+The standard error method.
+
+```{r}
+bootstrap_dist %>%
+  summarize(center=mean(ave),
+            lower=center-sd(ave)*qnorm(.975),
+            upper=center+sd(ave)*qnorm(.975))
+```
+
+### Steps from the `infer` package
+
+- First specify the response variable, and explanatory variables if present. We like to use the `formula` option.
+
+```{r}
+pennies_sample %>%
+  specify(formula=year~NULL) %>%
+  head()
+```
+
+It is similar to using `select()` but note the meta data has also changed.
+
+- Generate replicates
+
+```{r}
+pennies_sample %>% 
+  specify(formula=year~NULL) %>% 
+  generate(reps = 1000, type = "bootstrap") %>%
+  head()
+```
+
+Compare this code with that using `rep_sample_n()`.
+
+- Find the sample statistic for each replicate.
+
+```{r}
+pennies_sample %>% 
+  specify(formula=year~NULL) %>% 
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "mean") %>%
+  head()
+```
+
+- Using results of bootstrap distribution
+ 
+```{r}
+boot_dist_mean <- pennies_sample %>% 
+  specify(formula=year~NULL) %>% 
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "mean")
+```
+
+```{r}
+(percentile_ci <- boot_dist_mean %>% 
+  get_confidence_interval(level = 0.95, type = "percentile"))
+```
+
+
+```{r}
+# Visualize the results
+visualize(boot_dist_mean) +
+  shade_confidence_interval(endpoints = percentile_ci)
+```
+
+Or if we want the standard error method.
+
+```{r}
+(mean_pennies <- pennies_sample %>%
+  summarize(ave=mean(year)) %>%
+  pull())
+```
+
+
+```{r}
+(standard_error_ci <- boot_dist_mean %>% 
+  get_confidence_interval(type = "se", point_estimate = mean_pennies))
+```
+
+
+### LC 8.5 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Construct a 95% confidence interval for the *median* year of minting of *all* US pennies? Use the percentile method and, if appropriate, then use the standard-error method.
+
+**Solution**: 
+
+Using the percentile method:
+
+```{r}
+set.seed(539)
+bootstrap_distribution <- pennies_sample %>%
+  specify(formula = year ~ NULL) %>%
+  generate(reps = 1000, type="bootstrap") %>%
+  calculate(stat = "median")
+```
+
+
+```{r}
+percentile_ci <- bootstrap_distribution %>%
+  get_confidence_interval(level = 0.95, type = "percentile")
+```
+
+
+```{r}
+percentile_ci
+```
+
+The standard-error method is not appropriate, because the bootstrap distribution is not bell-shaped:
+
+```{r}
+visualize(bootstrap_distribution)
+```
+
+Let's visualize the interval.
+
+```{r}
+visualize(bootstrap_distribution) + 
+  shade_confidence_interval(endpoints = percentile_ci) +
+  theme_classic()
+```
+
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+  * `infer` package version: `r packageVersion("infer")`
+

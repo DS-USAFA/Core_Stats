@@ -1,0 +1,4 @@
+"0","boot_dist_mean <- pennies_sample %>% "
+"0","  specify(formula=year~NULL) %>% "
+"0","  generate(reps = 1000, type = ""bootstrap"") %>% "
+"0","  calculate(stat = ""mean"")"

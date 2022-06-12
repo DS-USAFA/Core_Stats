@@ -1,0 +1,3 @@
+"0","# Visualize the results"
+"0","visualize(boot_dist_mean) +"
+"0","  shade_confidence_interval(endpoints = percentile_ci)"
