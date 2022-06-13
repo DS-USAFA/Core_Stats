@@ -1,3 +1,4 @@
+
 ---
 title: "Problem Set 05: Sampling (30 pts)"
 subtitle: "Authorized Resources: Anyone and anything."

@@ -1,12 +1,11 @@
 ---
-ttitle: 'Problem Set 04: Multiple Linear Regression Solutions'
+title: 'Problem Set 04: Multiple Linear Regression Solutions'
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
   pdf_document: default
   html_document:
     theme: lumen
-    df_print: kable
 ---
 
 ```{r, include=FALSE}
@@ -14,6 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE, fig.width = 16/2, fig.height = 9/2)
 ```
 
+## Documentation: None
 
 # Introduction  
 
