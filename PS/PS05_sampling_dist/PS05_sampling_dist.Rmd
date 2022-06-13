@@ -62,8 +62,7 @@ Fill in your answers to the exercises below with a corresponding exercise header
 First load the necessary packages:
 
 ```{r message=FALSE,warning=FALSE}
-library(ggplot2)
-library(dplyr)
+library(tidyverse)
 library(forcats)
 library(moderndive)
 ```
@@ -299,7 +298,6 @@ set.seed(84)
   * `r R.version.string`
   * `tidyverse` package version: `r packageVersion("tidyverse")`
   * `moderndive` package version: `r packageVersion("moderndive")`
-  * `infer` package version: `r packageVersion("infer")`
   * `forcats` package version: `r packageVersion("forcats")`
   
 [//]: (students- please do not delete anything below this line!) 

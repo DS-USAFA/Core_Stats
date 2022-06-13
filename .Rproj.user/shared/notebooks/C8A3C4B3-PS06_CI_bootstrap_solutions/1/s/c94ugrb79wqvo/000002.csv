@@ -1,0 +1,2 @@
+"0","gss_sample %>%"
+"0","  summarize(prob=mean(race==""POC""))"
