@@ -1,0 +1,2 @@
+"0","percentile_ci_1 <- bootstrap_dist1 %>% "
+"0","  get_confidence_interval(level = 0.90, type = ""percentile"")"

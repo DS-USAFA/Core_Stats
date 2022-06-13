@@ -1,0 +1,249 @@
+---
+title: "Math 300 Lesson 26 Notes"
+subtitle: "Interpreting Confidence Intervals"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Correctly interpret a confidence interval to include identifying incorrect statements.  
+
+2. Explain the factors that impact the width of a confidence interval.  
+
+## Reading 
+
+[Chapter 8.5](https://moderndive.com/8-confidence-intervals.html#one-prop-ci)
+
+
+## Lesson 
+
+There are no learning checks for this lesson. 
+
++ The interpretation of the confidence interval is subtle because the 95% coverage relates to process. If we were to repeat the data collection process and confidence interval construction, the coverage relates to how often these intervals contain the true population parameter. In practice we don't know the true population parameter and we don't repeat the entire process.
+
++ We will use a simulation to help us understand the confidence interval. We will use a proportion instead of a mean. Pay attention to the code used with the `infer` package. 
+
+***
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(moderndive)
+library(infer)
+```
+
+
+### Understanding confidence interval.
+
+Interpretation of a confidence interval relates to the entire process of collecting data and building a confidence interval. In practice we do this process only once. However, in a simulation we can repeat the process. We will do this in this lesson.
+
+Let's use the bin of red and white balls. The population is a set of 2400 balls where 900 are red and 1500 are white. We already know more than we would in practice since we have a census.
+
+```{r}
+# The population data
+head(bowl)
+```
+
+Let's find the population summary numbers.
+
+
+```{r}
+bowl %>%
+  summarize(red=mean(color=="red"),total=n(),num_red=sum(color=="red"))
+```
+
+This information will give us knowledge about the population that is not known in practice. 
+
+Let's take a sample of size 100 from the population.
+
+```{r}
+set.seed(911)
+sample1<-bowl %>%
+    rep_sample_n(size = 100, reps = 1, replace = FALSE)
+```
+
+
+
+```{r}
+sample1 %>%
+  summarize(red=mean(color=="red"),total=n(),num_red=sum(color=="red"))
+```
+
+In this sample we see that we have 42 red balls out of 100. Why is this not .375?
+
+Let's construct a 90% confidence interval. Pay attention options used in each function call.
+
+
+```{r}
+(bootstrap_dist1<-sample1 %>%
+      specify(formula = color ~ NULL, success = "red") %>%
+      generate(reps = 1000, type = "bootstrap") %>%
+      calculate(stat = "prop"))
+```
+
+And now the confidence interval.
+
+```{r}
+percentile_ci_1 <- bootstrap_dist1 %>% 
+  get_confidence_interval(level = 0.90, type = "percentile")
+```
+
+
+```{r}
+percentile_ci_1
+```
+
+- Interpret this confidence interval.
+
+**Answer:**
+
+
+
+- What is wrong with the following statement?
+
+*There is a 90% probability that the true population proportion of red balls is between 0.34 and 0.5*
+
+**Answer:**
+
+
+
+***
+
+Notice that the above confidence interval captured the true mean. Repeat the process again.
+
+```{r}
+# Complete the code
+# bowl %>%
+#     rep_sample_n(size = _______, reps = 1, replace = __________) %>%
+#     specify(formula = color ~ NULL, success = "________") %>%
+#     generate(reps = 1000, type = "__________") %>%
+#     calculate(stat = "________") %>% 
+#     get_confidence_interval(level = _________, type = "____________")
+```
+
+Notice that this interval also included the true value but it was a different interval. Again, let's repeat the process.
+
+
+```{r}
+# Add code here
+```
+
+We could just keep doing a cut and paste, but let's write a function that will automate this process. You are not expected to generate this code but it is presented if you are interesting in learning about more sophisticated coding in `R`.
+
+First we write a function that 
+
+```{r}
+# Function to find a confidence interval
+  ci_pipeline <- function(sample_data) {
+    sample_data %>%
+      specify(formula = color ~ NULL, success = "red") %>%
+      generate(reps = 1000, type = "bootstrap") %>%
+      calculate(stat = "prop") %>%
+      get_confidence_interval(level = 0.90, type = "percentile") %>%
+      mutate(mid_point=(upper_ci+lower_ci)/2)
+  }
+```
+
+Now we just need to repeat the sampling process and apply our function to each sample.
+
+```{r cache=TRUE}
+set.seed(9073)
+bowl %>%
+  rep_sample_n(size = 100, reps = 100, replace = FALSE) %>%
+  group_by(replicate) %>%
+  nest() %>%
+  mutate(bootstraps = map(data, ci_pipeline)) %>%
+  unnest(bootstraps) %>%
+  mutate(captured = lower_ci <= 0.375 & 0.375 <= upper_ci) -> sim_cis
+```
+
+```{r}
+head(sim_cis)
+```
+
+We can find out how many of the confidence intervals included the true proportion of red balls. It should be around 90.
+
+```{r}
+sim_cis %>%
+  ungroup() %>%
+  summarize(coverage=sum(captured))
+```
+
+This means that 89 out of the 100 simulated confidence intervals included the true population proportion. Why is it not 90?
+
+Let's plot all the intervals.
+
+```{r warning=FALSE,message=FALSE}
+ggplot(sim_cis) +
+  geom_segment(aes(
+    y = replicate, yend = replicate, x = lower_ci, xend = upper_ci,
+    alpha = factor(captured, levels = c("TRUE", "FALSE"))
+  )) +
+  geom_point(
+    aes(
+      x = mid_point, y = replicate,
+      alpha = factor(captured, levels = c("TRUE", "FALSE"))
+    ),
+    show.legend = FALSE, size = 1
+  ) +
+  labs(
+    x = expression("Proportion of red balls"), y = "Confidence interval number",
+    alpha = "Captured"
+  ) +
+  geom_vline(xintercept = 0.375, color = "red") +
+  coord_cartesian(xlim = c(0.1, 0.7)) +
+  theme_light() +
+  theme(
+    panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank(),
+    panel.grid.minor.x = element_blank()
+  )
+```
+
+- Interpret this plot in terms of a confidence interval.
+
+***
+
+What happens to width of a confidence interval if 
+
+- the sample size is larger?
+
+**Answer:**
+
+
+
+
+- the confidence level is larger?
+
+**Answer:**
+
+
+
+
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+  * `infer` package version: `r packageVersion("infer")`
+

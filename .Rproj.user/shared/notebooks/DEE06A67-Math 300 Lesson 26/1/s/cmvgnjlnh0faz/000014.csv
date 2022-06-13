@@ -1,0 +1,8 @@
+"0","set.seed(9073)"
+"0","bowl %>%"
+"0","  rep_sample_n(size = 100, reps = 100, replace = FALSE) %>%"
+"0","  group_by(replicate) %>%"
+"0","  nest() %>%"
+"0","  mutate(bootstraps = map(data, ci_pipeline)) %>%"
+"0","  unnest(bootstraps) %>%"
+"0","  mutate(captured = lower_ci <= 0.375 & 0.375 <= upper_ci) -> sim_cis"

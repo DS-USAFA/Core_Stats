@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. construct bootstrap percentile and standard error confidence intervals for a single mean or median using the `infer` package.
+1. Construct bootstrap percentile and standard error confidence intervals for a single mean or median using the `infer` package.
 
 ## Reading 
 

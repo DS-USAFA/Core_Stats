@@ -1,0 +1,7 @@
+"0","(bootstrap_dist1<-sample1 %>%"
+"0","      specify(formula = color ~ NULL, success = ""red"") %>%"
+"0","      generate(reps = 1000, type = ""bootstrap"") %>%"
+"0","      calculate(stat = ""prop""))"
+"1","Response: color (factor)"
+"1","
+"
