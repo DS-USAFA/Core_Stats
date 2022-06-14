@@ -1,0 +1,5 @@
+"0","set.seed(45678)"
+"0","bootstrap_dist<-bowl_sample_1 %>%"
+"0","  specify(color~NULL,success=""red"") %>%"
+"0","  generate(reps=1000,type=""bootstrap"") %>%"
+"0","  calculate(stat=""prop"")"

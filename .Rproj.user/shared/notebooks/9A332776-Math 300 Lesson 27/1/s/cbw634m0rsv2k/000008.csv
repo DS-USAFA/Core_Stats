@@ -1,0 +1,2 @@
+"0","bootstrap_distribution_yawning %>%"
+"0","  summarize(ave=mean(stat))"

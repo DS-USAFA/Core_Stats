@@ -1,7 +1,7 @@
 ---
 title: "Math 300 Lesson 26 Notes"
 subtitle: "Interpreting Confidence Intervals"
-author: "Professor Bradley Warner"
+author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
   pdf_document:
