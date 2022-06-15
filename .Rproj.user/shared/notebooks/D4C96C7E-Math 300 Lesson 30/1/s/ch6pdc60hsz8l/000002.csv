@@ -1,0 +1,3 @@
+"0","obs_value <- promotions %>%"
+"0","  specify(formula=decision~gender,success = ""promoted"") %>%"
+"0","  calculate(stat=""diff in props"",order=c(""male"",""female""))"

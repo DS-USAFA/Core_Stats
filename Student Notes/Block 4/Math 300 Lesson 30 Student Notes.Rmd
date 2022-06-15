@@ -1,0 +1,165 @@
+---
+title: "Math 300 Lesson 30 Notes"
+subtitle: "Conducting Hypothesis Tests"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Correctly use terminology and notation of hypothesis testing.     
+
+2.  Using the `infer` package, conduct a hypothesis test and interpret the results.
+
+3. Compare and contrast confidence intervals and hypothesis tests.
+
+
+
+## Reading 
+
+[Chapter 9.2 - 9.3](https://moderndive.com/9-hypothesis-testing.html#understanding-ht)
+
+
+## Lesson 
+
+Work through the learning checks LC 9.1 - LC 9.4.
+
++ Spend time on the terminology. There are many new terms.
+
++ Try to write your own code for hypothesis tests and confidence from scratch using the `infer` package.  
+
+***
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(infer)
+library(moderndive)
+library(nycflights13)
+library(ggplot2movies)
+```
+
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 9
+lc <- 0
+```
+
+### LC 9.1 (Objective 2)
+
+**(LC 9.1)** Why does the following code produce an error? In other words, what about the response and predictor variables make this not a possible computation with the `infer` package?
+
+```{r, eval=FALSE}
+library(moderndive)
+library(infer)
+null_distribution_mean <- promotions %>%
+  specify(formula = decision ~ gender, success = "promoted") %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "diff in means", order = c("male", "female"))
+```
+
+**Solution**: 
+
+### LC 9.2 (Objective 1)
+
+**(LC 9.2)** Why are we relatively confident that the distributions of the sample proportions will be good approximations of the population distributions of promotion proportions for the two genders?
+
+**Solution**:  
+
+
+
+### LC 9.3 (Objective 1)
+
+**(LC 9.3)** Using the definition of _p-value_, write in words what the $p$-value represents for the hypothesis test comparing the promotion rates for males and females.
+
+**Solution**:  
+
+
+
+### LC 9.4 (Objective 1)
+
+**(LC 9.4)** Describe in a paragraph how we used Allen Downey's diagram to conclude if a statistical difference existed between the promotion rate of males and females using this study.
+
+**Solution**:  
+
+ 
+
+***
+
+### Using `infer`
+
+Use `infer` to create a hypothesis and confidence interval for the promotion data set. Try to not use the book but using the following figure and the help menu. The data object is `promotions`.
+
+![](ht.png)
+
+```{r}
+head(promotions)
+```
+
+- Find null distribtuion
+
+```{r}
+
+```
+
+- Visualize the results
+
+```{r}
+
+```
+
+- Use code to get observed value.
+
+```{r}
+
+```
+
+
+- Get p-value
+
+```{r}
+
+```
+
+Find bootstrap percentile confidence interval
+
+- Get bootstrap distribution
+
+```{r}
+
+```
+
+- Get confidence interval
+
+```{r}
+
+```
+
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+  * `infer` package version: `r packageVersion("infer")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`
+  * `ggplot2movies` package version: `r packageVersion("ggplot2movies")`
+

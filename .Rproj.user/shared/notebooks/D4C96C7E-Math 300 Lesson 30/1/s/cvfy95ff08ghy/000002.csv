@@ -1,0 +1,5 @@
+"0","boot_dist <- promotions %>%"
+"0","  specify(formula=decision~gender,success = ""promoted"") %>%"
+"0","#  hypothesise(null=""independence"") %>%"
+"0","  generate(reps = 1000, type = ""bootstrap"") %>%"
+"0","  calculate(stat=""diff in props"",order=c(""male"",""female""))"
