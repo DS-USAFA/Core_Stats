@@ -1,0 +1,4 @@
+"0","promotions_mod %>% "
+"0","  group_by(shuffled, decision) %>%"
+"0","  tally()  %>%"
+"0","  mutate(perc = round(n / sum(n)*100,2))"

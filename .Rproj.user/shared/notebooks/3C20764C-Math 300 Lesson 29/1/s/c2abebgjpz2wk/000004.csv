@@ -1,0 +1,3 @@
+"0","ggplot(promotions, aes(x = gender, fill = decision)) +"
+"0","  geom_bar(position=""fill"") +"
+"0","  labs(x = ""Gender of name on résumé"",y=""Proportion"")"

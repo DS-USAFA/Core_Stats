@@ -1,0 +1,4 @@
+"0","ggplot(data = test_stats, aes(x = stat)) +"
+"0","  geom_histogram(binwidth = 0.1, fill = ""cyan"", color = ""black"") +"
+"0","  geom_vline(xintercept = (21/24 -14/24 ), color = ""red"", size = 1) +"
+"0","  labs(x = ""Difference in promotion rates (male - female)"")"

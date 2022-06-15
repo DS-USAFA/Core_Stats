@@ -1,0 +1,3 @@
+"0","set.seed(272)"
+"0","promotions_mod <- promotions %>%"
+"0","  mutate(shuffled=sample(gender)) "

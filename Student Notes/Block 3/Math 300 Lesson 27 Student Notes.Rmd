@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 3. Correctly use all terms and notation to include standard error, margin of error, sampling distribution, and bootstrap distribution.  
 
-4. Compare and contrast sampling disribution and bootstrap distribution.  
+4. Compare and contrast sampling distribution and bootstrap distribution.  
 
 ## Reading 
 
