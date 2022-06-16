@@ -1,15 +1,15 @@
 ---
 title: "Math 300 Lesson 3 Notes"
-subtitle: "Histograms and Facets"
+subtitle: "Linegraphs, Histograms and Facets"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
-  pdf_document:
-    toc: yes
 ---
 
 
@@ -22,9 +22,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Understand and wrangle data in preparation for plotting.
 
-2. Explain when it is appropriate to use a linegraphs, histogram, and facets. 
+2. Explain when it is appropriate to use a linegraphs, histograms, and facets. 
 
-3. Create and interpret a linegraphs using the `ggplot()` function.  
+3. Create and interpret a linegraph using the `ggplot()` function.  
 
 4. Create and interpret a histogram using the `ggplot()` function.
 
@@ -38,7 +38,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Work through the learning checks LC2.9 - LC2.21. There appear to be a large number of learning checks but many of them are linked together. Complete the code when necessary. 
 
-+ We are looking a different plots but the need for a particular plot changes based on the nature of our data. For the linegraph, the variable we choose to put on the x-axis has a sequential nature, usually time.  For the histogram we want to understand the distribution of a single quantitative variable. Facets allow us to bring in another variable, usually categorical. 
++ We are looking at different plots but the need for a particular plot changes based on the nature of our data. For the linegraph, the variable we choose to put on the x-axis has a sequential nature, usually time. For the histogram we want to understand the distribution of a single quantitative variable. Facets allow us to bring in another variable, usually categorical. 
 
 + We will be using `filter()` again to create a subset of data but we are putting in an **and** condition. This is required for some of the learning checks. Complete the setup code. 
 

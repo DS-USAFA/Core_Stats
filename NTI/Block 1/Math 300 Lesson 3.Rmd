@@ -4,13 +4,13 @@ subtitle: "Linegraphs, Histograms and Facets"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 2. Explain when it is appropriate to use a linegraphs, histogram, and facets. 
 
-3. Create and interpret a linegraphs using the `ggplot()` function.  
+3. Create and interpret a linegraph using the `ggplot()` function.  
 
 4. Create and interpret a histogram using the `ggplot()` function.
 
@@ -41,7 +41,7 @@ Remember that you will be running this more like a lab than a lecture. You want 
 
 Work through the learning checks LC2.9 - LC2.21. Because you have so many learning checks, you might not want to use a pair and share learning strategy for each one. You can pick and choose. 
 
-+ You want to emphasize that we are starting to look at different plots. These plots change based on the nature of our data. For the linegraph, the variable we choose to put on the x-axis has a sequential nature, usually time.  For the histogram we want to understand the distribution of a single quantitative variable. Facets allow us to bring in another variable, usually categorical. 
++ You want to emphasize that we are starting to look at different plots. These plots change based on the nature of our data. For the linegraph, the variable we choose to put on the x-axis has a sequential nature, usually time. For the histogram we want to understand the distribution of a single quantitative variable. Facets allow us to bring in another variable, usually categorical. 
 
 + We will be using `filter()` again to create a subset of data but we are putting in an **and** condition. This is the setup for LC2.9, so walk them through it. 
 
@@ -59,9 +59,9 @@ library(ggplot2)
 library(dplyr)
 ```
 
-*We need to create the `early_january_weather` data object. You may want to walk them through this code.*
+*We need to create the *`early_january_weather` *data object. You may want to walk them through this code. Again, this could be pulled via the *`moderndive` *package, but building it on our own is helpful and informative.* 
 
-*Use ?weather to understand the variables.*
+*Use *`?weather` *to understand the variables.*
 
 ```{r}
 glimpse(weather)
@@ -81,7 +81,7 @@ early_january_weather <- weather %>%
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Take a look at both the `weather` and `early_january_weather` data frames by running `View(weather)` and `View(early_january_weather)` in the console. In what respect do these data frames differ?
 
-**Solution**: *The rows of `early_january_weather` are a subset of `weather`.*  
+**Solution**: The rows of `early_january_weather` are a subset of `weather`. 
 
 ```{r}
 str(weather)
@@ -96,7 +96,7 @@ str(early_january_weather)
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** `View()` the `flights` data frame again. Why does the `time_hour` variable uniquely identify the hour of the measurement whereas the `hour` variable does not? 
 
-**Solution**: Because to uniquely identify an hour, we need the `year`/`month`/`day`/`hour` sequence, whereas there are only 24 possible `hour`'s.
+**Solution**: Because to uniquely identify an hour, we need the `year`/`month`/`day`/`hour` sequence, whereas there are only 24 possible `hour`s.
 
 
 ```{r}
@@ -114,7 +114,7 @@ str(flights)
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why are linegraphs frequently used when time is the explanatory variable?
 
-**Solution**: Because time is sequential: subsequent observations are closely related to each other.
+**Solution**: Because time is sequential: subsequent observations are closely related to each other. Also, we often see only one observation recorded per time period.
 
 ### LC 2.13 (Objective 3)
 
@@ -136,7 +136,7 @@ ggplot(data = early_january_weather, mapping = aes(x = time_hour, y = humid)) +
   geom_line()
 ```
 
-*Notice the cyclic nature of humid over the course of a day?*
+*Notice the cyclic nature of humid over the course of a day.*
 
 ### LC 2.14 (Objective 4)
 
@@ -160,7 +160,7 @@ head(colors())
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What does changing the number of bins from 30 to 40 tell us about the distribution of temperatures?
 
-**Solution**: The distribution doesn't change much. But by refining the bin width, we see that the temperature data has a high degree of accuracy. What do I mean by accuracy? Looking at the `temp` variable by `View(weather)`, we see that the precision of each temperature recording is 2 decimal places. Increasing the number of bins gives the impression that are more modes in the data because the number of data points in each bin get smaller. Interpretation of histograms depends on the number of bins and the location of the bins. This is why some people prefer density plots. We add one here for reference.
+**Solution**: The distribution doesn't change much. But by refining the bin width, we see that the temperature data has a high degree of accuracy. What do I mean by accuracy? Looking at the `temp` variable by `View(weather)`, we see that the precision of each temperature recording is 2 decimal places. Increasing the number of bins gives the impression that are more modes in the data because the number of data points in each bin get smaller. Interpretation of histograms depends on the number of bins and the location of the bins. This is why some people prefer density plots. We add one here for reference using `geom_density()` rather than `geom_histogram()`.
 
 ```{r}
 ggplot(data = weather, mapping = aes(x = temp)) +
@@ -200,12 +200,7 @@ temp <- c(3,3,5,5,9)
 include_graphics("SEATAC_temperatures.png")
 ```
 
-While, it appears that Seattle weather has a similar center of 55&deg;F, its
-temperatures are almost entirely between 35&deg;F and 75&deg;F for a range of
-about 40&deg;F. Seattle temperatures are much less spread out than New York i.e.
-much more consistent over the year. New York on the other hand has much colder
-days in the winter and much hotter days in the summer. Expressed differently,
-the middle 50% of values, as delineated by the **interquartile range** is 30&deg;F.
+Keep in mind that this is a plot of two linegraphs, not histograms. We are merely using these linegraphs to get an idea of the *spread* of temperature in Seattle, which we can compare to our idea of spread of temperature in New York. While, it appears that Seattle weather has a similar center of 55&deg;F, its temperatures are almost entirely between 35&deg;F and 75&deg;F for a range of about 40&deg;F. Seattle temperatures are much less spread out than New York i.e. much more consistent over the year. New York on the other hand has much colder days in the winter and much hotter days in the summer. Expressed differently, the middle 50% of values, as delineated by the **interquartile range** is 30&deg;F.
 
 ### LC 2.18 (Objective 5)
 

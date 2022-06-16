@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Professor Bradley Warner" />
+<meta name="author" content="YOUR NAME HERE" />
 
 
 <title>Math 300 Lesson 2 Notes</title>
@@ -64,7 +64,6 @@ if (window.hljs) {
 
 
 
-
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -85,9 +84,6 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
 }
 pre code {
   padding: 0;
@@ -246,7 +242,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Math 300 Lesson 2 Notes</h1>
 <h3 class="subtitle">Scatterplot</h3>
-<h4 class="author">Professor Bradley Warner</h4>
+<h4 class="author">YOUR NAME HERE</h4>
 <h4 class="date">June, 2022</h4>
 
 </div>
@@ -257,7 +253,7 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li><p>Create a scatterplot using the <code>ggplot()</code> function.</p></li>
 <li><p>Interpret the relationship between variables in a scatterplot.</p></li>
-<li><p>Refine and improve scatterplots to illustrate relevant points by prepossessing the data or using functions such as <code>alpha()</code> and <code>geom_jitter()</code>.</p></li>
+<li><p>Refine and improve scatterplots to illustrate relevant points by preprocessing the data or using functions such as <code>alpha()</code> and <code>geom_jitter()</code>.</p></li>
 </ol>
 </div>
 <div id="reading" class="section level2">
@@ -269,10 +265,12 @@ div.tocify {
 <p>Work through the learning checks LC2.1 - LC2.8. Complete the code when necessary.</p>
 <div id="setup" class="section level3">
 <h3>Setup</h3>
-<pre class="r"><code>library(nycflights13)
-library(ggplot2)
+<p>We need to load the required packages for this document:</p>
+<pre class="r"><code>library(nycflights13)</code></pre>
+<pre><code>## Warning: package &#39;nycflights13&#39; was built under R version 4.1.3</code></pre>
+<pre class="r"><code>library(ggplot2)
 library(dplyr)</code></pre>
-<p><em>We need to create the <code>alaska_flights</code> data object.</em> Complete the code and remove the comment symbol #.</p>
+<p><em>We need to create the <code>alaska_flights</code> data object.</em> This is a subset of the <code>flights</code> dataset consisting only of those flown by the Alaskan Airlines carrier. Complete the code and remove the comment symbol #.</p>
 <pre class="r"><code>#alaska_flights &lt;- ____________ %&gt;% 
 #  filter(carrier == &quot;______&quot;)</code></pre>
 </div>
@@ -280,7 +278,10 @@ library(dplyr)</code></pre>
 <h3>LC 2.1 (Objective 3)</h3>
 <p><strong>(LC 2.1)</strong> Take a look at both the <code>flights</code> and <code>alaska_flights</code> data frames by running <code>View(flights)</code> and <code>View(alaska_flights)</code> in the console. In what respect do these data frames differ? For example, think about the number of rows in each dataset.</p>
 <p><strong>Solution</strong>:</p>
-<p><em>Build the plot for the next set of learning checks.</em> Complete the code and remove the comment symbol #.</p>
+</div>
+<div id="additional-setup" class="section level3">
+<h3>Additional Setup</h3>
+<p><em>Build the plot for the next set of learning checks.</em> We want to visualize the relationship between between two numerical variables: <code>dep_delay</code> (the departure delay on the horizontal “x” axis) and <code>arr_delay</code> (the arrival delay on the vertical “y” axis). Complete the code and remove the comment symbol #.</p>
 <pre class="r"><code>#ggplot(data = _______________, mapping = aes(x = ________________, y = arr_delay)) + 
 #  geom_point()</code></pre>
 </div>
@@ -345,10 +346,10 @@ Figure 2: Arrival vs. departure delays scatterplot with alpha = 0.2
 <div id="documenting-software" class="section level2">
 <h2>Documenting software</h2>
 <ul>
-<li>File creation date: 2022-06-04</li>
-<li>R version 4.1.3 (2022-03-10)</li>
-<li><code>ggplot2</code> package version: 3.3.6</li>
-<li><code>dplyr</code> package version: 1.0.9</li>
+<li>File creation date: 2022-06-14</li>
+<li>R version 4.1.1 (2021-08-10)</li>
+<li><code>ggplot2</code> package version: 3.3.5</li>
+<li><code>dplyr</code> package version: 1.0.7</li>
 <li><code>nycflights13</code> package version: 1.0.2</li>
 </ul>
 </div>

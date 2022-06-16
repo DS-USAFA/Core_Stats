@@ -4,12 +4,12 @@ subtitle: "Boxplots and Barcharts"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Create and interpret boxplots using `ggplot()`. This includes quartiles, interquartile range, whiskers, and outliers. 
+1. Create and interpret boxplots using `ggplot()`; identify and interpret quartiles, interquartile range, whiskers, and outliers.
 
 2. Compare and contrast boxplots, barcharts, histograms, and pie charts.
 
@@ -39,9 +39,9 @@ Work through the learning checks LC2.22 - LC2.37. Complete code when required.
 
 + Plots change based on the nature of our data. The boxplot was developed prior to widespread use of computers. It is comparable to the use of a histogram and/or density plot. It is meant for a single quantitative variable. It a second categorical variable is added, we can generate side-by-side boxplots. 
 
-+ The barchart is for a categorical, qualitative, variables. It can be argued that a table is just as informative. If a second categorical variable is added, we must consider how to visually represent it. A table is often better than a barchart especially for a single variable. We will `tidyverse` and base code to create a table in our solution. 
++ The barchart is for a categorical, qualitative variables. It can be argued that a table is just as informative. If a second categorical variable is added, we must consider how to visually represent it. A table is often better than a barchart especially for a single variable. We will `tidyverse` and base code to create a table in our solution. 
 
-+ Clarify the use of `fill` and `color`. The former is the fill color and the later the color of the bounding box.  
++ Note the difference in the use of `fill` and `color`. The former is the fill color and the latter the color of the bounding box.  
 
 + See the following for more on the principles of [visualizing data](https://clauswilke.com/dataviz/) and [technical details](https://r-graphics.org/).
 
