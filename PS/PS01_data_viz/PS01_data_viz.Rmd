@@ -54,7 +54,7 @@ Once you have opened the document:
 *  Delete any extra code (everything from line 6 down).
 *  Everything between the --- is called the YAML, Yet Another Markup Language, and establishes the header and document style as a minimum. Insert a text documentation line after the YAML.
 
-![](figures/set.up.png){width=100%}
+![](figures/set.up2.png){width=100%}
 
 <br> 
 
