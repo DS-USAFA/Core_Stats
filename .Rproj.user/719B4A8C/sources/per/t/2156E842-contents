@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Conduct and interpret a hypothesis test for the difference of two means.      
 
-2.  Calculate and interpret a confidence interval for the differnce of two means.
+2.  Calculate and interpret a confidence interval for the difference of two means.
 
 
 ## Reading 
@@ -40,7 +40,7 @@ Work through the learning checks LC 9.9 - LC 9.15.
 
 + This is a two-sided test. The p-value calculation is a little different. This is a nice discussion point.  
 
-+ Interpret
++ Interpret the p-value in context of the problem.
 
 ***
 
@@ -246,7 +246,8 @@ ggplot(data = action_romance, aes(x = genre,y=rating)) +
   labs(y = "IMDb rating") +
   theme_classic()
 ```
-Looks like romance movies have a higher rating.
+
+Looks like romance movies have a higher median rating in the population.
 
 ***
 
