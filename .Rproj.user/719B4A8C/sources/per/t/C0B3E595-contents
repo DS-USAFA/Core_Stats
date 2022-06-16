@@ -1,0 +1,261 @@
+---
+title: "Math 300 NTI Lesson 32"
+subtitle: "Case Study"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Conduct and interpret a hypothesis test for the difference of two means.      
+
+2.  Calculate and interpret a confidence interval for the differnce of two means.
+
+
+## Reading 
+
+[Chapter 9.5](https://moderndive.com/9-hypothesis-testing.html#ht-case-study)
+
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+Work through the learning checks LC 9.9 - LC 9.15.
+
++ This is a two-sided test. The p-value calculation is a little different. This is a nice discussion point.  
+
++ Interpret
+
+***
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(infer)
+library(moderndive)
+library(ggplot2movies)
+```
+
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 9
+lc <- 8
+```
+
+### LC 9.9 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Conduct the same analysis comparing action movies versus romantic movies using the median rating instead of the mean rating. What was different and what was the same? 
+
+**Solution**:  
+
+```{r}
+set.seed(2511)
+# In calculate() step replace "diff in means" with "diff in medians"
+null_distribution_movies_median <- movies_sample %>% 
+  specify(formula = rating ~ genre) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "diff in medians", order = c("Action", "Romance"))
+```
+
+
+```{r}
+# compute observed "diff in medians"
+obs_diff_medians <- movies_sample %>% 
+  specify(formula = rating ~ genre) %>% 
+  calculate(stat = "diff in medians", order = c("Action", "Romance"))
+obs_diff_medians
+```
+
+
+```{r}
+# Visualize p-value. Observing this difference in medians under H0
+# is very unlikely! Suggesting H0 is false, similarly to when we used
+# "diff in means" as the test statistic. 
+visualize(null_distribution_movies_median, bins = 10) + 
+  shade_p_value(obs_stat = obs_diff_medians, direction = "both")
+```
+
+
+```{r}
+# p-value is very small, just like when we used "diff in means"
+# as the test statistic. 
+null_distribution_movies_median %>% 
+  get_p_value(obs_stat = obs_diff_medians, direction = "both")
+```
+
+Since our level of significance is 0.001, based on the data there is insufficient evidence to claim that average rating of romance movies is different from the average rating of action movies. 
+
+
+- Confidence interval
+
+```{r}
+set.seed(2511)
+# In calculate() step replace "diff in means" with "diff in medians"
+boot_distribution_movies_median <- movies_sample %>% 
+  specify(formula = rating ~ genre) %>% 
+#  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "diff in medians", order = c("Action", "Romance"))
+```
+
+
+```{r}
+visualize(boot_distribution_movies_median, bins = 10) 
+```
+
+
+```{r}
+boot_distribution_movies_median %>% 
+  get_ci(level=.999,type="percentile")
+```
+
+
+
+### LC 9.10 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What conclusions can you make from viewing the faceted histogram looking at `rating` versus `genre` that you couldn't see when looking at the boxplot?
+
+**Solution**:  
+
+```{r}
+ggplot(data = movies_sample, aes(x = rating)) +
+  geom_histogram(bins=8) +
+  facet_wrap(~genre)+
+  labs(x = "IMDb rating")
+```
+
+Histograms are limited as they depend on the number of bins and bin location. There is not much that you can tell in the histograms that you can tell in the boxplots.  If the data was multi-modal, you could tell this in the histogram and not the boxplots.
+
+A density plot might be better.
+
+```{r}
+ggplot(data = movies_sample, aes(x = rating)) +
+  geom_density(fill="cyan") +
+  facet_wrap(~genre)+
+  labs(x = "IMDb rating") +
+  theme_classic()
+```
+
+
+
+### LC 9.11 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Describe in a paragraph how we used Allen Downey's diagram to conclude if a statistical difference existed between mean movie ratings for action and romance movies.
+
+**Solution**:  
+
+We use the `movies_sample` dataset as the input for test statistic. The $H_0$ model is "there is no statistical difference between mean movie ratings for action and romance movies", and with the p-value from `infer` commands, we fail to reject the $H_0$ model and conclude that there is insufficient evidence to conclude that a statistical difference existed between the mean movie ratings for action and romance movies.
+
+
+### LC 9.12 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why are we relatively confident that the distributions of the sample ratings will be good approximations of the population distributions of ratings for the two genres?
+
+**Solution**:  
+
+Because the sample was a random sample from all the movies rated and thus we believe it is representative of the population. 
+
+### LC 9.13 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Using the definition of $p$-value, write in words what the $p$-value represents for the hypothesis test comparing the mean rating of romance to action movies.
+
+**Solution**:  
+
+The $p$-value represents, given the ratings for action and romance movies have the same distribution, it is the probability of finding the observed difference or more extreme between mean movie ratings for action and romance movies. 
+
+### LC 9.14 (Objective 1)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the value of the $p$-value for the hypothesis test comparing the mean rating of romance to action movies?
+
+**Solution**: 
+
+The $p$-value here is $0.004$.
+
+### LC 9.15 (Not testable)
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Test your data wrangling knowledge and EDA skills:
+
+- Use `dplyr` and `tidyr` to create the necessary data frame focused on only action and romance movies (but not both) from the `movies` data frame in the `ggplot2movies` package.
+- Make a boxplot and a faceted histogram of this population data comparing ratings of action and romance movies from IMDb.
+- Discuss how these plots compare to the similar plots produced for the `movies_sample` data.
+
+**Solution**: 
+
+- Use `dplyr` and `tidyr` to create the necessary data frame focused on only action and romance movies (but not both) from the `movies` data frame in the `ggplot2movies` package. 
+
+```{r}
+action_romance <- movies %>%
+  select(title,year,rating,votes,Action,Romance) %>%
+# Get rid of movies that are both
+  filter(!(Action == 1 & Romance == 1)) %>%
+  filter(Action == 1 | Romance == 1) %>%
+   mutate(genre = case_when(
+    Action == 1 ~ "Action",
+    Romance == 1 ~ "Romance",
+    TRUE ~ "Neither"
+  )) %>%
+  select(-Action,-Romance)
+```
+
+
+
+```{r}
+action_romance %>% 
+  group_by(genre) %>% 
+  summarize(n = n(), mean_rating = mean(rating), std_dev = sd(rating))
+```
+
+- Make a boxplot and a faceted histogram of this population data comparing ratings of action and romance movies from IMDb.
+
+
+```{r}
+ggplot(data = action_romance, aes(x = rating)) +
+  geom_histogram(bins=8) +
+  facet_wrap(~genre)+
+  labs(x = "IMDb rating")
+```
+```{r}
+ggplot(data = action_romance, aes(x = rating)) +
+  geom_density() +
+  facet_wrap(~genre)+
+  labs(x = "IMDb rating") +
+  theme_classic()
+```
+
+```{r}
+ggplot(data = action_romance, aes(x = genre,y=rating)) +
+  geom_boxplot() +
+  labs(y = "IMDb rating") +
+  theme_classic()
+```
+Looks like romance movies have a higher rating.
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+  * `infer` package version: `r packageVersion("infer")`
+  * `ggplot2movies` package version: `r packageVersion("ggplot2movies")`
+

@@ -1,0 +1,3 @@
+"0","action_romance %>% "
+"0","  group_by(genre) %>% "
+"0","  summarize(n = n(), mean_rating = mean(rating), std_dev = sd(rating))"

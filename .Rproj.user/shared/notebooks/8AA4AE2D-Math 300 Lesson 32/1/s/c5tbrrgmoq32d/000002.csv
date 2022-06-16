@@ -1,0 +1,9 @@
+"0","# compute observed ""diff in medians"""
+"0","obs_diff_medians <- movies_sample %>% "
+"0","  specify(formula = rating ~ genre) %>% "
+"0","  calculate(stat = ""diff in medians"", order = c(""Action"", ""Romance""))"
+"0","obs_diff_medians"
+"1","Response: rating (numeric)
+Explanatory: genre (factor)"
+"1","
+"

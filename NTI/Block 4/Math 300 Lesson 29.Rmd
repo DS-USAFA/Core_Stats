@@ -242,7 +242,7 @@ ggplot(data = test_stats, aes(x = stat)) +
 
 - Compare the permutation test sampling distribution to the bootstrap.
 
-**Answer:** The boostrap and permutation test sampling distributions look similar except where they are centered. The bootstrap is centered on the observed sample statistics and the permutation is centered on the hypothesized value of zero.
+**Answer:** The bootstrap and permutation test sampling distributions look similar except where they are centered. The bootstrap is centered on the observed sample statistics and the permutation is centered on the hypothesized value of zero.
 
 ***
 

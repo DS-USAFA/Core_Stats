@@ -1,0 +1,7 @@
+"0","set.seed(2511)"
+"0","# In calculate() step replace ""diff in means"" with ""diff in medians"""
+"0","boot_distribution_movies_median <- movies_sample %>% "
+"0","  specify(formula = rating ~ genre) %>% "
+"0","#  hypothesize(null = ""independence"") %>% "
+"0","  generate(reps = 1000, type = ""bootstrap"") %>% "
+"0","  calculate(stat = ""diff in medians"", order = c(""Action"", ""Romance""))"
