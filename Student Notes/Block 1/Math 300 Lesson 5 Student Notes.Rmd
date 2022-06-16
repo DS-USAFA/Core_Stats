@@ -4,12 +4,12 @@ subtitle: "filter and summarize"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -68,7 +68,7 @@ flights %>%
 
 ### LC 3.1 (Objective 1)
 
-**(LC 3.1)** What's another way using the "not" operator `!` to filter only the rows that are not going to Burlington, VT nor Seattle, WA in the `flights` data frame? Test this out using the code above.
+**(LC 3.1)** What's another way to use the "not" operator `!` to filter only the rows that are not going to Burlington, VT nor Seattle, WA in the `flights` data frame? Test this out using the code above.
 
 **Solution**: 
 

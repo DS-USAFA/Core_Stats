@@ -4,13 +4,13 @@ subtitle: "Boxplots and Barcharts"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Create and interpret boxplots using `ggplot()`. This includes quartiles, interquartile range, whiskers, and outliers. 
+1. Create and interpret boxplots using `ggplot()`; identify and interpret quartiles, interquartile range, whiskers, and outliers. 
 
 2. Compare and contrast boxplots, barcharts, histograms, and pie charts.
 
@@ -40,15 +40,15 @@ Remember that you will be running this more like a lab than a lecture. You want 
 
 Work through the learning checks LC2.22 - LC2.37.
 
-+ Again, you want to emphasize that we are starting to look at different plots. These plots change based on the nature of our data. The boxplot was developed prior to widespread use of computers. It is comparable to the use of a histogram and/or density plot. It is meant for a single quantitative variable. It a second categorical variable is added, we can generate side-by-side boxplots. 
++ Again, you want to emphasize that we are starting to look at different plots. These plots change based on the nature of our data. The boxplot was developed prior to widespread use of computers. It is comparable to the use of a histogram and/or density plot. It is meant for a single quantitative variable. If a second categorical variable is added, we can generate side-by-side boxplots. 
 
-+ The barchart is for a categorical, qualitative, variables. It can be argued that a table is just as informative. If a second categorical variable is added, we must consider how to visually represent it. A table is often better than a barchart especially for a single variable. We will `tidyverse` and base code to create a table in our solution. 
++ The barchart is for categorical, qualitative variables. It can be argued that a table is just as informative. If a second categorical variable is added, we must consider how to visually represent it. A table is often better than a barchart especially for a single variable. We will `tidyverse` and base code to create a table in our solution. 
 
 + We are doing some more data wrangling. This is a preview of material to come.
 
 + We added a theme to our plot in this lesson to make the plot more appropriate for presentation to an audience. In an exploratory analysis, we don't care about axis labels or plot themes.
 
-+ Clarify the use of `fill` and `color`. The former is the fill color and the later the color of the bounding box.  
++ Clarify the use of `fill` and `color`. The former is the fill color and the latter the color of the bounding box.  
 
 + See the following for more on the principles of [visualizing data](https://clauswilke.com/dataviz/) and [technical details](https://r-graphics.org/).
 
@@ -69,9 +69,9 @@ library(dplyr)
 
 Create the side-by-side boxplots from the book. 
 
-*Explain why we have to use factor in `aes()` function.* 
+*Explain why we have to use * `factor()` *in the* `aes()` *function.* R is interpreting month as a numerical variable, but `geom_boxplot()` requires `x` to be a categorical variable. The `factor()` function converts this numerical variable to a categorical one. 
 
-*Walk through explaining the elements of the boxplot.*
+*Walk through the elements of the boxplot: quartiles, IQR, median (NOT MEAN), outliers.*
 
 ```{r warning=FALSE}
 # Boxplots in the reading of section 2.7, adding a different theme.
@@ -93,7 +93,7 @@ weather %>%
   filter(month == 5 & temp < 25)
 ```
 
-There appears to be only one hour and only at JFK that recorded 13.1 F (-10.5 C) in the month of May. This is probably a data entry mistake! Why wasn't the weather at least similar at EWR (Newark) and LGA (LaGuardia)? Can we drop it from further analysis?
+There appears to be only one hour and only at JFK that recorded 13.1 F (-10.5 C) in the month of May. This is probably a data entry mistake! Why wasn't the weather similar at EWR (Newark) and LGA (LaGuardia)? Can we drop it from further analysis?
 
 ### LC 2.23 (Objective 1)
 
@@ -135,8 +135,9 @@ ggplot(data = weather, mapping = aes(x = factor(pressure), y = temp)) +
   geom_boxplot() 
 ```
 
-### LC 2.25 (Objective 2)
+*This is a good opportunity to stop and remind cadets that when they build a plot, it should send a message. If they build something and it looks like this, they should probably re-evaluate.*
 
+### LC 2.25 (Objective 2)
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Boxplots provide a simple way to identify outliers.  Why may outliers be easier to identify when looking at a boxplot instead of a faceted histogram?
 
@@ -152,7 +153,7 @@ ggplot(data = weather, mapping = aes(x = factor(pressure), y = temp)) +
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the difference between histograms and barplots?
 
-**Solution**: Again histograms visualize a quantatative, numerical, variable whilst a barchart visualizes a categorical, qualatative, variable. 
+**Solution**: Again a histogram visualizes a quantitative, numerical variable whilst a barchart visualizes a categorical, qualitative, variable. 
 
 ### LC 2.28 (Objective 3, 4)  
 
@@ -198,7 +199,7 @@ flights %>%
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is your opinion as to why pie charts continue to be used?
 
-**Solution**: In our **opinion**, pie charts are generally considered as a poorer method for communicating data than bar charts. People's brains are not as good at comparing the size of angles because there is no scale, and in comparison, it is much easier to compare the heights of bars in a bar charts. However, pie charts have been used historical and it is difficult to overcome this momentum. Also, many software packages, such as Excel, make it is to generate pie charts. 
+**Solution**: In our **opinion**, pie charts are generally considered as a poorer method for communicating data than bar charts. People's brains are not as good at comparing the size of angles because there is no scale, and in comparison, it is much easier to compare the heights of bars in a bar charts. However, pie charts have been used historical and it is difficult to overcome this momentum. Also, many software packages, such as Excel, make it easy to generate pie charts. 
 
 ### LC 2.32 (Objective 3) 
 

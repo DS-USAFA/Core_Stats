@@ -4,28 +4,30 @@ subtitle: "Data with R"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(nycflights13)
 ```
 
 ## Objectives
 
 1. Install, load, and use R packages.
 
-2. Explore data sets with R functions to include glimpse(), View(), kable() and $.
+2. Explore data sets with R functions to include `glimpse()`, `View()`, `kable()` and `$`.
 
-3. Identified and justify if a variable is for identification or measurement and if measurement if it is categorical or quantitative.  
+3. Identify and justify whether a variable is used for identification or measurement and, if measurement, whether it is categorical or quantitative.  
 
-4. Understand and practice the tips on learning to code to include using help functions and reading error messages
+4. Understand and practice the tips on learning to code to include using help functions and reading error messages.
 
 ## Reading 
 
@@ -33,9 +35,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Lesson 
 
-Remember that you will be running this more like a lab than a lecture. You want to get them using `R` and answering questions. The focus will be on answering the learning checks. This will require to use our book and to use RStudio. Those should be our primary teaching tools.
+Remember that you will be running this more like a lab than a lecture. You want to get them using `R` and answering questions. The focus will be on answering the learning checks. This will require us to use our book and to use RStudio. Those should be our primary teaching tools.
 
-+ Have a copy of the textbook open in a browser tab, the NITs in a browser tab, and the student notes Rmd open. Work through the Rmd with them using the answers in the NTI. You can go back to the book to bring clarity to specific points. 
++ Have a copy of the textbook open in a browser tab, the NTI in a browser tab, and the student notes Rmd open. Work through the Rmd with them using the answers in the NTI. You can go back to the book to bring clarity to specific points. 
 
 + Work through the learning checks LC1.1 - LC1.7. You may not be able to get through all of them. You can pick and choose which you want to emphasize in class. Refer to the book to get the question and appropriate reference material.
 
@@ -54,19 +56,14 @@ chap <- 1
 lc <- 0
 ```
 
-```{r message=FALSE}
-# Loading libraries needed
-library(dplyr)
-library(nycflights13)
-```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Repeat the above installing steps, but for the `dplyr`, `nycflights13`, and `knitr` packages. This will install the earlier mentioned `dplyr` package, the `nycflights13` package containing data on all domestic flights leaving a NYC airport in 2013, and the `knitr` package for writing reports in R. 
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Repeat the package installation steps from the text, but for the `dplyr`, `nycflights13`, and `knitr` packages. This will install the earlier mentioned `dplyr` package, the `nycflights13` package containing data on all domestic flights leaving a NYC airport in 2013, and the `knitr` package for writing reports in R. 
 
-* These may be installed. If so, show them how to load package using the Packages tab in RStudio. *
+* These may be already be installed. If so, show them how to load package using the Packages tab in RStudio. *
 
 ### LC 1.2 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** "Load" the `dplyr`, `nycflights13`, and `knitr` packages as well by repeating the above steps.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** "Load" the `dplyr`, `nycflights13`, and `knitr` packages as well by using the `library()` function.
 
 **Solution**: If the following code runs with no errors, you've succeeded!
 
@@ -76,19 +73,21 @@ library(nycflights13)
 library(knitr)
 ```
 
+Order does matter if multiple packages have functions or datasets of the same name. The most recently loaded package will overwrite existing objects of the same name. 
+
 ### LC 1.3 (Objective 2)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What does any *ONE* row in this `flights` dataset refer to?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What does any *ONE* row in the `flights` dataset refer to? Remind them that the `flights` dataset was loaded when we loaded the `nycflights13` package. 
 
 - A. Data on an airline 
 - B. Data on a flight
 - C. Data on an airport
 - D. Data on multiple flights
 
-**Solution**: This is data on a flight. Not a flight path! Example: 
+**Solution**: This is data on a single flight, and not a flight path! Example: 
 
-* a flight path would be United 1545 to Houston
-* a flight would be United 1545 to Houston at a specific date/time. For example: 2013/1/1 at 5:15am.
+* a flight path would be the United 1545 to Houston
+* a single flight would be the United 1545 to Houston at a specific date/time. For example: 2013/1/1 at 5:15am.
 
 ### LC 1.4 (Objective 3, 4)
 
@@ -114,7 +113,7 @@ library(knitr)
 
 ### LC 1.6 (Objective 3)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Provide the names of variables in a data frame with at least three variables in which one of them is an identification variable and the other two are not.  In other words, create your own tidy dataset that matches these conditions.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Create your own data frame. First, provide the names of at least three variables, one of which is an identification variable and the other two are not. Next, create your own tidy dataset that matches these conditions.
 
 **Solution**: 
 

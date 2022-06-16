@@ -4,13 +4,13 @@ subtitle: "Scatterplot"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 2. Interpret the relationship between variables in a scatterplot.
 
-3. Refine and improve scatterplots to illustrate relevant points by prepossessing the data or using functions such as `alpha()` and `geom_jitter()`.  
+3. Refine and improve scatterplots to illustrate relevant points by preprocessing the data or using functions such as `alpha()` and `geom_jitter()`.  
 
 ## Reading 
 
@@ -38,7 +38,7 @@ Work through the learning checks LC2.1 - LC2.8.
 
 + You want to emphasize that creating plots has two purposes. The first is exploratory, that is to learn about the data and, in particular for scatterplots, the relationship between two quantitative variables. Plots are also used for explanatory purposes. You want to convey to the audience an important or relevant feature of the data. 
 
-+ For a scatterplot, we usually want to put the variable we believe to be the predictor or explanatory variable on the x-axis. On the y-axis we put the respone or dependent variable. Sometimes it is not clear which is which and in this case it does not matter which variable goes on which axis. 
++ For a scatterplot, we usually want to put the variable we believe to be the predictor or explanatory variable on the x-axis. On the y-axis we put the response or dependent variable. Sometimes it is not clear which is which and in this case it does not matter which variable goes on which axis. 
 
 + Using the `+` symbol in `ggplot()` can be confusing, but emphasize that we are creating layers. Tell your students to ask themselves what the want `R` to do? And what does `R` need to do this? For a plot, we need data and then we need to tell `R` what the aesthetics and geoms are. The `+` symbol allows us to build in layers.
 
@@ -51,13 +51,16 @@ chap <- 2
 lc <- 0
 ```
 
+
+Remind them that we need to load the necessary packages. There is a difference between the terms "install" and "load" for packages. We only need to install the package once, but we need to load it every time we use it. 
+
 ```{r message=FALSE}
 library(nycflights13)
 library(ggplot2)
 library(dplyr)
 ```
 
-*We need to create the `alaska_flights` data object. You may want to walk them through this code.*
+*We need to create the `alaska_flights` data object. You may want to walk them through this code. In the text, this object is part of the `moderndive` package, but we can easily create it here.*
 
 ```{r}
 alaska_flights <- flights %>% 
@@ -69,9 +72,9 @@ head(alaska_flights)
 ```
 
 
-*We are using the `str()` function in our solution. You should point this out to them.*
-
 ### LC 2.1 (Objective 3)
+
+*We are using the `str()` function in our solution. You should point this out to them.*
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Take a look at both the `flights` and `alaska_flights` data frames by running `View(flights)` and `View(alaska_flights)` in the console. In what respect do these data frames differ? For example, think about the number of rows in each dataset.
 
@@ -84,6 +87,8 @@ str(flights)
 ```{r}
 str(alaska_flights)
 ```
+
+### Additional Setup
 
 *Build the plot for the next set of learning checks.*
 
@@ -149,9 +154,9 @@ ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) +
 
 
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** After viewing the Figure 2 above, give an approximate range of arrival delays and departure delays that occur the most frequently.  How has that region changed compared to when you observed the same plot without the `alpha = 0.2` set in Figure 1?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** After viewing the Figure 2 above, give an approximate range of arrival delays and departure delays that occur the most frequently. How has that region changed compared to when you observed the same plot without the `alpha = 0.2` set in Figure 1?
 
-**Solution**: The lower plot suggests that most Alaska flights from NYC depart between 12 minutes early and on time and arrive between 50 minutes early and on time.
+**Solution**: The lower plot suggests that most Alaska flights from NYC depart between 12 minutes early and on time and arrive between 50 minutes early and on time. This is a little narrower and lower than what we would have approximated without the shading. 
 
 
 ## Documenting software 

@@ -1,15 +1,15 @@
 ---
 title: "Math 300 Lesson 2 Notes"
 subtitle: "Scatterplot"
-author: "Professor Bradley Warner"
+author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
-  pdf_document:
-    toc: yes
 ---
 
 
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 2. Interpret the relationship between variables in a scatterplot.
 
-3. Refine and improve scatterplots to illustrate relevant points by prepossessing the data or using functions such as `alpha()` and `geom_jitter()`.  
+3. Refine and improve scatterplots to illustrate relevant points by preprocessing the data or using functions such as `alpha()` and `geom_jitter()`.  
 
 ## Reading 
 
@@ -36,6 +36,7 @@ Work through the learning checks LC2.1 - LC2.8. Complete the code when necessary
 
 ### Setup  
 
+We need to load the required packages for this document:
 
 ```{r message=FALSE}
 library(nycflights13)
@@ -43,7 +44,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
-*We need to create the `alaska_flights` data object.* Complete the code and remove the comment symbol #.
+*We need to create the `alaska_flights` data object.* This is a subset of the `flights` dataset consisting only of those flown by the Alaskan Airlines carrier. Complete the code and remove the comment symbol #.
 
 ```{r}
 #alaska_flights <- ____________ %>% 
@@ -59,8 +60,9 @@ library(dplyr)
 **Solution**: 
 
 
+### Additional Setup
 
-*Build the plot for the next set of learning checks.* Complete the code and remove the comment symbol #.
+*Build the plot for the next set of learning checks.* We want to visualize the relationship between between two numerical variables: `dep_delay` (the departure delay on the horizontal "x" axis) and `arr_delay` (the arrival delay on the vertical "y" axis). Complete the code and remove the comment symbol #.
 
 ```{r}
 #ggplot(data = _______________, mapping = aes(x = ________________, y = arr_delay)) + 

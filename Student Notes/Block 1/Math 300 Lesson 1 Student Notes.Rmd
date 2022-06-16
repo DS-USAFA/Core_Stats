@@ -4,12 +4,12 @@ subtitle: "Data with R"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
-  pdf_document:
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -20,11 +20,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Install, load, and use R packages.
 
-2. Explore data sets with R functions to include glimpse(), View(), kable() and $.
+2. Explore data sets with R functions to include `glimpse()`, `View()`, `kable()` and `$`.
 
-3. Identified and justify if a variable is for identification or measurement and if measurement if it is categorical or quantitative.  
+3. Identify and justify whether a variable is used for identification or measurement and, if measurement, whether it is categorical or quantitative.  
 
-4. Understand and practice the tips on learning to code to include using help functions and reading error messages
+4. Understand and practice the tips on learning to code to include using help functions and reading error messages.
 
 ## Reading 
 
@@ -38,13 +38,13 @@ Work through the learning checks LC1.1 - LC1.7. Complete the code when necessary
 ### LC 1.1 (Objective 1)
 
 
-**(LC 1.1)**  Repeat the above installing steps, but for the `dplyr`, `nycflights13`, and `knitr` packages. This will install the earlier mentioned `dplyr` package, the `nycflights13` package containing data on all domestic flights leaving a NYC airport in 2013, and the `knitr` package for writing reports in R. 
+**(LC 1.1)**  Repeat the package installation steps from the text, but for the `dplyr`, `nycflights13`, and `knitr` packages. This will install the earlier mentioned `dplyr` package, the `nycflights13` package containing data on all domestic flights leaving a NYC airport in 2013, and the `knitr` package for writing reports in R. 
 
 * These may be installed. Know how to load a package using the Packages tab in RStudio. *
 
 ### LC 1.2 (Objective 1)
 
-**(LC 2.1)** "Load" the `dplyr`, `nycflights13`, and `knitr` packages as well by repeating the above steps.
+**(LC 2.1)** "Load" the `dplyr`, `nycflights13`, and `knitr` packages as well by using the `library()` function.
 
 **Solution**: Complete the code by removing the comment symbol # and typing in the appropriate library. Does the order matter?
 
@@ -56,7 +56,7 @@ Work through the learning checks LC1.1 - LC1.7. Complete the code when necessary
 
 ### LC 1.3 (Objective 2)
 
-**(LC 1.3)** What does any *ONE* row in this `flights` dataset refer to?
+**(LC 1.3)** What does any *ONE* row in the `flights` dataset refer to? 
 
 - A. Data on an airline 
 - B. Data on a flight
@@ -88,9 +88,9 @@ Work through the learning checks LC1.1 - LC1.7. Complete the code when necessary
 
 ### LC 1.6 (Objective 3)
 
-**(LC 1.6)** Provide the names of variables in a data frame with at least three variables in which one of them is an identification variable and the other two are not.  In other words, create your own tidy dataset that matches these conditions.
+**(LC 1.6)** Create your own data frame. First, provide the names of at least three variables, one of which is an identification variable and the other two are not. Next, create your own tidy dataset that matches these conditions.
 
-**Solution**: Complete the code by removing the comment symbol # and entering what you think an appropriate value would be for the missing value of the variable.
+**Solution**: Complete the code by removing the comment symbol # and entering what you think an appropriate value would be for the missing value of the variable. Also, in the narrative below, replace the XXXXX values with the appropriate terms or responses.
 
 
 ```{r}
@@ -101,21 +101,21 @@ Work through the learning checks LC1.1 - LC1.7. Complete the code when necessary
 # glimpse(LC6)
 ```
 
-* In the example,`id` is an XXXX variable as it identifies the observation in question.
+* In the example,`id` is an XXXXX variable as it identifies the observation in question.
 * Anything else pertains to XXXXX.
 
-We can also look at the `weather` data object.
+We can also look at the `weather` data object. Remove the comment symbol # and replace the XXXXX values with the appropriate terms or responses. 
 
 ```{r}
 # glimpse(weather)
 ```
 
-* The combination of XXXX, XXXX, XXXXX, XXXX, XXXXX are identification variables as they identify the observation in question.
+* The combination of XXXXX, XXXXX, XXXXX, XXXXX, XXXXX are identification variables as they identify the observation in question.
 * Anything else pertains to measurements.
 
 ### LC 1.7 (Objective 2, 4)
 
-**(LC 1.7)** Look at the help file for the `airports` data frame. Revise your earlier guesses about what the variables `lat`, `lon`, `alt`, `tz`, `dst`, and `tzone` each describe.
+**(LC 1.7)** Look at the help file for the `airports` data frame. Revise your earlier guesses about what the variables `lat`, `lon`, `alt`, `tz`, `dst`, and `tzone` each describe. Note that if you already explore `?airports`, this question is redundant. 
 
 **Solution**: 
 
