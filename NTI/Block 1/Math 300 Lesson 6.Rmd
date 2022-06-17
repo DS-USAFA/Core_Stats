@@ -4,13 +4,13 @@ subtitle: "group_by, mutate, and arrange"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Use the `group_by()` function to create aggregated data frames to use with other functions, in particular `summarize()`, to explore, explain, and visualize. 
 
-2. Use the `mutate()` function to create new variables in a data frame to use to explore, explain, and visualize.
+2. Use the `mutate()` function to create new variables in a data frame in order to explore, explain, and visualize.
 
 3. Use the `arrange()` function to sort data frames to explore, explain, and visualize. 
 

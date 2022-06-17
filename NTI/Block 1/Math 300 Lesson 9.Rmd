@@ -4,13 +4,13 @@ subtitle: "Case Study and Review"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Read data into `R` and get into tidy format.  
+1. Read data into `R` and convert it to tidy format.  
 
 ## Reading 
 

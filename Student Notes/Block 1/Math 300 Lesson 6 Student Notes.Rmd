@@ -4,12 +4,12 @@ subtitle: "group_by, mutate, and arrange"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Use the `group_by()` function to create aggregated data frames to use with other functions, in particular `summarize()`, to explore, explain, and visualize. 
 
-2. Use the `mutate()` function to create new variables in a data frame to use to explore, explain, and visualize.
+2. Use the `mutate()` function to create new variables in a data frame in order to explore, explain, and visualize.
 
 3. Use the `arrange()` function to sort data frames to explore, explain, and visualize. 
 
@@ -39,7 +39,7 @@ Work through the learning checks LC3.5 - LC3.12. Complete code as necessary.
 
 + The `group_by()` can be used on more than two variables but they must be in the same call to `group_by()`. 
 
-+ Using `arrange()` is straight forward expect the use of `desc()` within the `arrange()` call to sort in decreasing order. 
++ Using `arrange()` is straightforward except for the use of `desc()` within the `arrange()` call to sort in decreasing order. 
 
 + As a rough rule of thumb, as long as you are not losing original information that you might need later, it’s acceptable practice to overwrite existing data frames with updated ones.
 
