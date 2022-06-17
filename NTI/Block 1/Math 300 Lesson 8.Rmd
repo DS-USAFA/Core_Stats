@@ -4,13 +4,13 @@ subtitle: "Importing Data"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -38,13 +38,13 @@ Remember that you will be running this more like a lab than a lecture. You want 
 
 Work through the learning checks LC4.1 - LC4.3.
 
-+ Although this chapter seems straight forward, it is not. Thinking about the form you want the data in means defining the observational unit. Spend time on the examples to help make the point. LC4.1 and LC4.2. In the background papers folder of the course materials, we have Wickham's paper on tidy data, this can give you more insight for class discussions.
++ Although this chapter seems straightforward, it is not. Thinking about the form you want the data in means defining the observational unit. Spend time on the examples to help make the point. LC4.1 and LC4.2. In the background papers folder of the course materials, we have Wickham's paper on tidy data, this can give you more insight for class discussions.
 
 + From Wickham's paper: Tidy data is a standard way of mapping the meaning of a dataset to its structure. A dataset is messy or tidy depending on how rows, columns and tables are matched up with observations, variables and types. You must think about your data before analyzing it. 
 
 + The book makes it seem that long data frames are tidy and wide ones are not. Be careful, this can be too simplistic. 
 
-+ The `pivot_to_longer()` function is difficult when you first use it. The function arguments can be confusing. The `names_to` and `values_to` are really just asking for the names of columns when done. The `names_to` takes the column names and creates a variable with the assigned name. The `values_to` takes the values in the selected columns and makes them a variable. The `cols` is subtle and can be done in a variety of ways. Practice, run `?pivot_longer` or go to the [tidyverse](https://tidyr.tidyverse.org/dev/articles/pivot.html#pew) for more examples.  
++ The `pivot_longer()` function is difficult when you first use it. The function arguments can be confusing. The `names_to` and `values_to` are really just asking for the names of columns when done. The `names_to` takes the column names and creates a variable with the assigned name. The `values_to` takes the values in the selected columns and makes them a variable. The `cols` is subtle and can be done in a variety of ways. Practice, run `?pivot_longer` or go to the [tidyverse](https://tidyr.tidyverse.org/dev/articles/pivot.html#pew) for more examples.  
 
 ### Setup
 
@@ -64,7 +64,7 @@ library(fivethirtyeight)
 
 ### Import data 4.1.2 (Objective 1)
 
-Repeat the import of `dem_score.xlxs` into `R`. Experiment with the options in the GUI. Also import `https://moderndive.com/data/dem_score.csv` using the `Import Dataset` icon under the **Envionment** tab.
+Repeat the import of `dem_score.xlsx` into `R`. Experiment with the options in the GUI. Also import `https://moderndive.com/data/dem_score.csv` using the `Import Dataset` icon under the **Environment** tab.
 
 ### LC 4.1 (Objective 2)
 

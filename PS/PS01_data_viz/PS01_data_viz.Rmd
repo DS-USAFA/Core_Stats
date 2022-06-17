@@ -52,7 +52,7 @@ Once you have opened the document:
 *  Change the title at the top to "Problem Set 1: Data Visualization". Be sure to keep the quotation marks. 
 *  Add an author line with your full name, following the example below. You need quotation marks!
 *  Delete any extra code (everything from line 6 down).
-*  Everything between the --- is called the YAML, Yet Another Markup Language, and establishes the header and document style as a minimum. Insert a text documentation line after the YAML.
+*  Everything between the `---` is called the YAML, Yet Another Markup Language, and establishes the header and document style as a minimum. Insert a text documentation line after the YAML.
 
 ![](figures/set.up2.png){width=100%}
 
@@ -94,7 +94,7 @@ library(ggplot2)
 library(readr)
 ```
 
-Remember, "running code means" telling `R` "do this". Ask yourself what do I want `R` to do and what does `R` need to do this? You can run existing code many ways:
+Remember, "running code" means telling `R` "do this". Ask yourself what do I want `R` to do and what does `R` need to do this? You can run existing code many ways:
 
 - Re-typing code out directly in the console (most laborious method)
 - Copying and pasting existing code into the console and hitting enter (easier method)
@@ -104,7 +104,7 @@ Remember, "running code means" telling `R` "do this". Ask yourself what do I wan
 
 ### The Data
 
-Today we will practice data visualization using data on births from the state of North Carolina. Copy, paste and run the code below in your rmarkdown file to load the data. The rmarkdown file does not use any objects in your local global environment. You must load all data and libraries into your rmarkdown file.   
+Today we will practice data visualization using data on births from the state of North Carolina. Copy, paste and run the code below in a code chunk in your rmarkdown file to load the data. The rmarkdown file does not use any objects in your local global environment. You must load all data and libraries into your rmarkdown file.   
 
 ```{r, message = F}
 nc <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTm2WZwNBoQdZhMgot7urbtu8eG7tzAq-60ZJsQ_nupykCAcW0OXebVpHksPWyR4x8xJTVQ8KAulAFS/pub?gid=202410847&single=true&output=csv")
@@ -128,9 +128,9 @@ glimpse(nc)
 
 We will see that there are 1000 observations and 13 variables in this data set. The variable names are `fage`, `mage`, `mature`, etc. This output also tells us that some variables are numbers...some specifically integers `<int>`, others are numbers with decimals  `<dbl>`.  Some of the variables are factors `<fct>`. It is a good practice to see if R is treating variables as factors `<fct>`; as numbers `<int>` or `<dbl>` (basically numbers with decimals); or as characters (i.e. text) `<chr>`. 
 
-1. Looking at the output of the `glimpse()` function, has does `R` classify the variable `mature`? Same question for the variable `gained`. (Answer with text)
+1. Looking at the output of the `glimpse()` function, how does `R` classify the variable `mature`? Same question for the variable `gained`. (Answer with text)
 
-**Remember** to answer this question in your rmarkdown file. Start the section with the label `## Exercise 1` and then insert two returns before typing your answer.  
+**Remember** to answer this question in your rmarkdown file. Start the section with the label `## Exercise 1` and then insert two returns before typing your answer. Your answer should be in COMPLETE SENTENCES. 
 
 ### The data viewer
 
@@ -146,7 +146,7 @@ head(nc)
 ### Knit your document 
 
 <div id="license">
-It is a good idea to try kitting your document from time to time as you go along! Go ahead, and make sure your document is knitting, and that your knitted file includes Exercise headers, text, and code. Note that knitting automatically saves your Rmd file too!
+It is a good idea to try kitting your document from time to time as you go along! Go ahead, and make sure your document is knitting, and that your knitted file includes Exercise headers, text, and code. Note that knitting automatically saves your Rmd file too! 
 </div>
 
 # Types of Graphs
@@ -195,7 +195,7 @@ ggplot(data = nc, aes(x = weeks, y = weight)) +
 If we are just exploring the data, we don't need to clean up the graph. However, for presentation in a report, it is needed. Notice that there is a positive relationship between these variables. 
 
 
-1.  Make a graph showing a mother's age `mage` on the x axis and the variable `weeks` on the y axis.  Include axis labels with measurement units, and a title. (`R` code and output)
+1.  Make a graph showing a mother's age `mage` on the x axis and the variable `weeks` on the y axis.  Include axis labels with measurement units, and a title (`R` code and output). HINT: copy and paste the code above and edit it for this exercise. 
 
 ```{r include = F}
 ggplot(data = nc, aes(x = mage, y = weeks))+ 
@@ -220,7 +220,7 @@ ggplot(data = nc, aes(x = weeks, y = gained, color = premie, shape = marital))+
 
 
 
-1. Make a new scatterplot that shows a mothers age on the x axis (variable called `mage`) and pregnancy length on the y axis (`weeks`). Color the points on the plot based on the gender of the resulting baby (variable called `gender`). Change the shape based on the marital status of the mother (variable called `marital`). Use `alpha` value of 0.4 and use the classic theme. There should not appear to be any strong relationship between a mother's age and the pregnancy length. (`R` code and output)
+1. Make a new scatterplot that shows a mother's age on the x axis (variable called `mage`) and pregnancy length on the y axis (`weeks`). Color the points on the plot based on the gender of the resulting baby (variable called `gender`). Change the shape based on the marital status of the mother (variable called `marital`). Use `alpha` value of 0.4 and use the classic theme. There should not appear to be any strong relationship between a mother's age and the pregnancy length. (`R` code and output)
 
 ```{r include = F}
 ggplot(data = nc, aes(x = mage, y = weeks, color = gender, shape = marital)) + 
@@ -263,7 +263,7 @@ ggplot(data = nc, aes(x = mage))+
 
 Note that none of these arguments went inside the `aes`thetic `mapping` argument as they do not specifically represent mappings of variables. 
 
-1. Inspect the histogram of the `mage` variable. Answer each of the following with **text**. 
+1. Inspect the above histogram of the `mage` variable. Answer each of the following with **text**. 
 
     **A.** The y axis is labeled **count**. What is specifically being counted in this case? Hint: think about what each case is in this data set. 
     
@@ -381,7 +381,7 @@ ggplot(data = nc, aes(x = premie))+
   theme_classic()
 ```
 
-To make this into proportions, is more difficult. Here is the code, but you are not going to be held accountable for this code as it uses advanced features of `ggplot()`.  
+To make this into proportions is more difficult. Here is the code, but you are not going to be held accountable for this code as it uses advanced features of `ggplot()`.  
 
 ```{r fig.height=3, fig.width=5, warning = F}
 ggplot(data = nc, aes(x = premie,y=..prop..,group=1))+ 

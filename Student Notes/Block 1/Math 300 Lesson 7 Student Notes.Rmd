@@ -4,12 +4,12 @@ subtitle: "join, select, rename, and top_n"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
-  pdf_document:
-    toc: yes
 ---
 
 
@@ -20,13 +20,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Use the `inner_join()` function to combine data frames to use to explore, explain, and visualize. 
+1. Use the `inner_join()` function to combine data frames in order to explore, explain, and visualize. 
 
 2. Explain how to join data frame to include the use of keys and the advantages and the disadvantages of normal forms. 
 
-3. Use `rename()` and `select()` to reorganize data frames to use to explore, explain, and visualize. This includes all the ways to select columns including helper functions such as `everthing()`, `contains()`, etc. 
+3. Use `rename()` and `select()` to reorganize data frames in order to explore, explain, and visualize. This includes all the ways to select columns including helper functions such as `everthing()`, `contains()`, etc. 
 
-4. Use `top_n()` to select a subset of the data frame.
+4. Use `top_n()` to select a subset of a data frame.
 
 
 ## Reading 
