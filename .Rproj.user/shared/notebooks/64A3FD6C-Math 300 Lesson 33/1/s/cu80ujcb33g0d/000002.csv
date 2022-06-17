@@ -1,0 +1,5 @@
+"0","ggplot(data = flight_sample, aes(x = arr_delay)) +"
+"0","  geom_density(fill=""cyan"") +"
+"0","  facet_wrap(~carrier)+"
+"0","  labs(x = ""Arrival Delay"") +"
+"0","  theme_classic()"

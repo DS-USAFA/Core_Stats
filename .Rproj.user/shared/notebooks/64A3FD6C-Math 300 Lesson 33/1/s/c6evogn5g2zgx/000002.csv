@@ -1,0 +1,4 @@
+"0","# Get the null distribution"
+"0","null_dist <- flight_sample %>%"
+"0","  specify(formula = arr_delay ~ carrier) %>%"
+"0","  assume(""t"")"

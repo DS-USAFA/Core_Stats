@@ -1,0 +1,227 @@
+---
+title: "Math 300 NTI Lesson 33"
+subtitle: "More on Hypothesis Tests"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Standardize a variable.       
+
+2. Find percentile and probabilities for the t distribution, this includes determining the correct degrees of freedom.  
+
+3. Use the `infer` package to conduct a theory-based hypothesis test. 
+
+4. Know and verify the assumptions of the two-sample t-test.
+
+
+## Reading 
+
+[Chapter 9.6](https://moderndive.com/9-hypothesis-testing.html#nhst-conclusion)
+
+
+## Lesson 
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
+There are no learning checks for this section. 
+
++ The material in this section is the traditional small sample normal-based inference. It is good to present this so they are familiar with the material. Point out the differences and the assumptions needed. 
+
+*These traditional theory-based methods have been used for decades mostly because researchers didn’t have access to computers that could run thousands of calculations quickly and efficiently. Now that computing power is much cheaper and more accessible, simulation-based methods are much more feasible. However, researchers in many fields continue to use theory-based methods. Hence, we make it a point to include an example here.*
+
++ We have to standardize to get a mathematical solution for the sampling distribution of the difference in means, the t distribution.  
+
++ Spend a little time of the formula for the t distribution of the difference of two means. 
+
++ Spend time on the problem with p-values. Read the papers and point out key ideas from the reading. Have students read some of the referenced links.
+
+***
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(infer)
+library(moderndive)
+library(nycflights13)
+library(ggplot2movies)
+```
+
+## Problem
+
+Let's use the 2013 airline data to test the hypothesis that United Airlines flights arrive at their destination later than Delta flights on average. We will take a sample even though we have the computational power to look at all the flights.
+
+### Data
+
+Let's get a sample.
+
+```{r}
+set.seed(90)
+flight_sample <- flights %>%
+  select(arr_delay, carrier,origin) %>%
+  filter(carrier%in%c("DL","UA")) %>%
+  group_by(carrier) %>%
+  slice_sample(n=50) %>%
+  ungroup()
+```
+
+
+### EDA
+
+```{r}
+ggplot(data = flight_sample, aes(x = arr_delay)) +
+  geom_density(fill="cyan") +
+  facet_wrap(~carrier)+
+  labs(x = "Arrival Delay") +
+  theme_classic()
+```
+
+```{r}
+ggplot(data = flight_sample, aes(y = arr_delay, x= carrier)) +
+  geom_boxplot(fill="cyan") +
+  labs(x = "Arrival Delay") +
+  theme_classic()
+```
+
+```{r}
+flight_sample %>% 
+  group_by(carrier) %>% 
+  summarize(n = n(), mean_delay = mean(arr_delay), std_dev = sd(arr_delay))
+```
+
+The data is skewed with outliers, especially for Delta. This will cause problems for the theory-based method which assumes normality. We will run the test and also the simulation-based test.  
+
+### Hypothesis Test Theory-based
+
+```{r}
+# Get the null distribution
+null_dist <- flight_sample %>%
+  specify(formula = arr_delay ~ carrier) %>%
+  assume("t")
+```
+
+
+
+
+```{r}
+# Find observed difference
+obs_flights_mean_diff <- flight_sample %>% 
+  specify(formula = arr_delay ~ carrier) %>% 
+  hypothesize(null = "independence") %>% 
+#  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "t", order = c("DL", "UA"))
+```
+
+```{r}
+visualize(null_dist) +
+  theme_classic() +
+  shade_p_value(obs_stat = obs_flights_mean_diff, direction = "both")
+```
+
+```{r}
+#Get p-value
+null_dist %>% 
+  get_p_value(obs_stat = obs_flights_mean_diff, direction = "both")
+```
+
+Based on the data, there fails to be sufficient evidence to reject the claim that there is a difference in mean delay times between Delta Airlines and United Airlines out of New York.
+
+### Hypothesis Test Permutation
+
+This method does not assume normality. 
+
+
+```{r}
+# Get the null distribution
+null_dist_permute <- flight_sample %>% 
+  specify(formula = arr_delay ~ carrier) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "diff in means", order = c("DL", "UA"))
+```
+
+
+
+
+```{r}
+# Find observed difference
+obs_flights_mean_diff_permute <- flight_sample %>% 
+  specify(formula = arr_delay ~ carrier) %>% 
+  calculate(stat = "diff in means", order = c("DL", "UA"))
+```
+
+
+
+```{r}
+visualize(null_dist_permute) +
+  theme_classic() +
+  shade_p_value(obs_stat = obs_flights_mean_diff_permute, direction = "both")
+```
+
+```{r}
+#Get p-value
+null_dist_permute %>% 
+  get_p_value(obs_stat = obs_flights_mean_diff_permute, direction = "both")
+```
+
+Based on the data, there fails to be sufficient evidence to reject the claim that there is a difference in mean delay times between Delta Airlines and United Airlines out of New York.
+
+The p-values are close.
+
+
+### Confidence Interval
+
+```{r}
+null_dist_permute %>% 
+  get_ci(level=0.95,type="percentile")
+```
+
+We could use medians instead of means in the permutation test. It will not be as sensitive to the outliers. 
+
+### Confidence Interval for Medians
+
+
+
+```{r}
+# Get the null distribution
+null_dist_permute_median <- flight_sample %>% 
+  specify(formula = arr_delay ~ carrier) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "diff in medians", order = c("DL", "UA"))
+```
+
+```{r}
+null_dist_permute_median %>% 
+  get_ci(level=0.95,type="percentile")
+```
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
+  * `infer` package version: `r packageVersion("infer")`
+  * `nycflights13` package version: `r packageVersion("nycflights13")`
+  * `ggplot2movies` package version: `r packageVersion("ggplot2movies")`
+

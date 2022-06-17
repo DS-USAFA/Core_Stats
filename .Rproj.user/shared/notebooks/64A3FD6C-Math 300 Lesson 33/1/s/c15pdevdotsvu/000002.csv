@@ -1,0 +1,3 @@
+"0","visualize(null_dist_permute) +"
+"0","  theme_classic() +"
+"0","  shade_p_value(obs_stat = obs_flights_mean_diff_permute, direction = ""both"")"
