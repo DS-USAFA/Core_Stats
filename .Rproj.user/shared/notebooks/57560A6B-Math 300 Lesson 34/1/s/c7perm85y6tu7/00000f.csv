@@ -1,0 +1,10 @@
+"0","ggplot(ev_chp10, "
+"0","       aes(y = kwh_total, x = dollars)) +"
+"0","  geom_point() +"
+"0","  labs(x = ""Money Paid"", "
+"0","       y = ""Total Energy"","
+"0","       title = ""Relationship between money paid for charging session and total energy used"") +  "
+"0","  geom_smooth(method = ""lm"", se = FALSE) +"
+"0","  theme_classic()"
+"2","`geom_smooth()` using formula 'y ~ x'
+"

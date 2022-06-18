@@ -1,0 +1,2 @@
+"0","# Fit regression model:"
+"0","score_model <- lm(score ~ bty_avg, data = evals_ch5)"

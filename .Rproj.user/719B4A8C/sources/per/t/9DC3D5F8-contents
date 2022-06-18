@@ -1,16 +1,15 @@
 ---
-title: "Math 300 NTI Lesson 34"
+title: "Math 300 Lesson 34 Notes"
 subtitle: "Interpreting Regression Tables"
-author: "Professor Bradley Warner"
+author: "YOUR NAME HEREr"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
-    css: NTI.css
-  pdf_document:
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -71,28 +70,31 @@ glimpse(evals_ch5)
 The scatterplot revealed what appeared to be a slight positive association between the two variables. But is this just to the randomness associated with sampling?
 
 ```{r message=FALSE,warning=FALSE}
-ggplot(evals_ch5, 
-       aes(x = bty_avg, y = score)) +
-  geom_point() +
-  labs(x = "Beauty Score", 
-       y = "Teaching Score",
-       title = "Relationship between teaching and beauty scores") +  
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_classic()
+# Complete the code
+# ggplot(evals_ch5, 
+#        aes(x = _________, y = _________)) +
+#   geom_point() +
+#   labs(x = "Beauty Score", 
+#        y = "Teaching Score",
+#        title = "Relationship between teaching and beauty scores") +  
+#   geom_smooth(method = "lm", se = FALSE) +
+#   theme_classic()
 ```
 ### Regression Model
 
 Let's build the linear regression model.
 
 ```{r}
+# Complete the code
 # Fit regression model:
-score_model <- lm(score ~ bty_avg, data = evals_ch5)
+# score_model <- lm(________ ~ ________________, data = evals_ch5)
 ```
 
 
 ```{r}
+# Complete the code
 # Get regression table:
-get_regression_table(score_model)
+# get_regression_table(______________)
 ```
 
 - Some review:
@@ -113,7 +115,7 @@ $$
 
 ### Conclusion 
 
-Based on the data, there is sufficient evidence to conclude there is a linear relationship between the beauty rating and overall rating of an instructor at UT - Austin.
+**Answer:**
 
 ## Your turn
 
@@ -141,7 +143,7 @@ glimpse(ev_chp10)
 
 ### EDA
 
-Scatterplot
+Scatterplot 
 
 ```{r message=FALSE,warning=FALSE}
 ggplot(ev_chp10, 
@@ -152,27 +154,29 @@ ggplot(ev_chp10,
        title = "Relationship between money paid for charging session and total energy used") +  
   geom_smooth(method = "lm", se = FALSE) +
   theme_classic()
-```  
+``` 
 
 ### Regression Model
 
 Let's build the linear regression model.
 
 ```{r}
+# Complete the code
 # Fit regression model:
-ev_model <- lm(kwh_total ~ dollars, data = ev_chp10)
+
 ```
 
 
 ```{r}
+# Complete the code
 # Get regression table:
-get_regression_table(ev_model)
+
 ```
 
 
 ### Conclusion 
 
-Based on the data, there is insufficient evidence to conclude there is a linear relationship between the the amount paid for a charging session and the total energy used.
+**Answer:**
 
 
 ***

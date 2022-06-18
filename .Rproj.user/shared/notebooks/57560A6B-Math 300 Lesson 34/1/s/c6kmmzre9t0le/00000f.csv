@@ -1,0 +1,2 @@
+"0","# Fit regression model:"
+"0","ev_model <- lm(kwh_total ~ dollars, data = ev_chp10)"

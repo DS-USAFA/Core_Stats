@@ -3,7 +3,7 @@
     "path": "C:/Users/Brad.Warner/OneDrive - afacademy.af.edu/Classes/Core_Stats/NTI/Block 4/Math 300 Lesson 34.Rmd",
     "project_path": "NTI/Block 4/Math 300 Lesson 34.Rmd",
     "type": "r_markdown",
-    "hash": "3539761646",
+    "hash": "3819300435",
     "contents": "",
     "dirty": false,
     "created": 1655574319133.0,
@@ -12,15 +12,18 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "33,75",
-        "scrollLine": "31"
+        "cursorPosition": "155,0",
+        "scrollLine": "155",
+        "last_setup_crc32": "A88197B67e434e7",
+        "docOutlineVisible": "0",
+        "rmdVisualCollapsedChunks": ""
     },
     "folds": "",
-    "lastKnownWriteTime": 1655574357,
+    "lastKnownWriteTime": 1655577543,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1655574357337,
+    "last_content_update": 1655577543783,
     "read_only": false,
     "read_only_alternatives": []
 }
