@@ -1,3 +1,0 @@
-"0","flight_sample %>% "
-"0","  group_by(carrier) %>% "
-"0","  summarize(n = n(), mean_delay = mean(arr_delay), std_dev = sd(arr_delay))"

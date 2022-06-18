@@ -9,6 +9,12 @@ output:
     theme: lumen
 ---
 
+## Documentation: 
+
+We used all the resources available to instructors from the authors of Modern Dive.
+
+## Setup
+
 ```{r message = F}
 library(dplyr)
 library(ggplot2)

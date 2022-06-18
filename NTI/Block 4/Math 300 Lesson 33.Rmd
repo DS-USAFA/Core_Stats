@@ -13,7 +13,6 @@ output:
     toc: yes
 ---
 
-
 ```{r setup, include=FALSE}
 library(knitr)
 library(kableExtra)
@@ -22,39 +21,37 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Standardize a variable.       
+1.  Standardize a variable.
 
-2. Find percentile and probabilities for the t distribution, this includes determining the correct degrees of freedom.  
+2.  Find percentile and probabilities for the t distribution, this includes determining the correct degrees of freedom.
 
-3. Use the `infer` package to conduct a theory-based hypothesis test. 
+3.  Use the `infer` package to conduct a theory-based hypothesis test.
 
-4. Know and verify the assumptions of the two-sample t-test.
+4.  Know and verify the assumptions of the two-sample t-test.
 
-
-## Reading 
+## Reading
 
 [Chapter 9.6](https://moderndive.com/9-hypothesis-testing.html#nhst-conclusion)
 
-
-## Lesson 
+## Lesson
 
 *Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
 
-There are no learning checks for this section. 
+There are no learning checks for this section.
 
-+ The material in this section is the traditional small sample normal-based inference. It is good to present this so they are familiar with the material. Point out the differences and the assumptions needed. 
+-   The material in this section is the traditional small sample normal-based inference. It is good to present this so they are familiar with the material. Point out the differences and the assumptions needed.
 
-*These traditional theory-based methods have been used for decades mostly because researchers didn’t have access to computers that could run thousands of calculations quickly and efficiently. Now that computing power is much cheaper and more accessible, simulation-based methods are much more feasible. However, researchers in many fields continue to use theory-based methods. Hence, we make it a point to include an example here.*
+*These traditional theory-based methods have been used for decades mostly because researchers didn't have access to computers that could run thousands of calculations quickly and efficiently. Now that computing power is much cheaper and more accessible, simulation-based methods are much more feasible. However, researchers in many fields continue to use theory-based methods. Hence, we make it a point to include an example here.*
 
-+ We have to standardize to get a mathematical solution for the sampling distribution of the difference in means, the t distribution.  
+-   We have to standardize to get a mathematical solution for the sampling distribution of the difference in means, the t distribution.
 
-+ Spend a little time of the formula for the t distribution of the difference of two means. 
+-   Spend a little time of the formula for the t distribution of the difference of two means.
 
-+ Spend time on the problem with p-values. Read the papers and point out key ideas from the reading. Have students read some of the referenced links.
+-   Spend time on the problem with p-values. Read the papers and point out key ideas from the reading. Have students read some of the referenced links.
 
-***
+------------------------------------------------------------------------
 
-### Libraries 
+### Libraries
 
 ```{r warning=FALSE,message=FALSE}
 library(tidyverse)
@@ -82,7 +79,6 @@ flight_sample <- flights %>%
   ungroup()
 ```
 
-
 ### EDA
 
 ```{r}
@@ -106,7 +102,7 @@ flight_sample %>%
   summarize(n = n(), mean_delay = mean(arr_delay), std_dev = sd(arr_delay))
 ```
 
-The data is skewed with outliers, especially for Delta. This will cause problems for the theory-based method which assumes normality. We will run the test and also the simulation-based test.  
+The data is skewed with outliers, especially for Delta. This will cause problems for the theory-based method which assumes normality. We will run the test and also the simulation-based test.
 
 ### Hypothesis Test Theory-based
 
@@ -116,9 +112,6 @@ null_dist <- flight_sample %>%
   specify(formula = arr_delay ~ carrier) %>%
   assume("t")
 ```
-
-
-
 
 ```{r}
 # Find observed difference
@@ -145,8 +138,7 @@ Based on the data, there fails to be sufficient evidence to reject the claim tha
 
 ### Hypothesis Test Permutation
 
-This method does not assume normality. 
-
+This method does not assume normality.
 
 ```{r}
 # Get the null distribution
@@ -157,17 +149,12 @@ null_dist_permute <- flight_sample %>%
   calculate(stat = "diff in means", order = c("DL", "UA"))
 ```
 
-
-
-
 ```{r}
 # Find observed difference
 obs_flights_mean_diff_permute <- flight_sample %>% 
   specify(formula = arr_delay ~ carrier) %>% 
   calculate(stat = "diff in means", order = c("DL", "UA"))
 ```
-
-
 
 ```{r}
 visualize(null_dist_permute) +
@@ -185,7 +172,6 @@ Based on the data, there fails to be sufficient evidence to reject the claim tha
 
 The p-values are close.
 
-
 ### Confidence Interval
 
 ```{r}
@@ -193,11 +179,9 @@ null_dist_permute %>%
   get_ci(level=0.95,type="percentile")
 ```
 
-We could use medians instead of means in the permutation test. It will not be as sensitive to the outliers. 
+We could use medians instead of means in the permutation test. It will not be as sensitive to the outliers.
 
 ### Confidence Interval for Medians
-
-
 
 ```{r}
 # Get the null distribution
@@ -213,15 +197,14 @@ null_dist_permute_median %>%
   get_ci(level=0.95,type="percentile")
 ```
 
-***
+------------------------------------------------------------------------
 
-## Documenting software 
+## Documenting software
 
-  * File creation date: `r Sys.Date()`
-  * `r R.version.string`
-  * `tidyverse` package version: `r packageVersion("tidyverse")`
-  * `moderndive` package version: `r packageVersion("moderndive")`
-  * `infer` package version: `r packageVersion("infer")`
-  * `nycflights13` package version: `r packageVersion("nycflights13")`
-  * `ggplot2movies` package version: `r packageVersion("ggplot2movies")`
-
+-   File creation date: `r Sys.Date()`
+-   `r R.version.string`
+-   `tidyverse` package version: `r packageVersion("tidyverse")`
+-   `moderndive` package version: `r packageVersion("moderndive")`
+-   `infer` package version: `r packageVersion("infer")`
+-   `nycflights13` package version: `r packageVersion("nycflights13")`
+-   `ggplot2movies` package version: `r packageVersion("ggplot2movies")`

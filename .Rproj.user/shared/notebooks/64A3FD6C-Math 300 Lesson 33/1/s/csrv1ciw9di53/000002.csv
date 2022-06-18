@@ -1,6 +1,0 @@
-"0","# Find observed difference"
-"0","obs_flights_mean_diff <- flight_sample %>% "
-"0","  specify(formula = arr_delay ~ carrier) %>% "
-"0","  hypothesize(null = ""independence"") %>% "
-"0","#  generate(reps = 1000, type = ""permute"") %>% "
-"0","  calculate(stat = ""t"", order = c(""DL"", ""UA""))"

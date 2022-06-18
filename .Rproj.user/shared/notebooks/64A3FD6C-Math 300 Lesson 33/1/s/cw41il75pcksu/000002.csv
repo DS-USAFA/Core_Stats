@@ -1,4 +1,0 @@
-"0","ggplot(data = flight_sample, aes(y = arr_delay, x= carrier)) +"
-"0","  geom_boxplot(fill=""cyan"") +"
-"0","  labs(x = ""Arrival Delay"") +"
-"0","  theme_classic()"

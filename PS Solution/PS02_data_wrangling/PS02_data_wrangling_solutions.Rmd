@@ -9,9 +9,9 @@ output:
     theme: lumen
 ---
 
-## Documentation 
+## Documentation: 
 
-None.
+We used all the resources available to instructors from the authors of Modern Dive.
 
 ### R Packages 
 
