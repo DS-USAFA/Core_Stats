@@ -1,0 +1,3 @@
+"0","sat_gpa %>% "
+"0","  group_by(sex) %>% "
+"0","  summarize(gpa_fy = mean(gpa_fy),n=n())"

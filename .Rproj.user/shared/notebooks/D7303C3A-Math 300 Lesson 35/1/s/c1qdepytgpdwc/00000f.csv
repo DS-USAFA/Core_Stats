@@ -1,0 +1,13 @@
+"0","ggplot(score_regression_points, "
+"0","       aes(x = score_hat, y = residual)) +"
+"0","  geom_point() +"
+"0","  labs(x = ""Fitted Value"", "
+"0","       y = ""Residual"","
+"0","       title = ""Checking linearity assumption"") +  "
+"0","  geom_smooth(method = ""lm"", se = FALSE, color=""black"") +"
+"0","  geom_smooth(method=""loess"", se=FALSE) +"
+"0","  theme_classic()"
+"2","`geom_smooth()` using formula 'y ~ x'
+"
+"2","`geom_smooth()` using formula 'y ~ x'
+"

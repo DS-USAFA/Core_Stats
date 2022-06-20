@@ -40,7 +40,7 @@ There are no learning checks for this section.
 
 -   This is a chance to review regression and also to conduct a hypothesis test.
 
--   Focus on the intrepretation of the results.
+-   Focus on the interpretation of the results.
 
 ------------------------------------------------------------------------
 

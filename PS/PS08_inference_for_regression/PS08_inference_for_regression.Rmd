@@ -1,0 +1,338 @@
+---
+title: "Problem Set 08: Inference for Regression (30 pts)"
+subtitle: "Authorized Resources: Anyone and anything."
+output:
+  html_document:
+    css: lab.css
+    theme: lumen
+    toc: yes
+    toc_depth: 1
+    toc_float:
+      collapsed: false
+  pdf_document: default
+---
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk!
+knitr::opts_chunk$set(
+  echo = TRUE, message=FALSE, warning = FALSE, fig.width = 16/2, 
+  fig.height = 9/2
+)
+```
+
+**Relevant reading for this problem set**: [ModernDive Chapter 10: Inference for Regression](https://moderndive.com/10-inference-for-regression.html){target="_blank"}.
+
+# Collaboration {-}
+
+Please indicate who you collaborated with on this problem set: 
+
+
+
+
+## Background 
+
+For this problem set you will apply statistical inference to a linear modeling and explore methods to check the required conditions.  To start we will build a model using data from the `palmerpenguins` package. The `penguins` data contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. 
+
+First we will start with our typical exploratory data analysis and then build our linear model.  From there we will use our new skills to make inferences about our regression model and check the necessary conditions. 
+
+
+
+## Setup
+
+You will need to install `palmerpenguins` package.
+
+### Load packages
+
+We will read the data in from the`palmerpenguins` package, explore the data using the `dplyr` package and visualize it using the `ggplot2` package. The `moderndive` package includes some nice functions to show regression model outputs and finally use the `infer` package for “tidy” and transparent statistical inference.
+
+```{r message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(moderndive)
+library(infer)
+library(palmerpenguins)
+```
+
+### The data
+
+
+```{r message = F}
+pen <-penguins  %>% 
+  filter(!is.na(flipper_length_mm))
+```
+
+Take a moment to look at the data in the viewer. The dataset contains 8 variables. You can read more about the variables by typing ?penguins
+
+For our lab we will focus on four variables, the explanatory variables include: 
+
+* `flipper_length_mm` - an integer denoting flipper length (millimeters)
+* `bill_length_mm` - a number denoting bill length (millimeters)
+* `species`- denotes penguin species (Adélie, Chinstrap and Gentoo)
+
+The outcome variable `body_mass_g` is an integer denoting body mass (grams).
+
+
+\newpage
+
+### Visualization
+
+We will start by investigating the relationship between 'flipper_length_mm' and 'body_mass_g'. 
+
+
+```{r fig.height=3, fig.width=7}
+ggplot(data = pen, aes(y = body_mass_g, x = flipper_length_mm)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Flipper length (millimeters)", 
+       y = "Body mass (grams)", 
+       title = "Flipper Length and Body Mass of Three Species of Penguins") 
+```
+
+# Question 1
+
+Does the relationship appear to be positive or negative? Does it look to be reasonably linear? 
+
+**Answer:**
+
+
+## Create a linear regression model
+
+
+```{r m1}
+pen_model <- lm(body_mass_g ~ flipper_length_mm, data = pen)
+get_regression_table(pen_model)
+```
+
+# Question 2
+
+Using our shorthand interpretation for confidence intervals and the regression table, write a sentence interpreting the 95% confidence interval for $\beta_1$? 
+
+**Answer:**
+
+
+
+# Question 3
+Recall that the test statistic and $p$-value correspond to the hypothesis test: 
+$$\begin{aligned} H_0:&\beta_{1} = 0 \\\ \mbox{vs }H_A:& \beta_{1} \neq 0 \end{aligned}$$
+Write up the results & conclusions for this hypothesis test.
+
+**Answer:**
+
+
+# Question 4
+
+You may remember that this hypothesis test is only valid if certain "conditions for inference for regression" are met.  Let's take a closer look those conditions. 
+
+1. Linearity of relationship between variables
+2. Independence of the residuals
+3. Normality of the residuals
+4. Equality of variance of the residuals
+
+## Linearity of relationship between variables 
+
+**4a) ** This was analyzed in question 1. Did you say that the relationship between `flipper_length_mm` and `body_mass_g` appears to be linear?
+
+**Answer:**
+
+## Independence of the residuals
+
+The observations in our data must be independent of one another.   In this data, we can not be sure this is case, for example, some of the penguins included may be related (siblings, parents).  We are not given enough information to verify this condition has been met.
+
+
+## Normality of the residuals
+
+The third condition is that the residuals should follow a Normal distribution centered 0.  To check for normality, create a histogram.   
+
+The code to get the residuals is given. 
+
+```{r}
+regression_points <- get_regression_points(pen_model)
+```
+
+**4b)**  
+
+```{r fig.height=3, fig.width=7}
+#Add code for the histogram.
+
+
+```
+
+**4c)** Does this model meet the normality of residuals condition?
+
+**Answer:**
+
+
+
+## Equality of variance of the residuals
+
+The final condition says that the residual should exhibit equal variace across all of the values of the explanatory variable.   
+
+ To check this condition we can create a scatterplot that has our explanatory variable, `flipper_length_mm`, on the x-axis and our residuals on the y-axis.
+Does this model meet the Normality of Residuals condition?
+
+```{r fig.height=3, fig.width=7}
+ggplot(regression_points, aes(x = flipper_length_mm, y = residual)) +
+  geom_point() +
+  labs(x = "Flipper length in mm ", y = "Residual") +
+  geom_hline(yintercept = 0, col = "blue", size = 1)
+
+```
+**4d.** Does this model meet the Normality of Residuals condition?
+
+**Answer:**
+
+
+
+
+# Question 5
+
+Now let's circle back and take a second look at the confidence intervals.  Using this bootstrap distribution, we’ll construct the 95% confidence interval using the percentile method and (if appropriate) the standard error method as well.  We can compare our results to the results from R (which uses mathematical formula to construct confidence intervals.)
+
+### Step 1: Calculate the bootstrap statistic and Visualize the bootstrap distribution
+
+
+```{r}
+bootstrap_distn_slope <- pen %>% 
+  specify(formula = body_mass_g ~ flipper_length_mm) %>%
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "slope")
+visualize(bootstrap_distn_slope)
+```
+
+### Step 2: Calculate CI from the a bootstap resample two ways
+
+**5a)** Find a 95% CI using percentile method
+```{r}
+#finish the code here:
+#bootstrap_distn_slope %>%
+```
+
+
+**5b)** CI using the 95% rule 
+
+Since the bootstrap distribution appears to be roughly bell-shaped, we can also construct a 95% confidence interval using the standard error method
+```{r}
+#finish the code here:
+#bootstrap_distn_slope %>% 
+
+```
+
+# Question 6 
+
+Write down the three 95% confidence intervals for the  $\beta_{1}$. 
+a, b, c, d, e, and f with the appropriate values you've computed. 
+
+When you are done, make sure all the `|` in the table still line up so your results print out in a table! 
+
+
+CI construction method                    | lower value   | upper value
+-------------------------------           | ------------- | -------------  
+Using bootstrap: 95% SE error method      | a	            | b	
+Using bootstrap: percentile rule          | c             | d
+Using mathematical formula (R output)     | e	            | f
+
+
+In your opinion, would you say these three confidence intervals are similar?
+
+**Answers:** 
+
+
+## Part 2
+
+For the next part you will check the conditions for regression inference for a new model. This model will have `bill_length_mm` and `species` as explanatory variables, and we'll use the parallel slopes model
+
+```{r fig.height=3, fig.width=7}
+ggplot(data = pen, aes(y = body_mass_g, x = bill_length_mm, color=species)) + 
+  geom_point() + 
+  geom_parallel_slopes(method = "lm", se = FALSE) +
+  labs(x = "Bill length (millimeters)", 
+       y = "Body mass (grams)", 
+       title = "Bill Length and Body Mass of three Species of Penguins") 
+```
+
+Let's fit the parallel slopes model
+
+```{r}
+# Fit regression model:
+pen_parallel <- lm(body_mass_g ~ bill_length_mm + species, data = pen)
+
+# Get regression table:
+get_regression_table(pen_parallel)
+
+# Get regression points:
+regression_points_par <- get_regression_points(pen_parallel)
+
+```
+Let us once again inspect the conditions necessary for inference with regression.
+
+1. Linearity of relationship between variables
+2. Independence of the residuals
+3. Normality of the residuals
+4. Equality of variance of the residuals
+
+
+# Question 7
+
+**Check for Linearity of relationship between variables **
+
+Would you say that the relationship between `bill_length_mm` and `body_mass_g` appears to be linear for each species?
+
+**Answer:**
+
+**Check for Independence of the residuals **
+
+This is the same as the first model that we looked it. The observations in our data must be independent of one another.   In this data, we can not be sure this is case, for example, some of the penguins included may be related (siblings, parents).  We are not given enough information to verify this condition has been met.
+
+# Question 8
+ Check Normality of the residuals (and they should be centered at 0.)
+
+
+**8a) **
+```{r fig.height=3, fig.width=5}
+#Add code for the histogram:
+
+```
+**8b)** Does this model meet the Normality of Residuals condition?
+
+**Answer:**
+
+
+# Question 9
+
+ Check for Equality of variance of the residuals
+
+To check this condition we can create a scatterplot that has our explanatory variable, `flipper_length_mm`, on the x-axis and our residuals on the y-axis.
+
+
+
+**9a)**
+```{r fig.height=3, fig.width=7}
+#Add code to check this condition:
+
+
+```
+**9b) **Does this meet the equality of variance of the residuals condition?
+
+**Answer:**
+
+# Question 10
+
+What can we conclude about the relationship between bill length and body mass for each species? Do we meet the necessary conditions?
+
+**Answer:**
+
+
+# Question 11
+
+What can we conclude about the intercept for body mass for both a) the Chinstrap species (in green in our visualization above) and b) Gentoo species (in blue), as compared to the Adelie species (in red)?
+
+**Answer:**
+
+
+[//]: (students- please do not delete anything below this line!) 
+
+<style type="text/css">
+h1 { /* Header 1 */
+  color: Blue;
+}}
+</style>

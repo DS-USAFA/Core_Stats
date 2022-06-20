@@ -1,0 +1,10 @@
+"0","boot_gpa_means <- sat_gpa %>% "
+"0","   specify(gpa_fy ~ sex) %>%"
+"0","   generate(reps = 5000, type = ""bootstrap"") %>% "
+"0","   calculate(stat = ""diff in means"", order = c(""Male"", ""Female"")) "
+"0",""
+"0","head(boot_gpa_means)"
+"1","Response: gpa_fy (numeric)
+Explanatory: sex (factor)"
+"1","
+"
