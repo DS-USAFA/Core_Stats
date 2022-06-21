@@ -32,7 +32,7 @@ In addition we will review how to save objects using the `<-` assignment operato
 
 # Setup
 
-Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS02_lastname_firstname_section**
+Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS02_lastname_firstname_section**.
 
 Fill in your answers to the exercises below with a corresponding exercise header in your rmarkdown file. Be sure to include text *and* code where necessary.
 
@@ -66,7 +66,7 @@ data(txhousing)
 glimpse(txhousing)
 ```
 
-**Make sure all the above code is included in your R markdown document, or code later on in your document may not run correctly when you knit to PDF**
+**Make sure all the above code is included in your R markdown document, or code later on in your document may not run correctly when you knit to PDF**.
 
 These data are about housing in Texas. Each row is monthly data for a given city in Texas in a given year. There are multiple years of data for each city. 
 
@@ -109,9 +109,9 @@ Imagine for instance that we wanted to reduce the size of the data set, and only
 austin_12 <- txhousing %>% filter(year == 2012, city == "Austin")
 ```
  
-> Note that we use `==` to say that we only want values that **exactly match** 2012 and "Austin"
+> Note that we use `==` to say that we only want values that **exactly match** 2012 and "Austin".
 
-What if we wanted to restrict our data set to only years before 2004 and the City of Austin? Below we use the `<` symbol (meaning "less than") to accomplish this. 
+What if we wanted to restrict our data set to only years before 2004 and the city of Austin? Below we use the `<` symbol (meaning "less than") to accomplish this. 
 
 ```{r eval = F}
 txhousing %>% filter(year < 2004, city == "Austin")
@@ -207,10 +207,10 @@ This first set of exercises will help you practice basic syntax. All you need to
 1. Make a data set called `midland_sub` that includes data only from the city of Midland in 2007 & 2014. Print the first 3 rows of `midland_sub`. 
 
 
-1. Add a column **to the `midland_sub` data set** called `prct_sold` that calculates the percentage of `listings` that were `sold` (`sales/listings * 100`). Be sure to **save** the results also as a data frame called `midland_sub`. Print the first 3 rows of `midland_sub`.
+1. Add a column **to the `midland_sub` data set** called `prct_sold` that calculates the percentage of `listings` that were sold (`sales/listings * 100`). Be sure to **save** the results also as a data frame called `midland_sub`. Print the first 3 rows of `midland_sub`.
 
 
-1. Calculate the **median** percentage of listings that were sold in Midland **in each month of the year** based on your `midland_sub` data set. Save the results of the calculation in an data frame called `midland_summary`. 
+1. Calculate the **median** percentage of listings that were sold only in 2014 in Midland **in each month of that year** based on your `midland_sub` data set. Save the results of the calculation in an data frame called `midland_summary`. 
 
 
 1. Arrange the `midland_summary` in `desc`ending order based on the average percentage of listings that were sold in Midland in 2014, so you can see **which month** had the greatest percentage of houses sold in Midland on median value for 2014. Print `midland_summary`. 

@@ -133,14 +133,14 @@ txhousing %>%
 ## Exercise 9
 In 2013, in which month were the most houses sold in Texas? (show code and text)
 
-**Answer: August**
+**Answer: July**
 
 
 ```{r }
 txhousing %>% 
   filter(year == 2013) %>%
   group_by(month) %>%
-  summarize(top_sales = max(sales)) %>%
+  summarize(top_sales = sum(sales)) %>%
   arrange(desc(top_sales))
 ```
 

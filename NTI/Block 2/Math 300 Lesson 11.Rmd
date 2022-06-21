@@ -1,16 +1,16 @@
 ---
 title: "Math 300 NTI Lesson 11"
-subtitle: "Simple Linear Regression - Continuous x"
+subtitle: "Simple Linear Regression - Continuous Predictor"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
     css: NTI.css
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -22,11 +22,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Explore the relationship between 2 numerical variables using summary statistics and visualizations in `R`. This includes using the `skimr` package and fitting a best fit line in a scatterplot. 
+1. Use the `skimr` package to summarize multiple numerical variables in a data frame.
 
-2. Fit a linear regression model to two variables using the `lm()` function and interpret the output. This includes the interpretation of slope and the use of *association* and not *cause*.    
+2. Build a scatterplot to describe the relationship between two continuous, numerical variables; use `geom_smooth()` to visualize the best fit line. 
 
-3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
+3. Fit a linear regression model between two variables using the `lm()` function and interpret the output. This includes the interpretation of slope and the use of *association* and not *causation*.    
+
+4. Generate a table of observations, fitted values, and residuals from a linear regression object.  
 
 ## Reading 
 
@@ -40,11 +42,11 @@ Work through the learning checks LC5.1 - LC5.3.
 
 + Regression can be used for explanatory and predictive purposes. It falls on that line between traditional statistics/econometrics and machine learning. In this course we focus on its more traditional use to interpret the relationship between predictors and a response. Math 378 is our machine learning course and expands on linear regression in this framework.   
 
-+ Note the many different terms for `x` and `y` in regression. These names come from different fields. For example `y` is called the response, dependent variable, outcome, and output. While `x` is called input, predictor, independent variable, and explanatory variable. Also point out that `y` is numerical while `x` can be numerical or categorical.
++ Note the many different terms for `x` and `y` in regression. These names come from different fields. For example, `y` is called the response, dependent variable, outcome, and output. Meanwhile, `x` is called input, predictor, independent variable, and explanatory variable. Also point out that in linear regression, `y` is numerical while `x` can be numerical or categorical.
 
 + We are using new packages. The `tidyverse` package is a wrapper and actually loads `readr`, `dplyr`, `ggplot2`, and `tidyr`.  
 
-+ In the reading, the authors' setup the problem with instructor teaching score as the response, explain why, and beauty score as the explanatory variable. What is the research question? 
++ In the reading, the authors setup the problem with instructor teaching score as the response and beauty score as the explanatory variable. What is the research question? 
 
 + The reading introduces tilde `~` as a formula. You might want to talk about this as we use it in LC 5.1. 
 
@@ -82,7 +84,7 @@ evals_ch5 %>%
 
 ### LC 5.1 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Conduct a new exploratory data analysis with the same outcome variable $y$ being `score` but with `age` as the new explanatory variable $x$. Remember, this involves three things:
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Refer to the example in section 5.1.1. Conduct a new exploratory data analysis with the same outcome variable $y$ being `score` but with `age` as the new explanatory variable $x$. Remember, this involves three things:
 
 - Looking at the raw data values.
 - Computing summary statistics.
