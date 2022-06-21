@@ -1,16 +1,15 @@
 ---
-title: "Math 300 NTI Lesson 35"
+title: "Math 300 Lesson 35 Notes"
 subtitle: "Regression Assumptions"
-author: "Professor Bradley Warner"
+author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
-    css: NTI.css
-  pdf_document:
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -79,15 +78,16 @@ head(score_regression_points)
 When we have a simple linear regression model, we can check linearity using a scatterplot of the explanatory and response variables. For multiple regression, we need to plot fitted values and residuals. We will do both here for our problem.
 
 ```{r message=FALSE,warning=FALSE}
-ggplot(evals_ch5, 
-       aes(x = bty_avg, y = score)) +
-  geom_point() +
-  labs(x = "Beauty Score", 
-       y = "Teaching Score",
-       title = "Relationship between teaching and beauty scores") +  
-  geom_smooth(method = "lm", se = FALSE, color="black") +
-  geom_smooth(method="loess", se=FALSE) +
-  theme_classic()
+# Complete the code
+# ggplot(evals_ch5, 
+#        aes(x = ________, y = _______)) +
+#   geom_point() +
+#   labs(x = "Beauty Score", 
+#        y = "Teaching Score",
+#        title = "Relationship between teaching and beauty scores") +  
+#   geom_smooth(method = "lm", se = FALSE, color="black") +
+#   geom_smooth(method="loess", se=FALSE) +
+#   theme_classic()
 ```
 
 The `loess` function let's a plot a smoother through the data. The linearity assumption is not bad, there is a small issue at the lowest beauty score. We could also plot the residuals.
@@ -112,10 +112,11 @@ We see a similar result except now we can generalize to multiple predictors.
 We will build a histogram to check this assumption.
 
 ```{r}
-ggplot(score_regression_points, aes(x = residual)) +
-  geom_histogram(binwidth = 0.25, fill = "cyan", color="black") +
-  labs(x = "Residual") +
-  theme_classic()
+# Complete the code
+# ggplot(_______________, aes(x = _______)) +
+#   geom_histogram(binwidth = 0.25, fill = "cyan", color="black") +
+#   labs(x = "Residual") +
+#   theme_classic()
 ```
 
 There is a skew to the left.
@@ -125,78 +126,69 @@ There is a skew to the left.
 We could use the fitted vs residuals plot again for this or for simple linear regression we plot the explanatory variable against the residual. We want an equal spread around the horizontal line centered at zero. 
 
 ```{r}
-ggplot(score_regression_points, aes(x = bty_avg, y = residual)) +
-  geom_point() +
-  labs(x = "Beauty Score", y = "Residual") +
-  geom_hline(yintercept = 0, col = "blue", size = 1)
+# Complete the code
+# ggplot(____________, aes(x = __________, y = _______)) +
+#   geom_point() +
+#   labs(x = "__________", y = "___________") +
+#   geom_hline(yintercept = 0, col = "blue", size = 1)
 ```
-The equality of variance seems reasonable.
-
 
 ***
 
-```{r, include=FALSE, purl=FALSE}
-chap <- 10
-lc <- 0
-```
 
 ## Learning Check 10.1 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Continuing with our regression using `age` as the explanatory variable and teaching `score` as the outcome variable.
+**(LC 10.1)** Continuing with our regression using `age` as the explanatory variable and teaching `score` as the outcome variable.
 
-- Use the `get_regression_points()` function to get the observed values, fitted values, and residuals for all `r nrow(evals_ch5)` instructors. 
+- Use the `get_regression_points()` function to get the observed values, fitted values, and residuals for all instructors. 
 
 ```{r, eval=TRUE, echo=TRUE}
-evals_ch5 <- evals %>%
-  select(ID, score, bty_avg, age)
+# Complete the code to get the regression model and residuals
 
-# Fit regression model:
-score_age_model <- lm(score ~ age, data = evals_ch5)
-# Get regression points:
-regression_points <- get_regression_points(score_age_model)
-head(regression_points)
 ```
 
 - Perform a residual analysis and look for any systematic patterns in the residuals. Ideally, there should be little to no pattern but comment on what you find here.
 
 The first condition is that the relationship between the outcome variable $y$ and the explanatory variable $x$ must be **L**inear. 
 
-```{r non-linear2, fig.cap="Example of a clearly non-linear relationship.", echo=FALSE, fig.height=3.3}
+```{r fig.height=3.3}
+# Complete the code
 set.seed(76)
-evals_ch5 %>%
-  ggplot(aes(x = age, y = score)) +
-  geom_point() +
-  labs(x = "Age", y = "Teaching Score") +
-  geom_smooth(method = "lm", se = FALSE, color="black") +
-  geom_smooth(method = "loess", se=FALSE, color="blue") +
-  expand_limits(y = 10)
+# evals_ch5 %>%
+#   ggplot(aes(x = ________, y = ______)) +
+#   geom_point() +
+#   labs(x = "_______", y = "_____________") +
+#   geom_smooth(method = "lm", se = FALSE, color="black") +
+#   geom_smooth(method = "loess", se=FALSE, color="blue") +
+#   expand_limits(y = 10)
 ```  
 
-The relationship between score and age does seem to be linear. 
 
 The second condition is that the residuals must be **I**ndependent. In other words, the different observations in our data must be independent of one another. As explained in the reading,  "we say there exists *dependence* between observations".
 
 The third condition is that the residuals should follow a **N**ormal distribution.  
 
-```{r model1residualshist2, echo=FALSE, warning=FALSE, fig.cap="Histogram of residuals."}
-ggplot(regression_points, aes(x = residual)) +
-  geom_histogram(binwidth = 0.25, color = "black", fill = "cyan") +
-  labs(x = "Residual") +
-  theme_classic()
+```{r fig.height=3.3}
+# Complete the code
+# ggplot(regression_points, aes(x = ______________)) +
+#   geom_histogram(binwidth = 0.25, color = "black", fill = "cyan") +
+#   labs(x = "__________") +
+#   theme_classic()
 ```
 
-The residuals are skewed to the left, so normality does not appear to be a reasonable assumption. 
+
 
 The fourth and final condition is that the residuals should exhibit **E**qual variance across all values of the explanatory variable $x$. In other words, the value and spread of the residuals should not depend on the value of the explanatory variable $x$.  
 
-```{r numxplot62, echo=FALSE, warning=FALSE, fig.cap="Plot of residuals over beauty score."}
-ggplot(regression_points, aes(x = age, y = residual)) +
-  geom_point() +
-  labs(x = "Beauty Score", y = "Residual") +
-  geom_hline(yintercept = 0, col = "blue", size = 1)
+```{r}
+# Complete the code
+# ggplot(regression_points, aes(x = _________, y = __________)) +
+#   geom_point() +
+#   labs(x = "___________", y = "_______________") +
+#   geom_hline(yintercept = 0, col = "blue", size = 1)
 ```  
 
-This plot seems to justify the equality of variance assumption. 
+
 
 ***
 
