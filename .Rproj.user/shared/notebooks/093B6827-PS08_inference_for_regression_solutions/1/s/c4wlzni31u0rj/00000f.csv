@@ -1,0 +1,9 @@
+"0","ggplot(data = pen, aes(y = body_mass_g, x = bill_length_mm, color=species)) + "
+"0","  geom_point() + "
+"0","  geom_parallel_slopes(method = ""lm"", se = FALSE) +"
+"0","  labs(x = ""Bill length (millimeters)"", "
+"0","       y = ""Body mass (grams)"", "
+"0","       title = ""Bill Length and Body Mass of three Species of Penguins"") "
+"2","Warning:"
+"2"," `geom_parallel_slopes()` doesn't need a `method` argument (""lm"" is used).
+"

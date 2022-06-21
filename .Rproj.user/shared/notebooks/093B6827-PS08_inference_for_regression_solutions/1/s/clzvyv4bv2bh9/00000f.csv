@@ -1,0 +1,2 @@
+"0","bootstrap_distn_slope %>% "
+"0","  get_ci(type=""percentile"")"

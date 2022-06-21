@@ -159,10 +159,9 @@ regression_points <- get_regression_points(pen_model)
 
 ## Equality of variance of the residuals
 
-The final condition says that the residual should exhibit equal variace across all of the values of the explanatory variable.   
+The final condition says that the residual should exhibit equal variance across all of the values of the explanatory variable.   
 
  To check this condition we can create a scatterplot that has our explanatory variable, `flipper_length_mm`, on the x-axis and our residuals on the y-axis.
-Does this model meet the Normality of Residuals condition?
 
 ```{r fig.height=3, fig.width=7}
 ggplot(regression_points, aes(x = flipper_length_mm, y = residual)) +
@@ -172,7 +171,7 @@ ggplot(regression_points, aes(x = flipper_length_mm, y = residual)) +
 
 ```
 
-1. Does this model meet the Normality of Residuals condition?
+1. Does this model meet the equality of variance of residuals condition?
 
 **Answer:**
 
@@ -187,6 +186,7 @@ Now let's circle back and take a second look at the confidence intervals.  Using
 
 
 ```{r}
+set.seed(126)
 bootstrap_distn_slope <- pen %>% 
   specify(formula = body_mass_g ~ flipper_length_mm) %>%
   generate(reps = 1000, type = "bootstrap") %>% 
@@ -202,22 +202,10 @@ Find a 95% CI using percentile method
 #bootstrap_distn_slope %>%
 ```
 
-Is this similar to the output from the regression table?
 
 ## Part 2
 
-For the next part you will check the conditions for regression inference for a new model. This model will have `bill_length_mm` and `species` as explanatory variables, and we'll use the parallel slopes model
-
-```{r fig.height=3, fig.width=7}
-ggplot(data = pen, aes(y = body_mass_g, x = bill_length_mm, color=species)) + 
-  geom_point() + 
-  geom_parallel_slopes(method = "lm", se = FALSE) +
-  labs(x = "Bill length (millimeters)", 
-       y = "Body mass (grams)", 
-       title = "Bill Length and Body Mass of three Species of Penguins") 
-```
-
-Let's fit the parallel slopes model
+For the next part you will check the conditions for regression inference for a new model. This model will have `bill_length_mm` and `species` as explanatory variables, and we'll use the parallel slopes model. Let's fit the parallel slopes model
 
 ```{r}
 # Fit regression model:
@@ -260,7 +248,7 @@ This is the same as the first model that we looked it. The observations in our d
 
 
 
-1. Check for Equality of variance of the residuals
+1. Check for equality of variance of the residuals
 
 To check this condition we can create a scatterplot that has our explanatory variable, `flipper_length_mm`, on the x-axis and our residuals on the y-axis.
 

@@ -1,0 +1,5 @@
+"0","# Fit regression model:"
+"0","pen_parallel <- lm(body_mass_g ~ bill_length_mm + species, data = pen)"
+"0",""
+"0","# Get regression table:"
+"0","get_regression_table(pen_parallel)"
