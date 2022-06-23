@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Explain and give an example of a confounding variable.   
 
-2.  In linear regression, explain what best fit means and calculate the sum of squared errors.   
+2. In linear regression, explain what "best fit" means and calculate the sum of squared errors.   
 
 ## Reading 
 
@@ -36,7 +36,7 @@ This lesson gives you time to catch up on previous material.
 
 Work through the learning check LC5.8.
 
-+ The correlation does not imply causation is an important idea, but decision makers and humans in general want to know causation. There are other courses that help, DOE and econometrics. We will not explore   
++ That correlation does not imply causation is an important idea, but decision makers and humans in general want to know causation. There are other courses that help, DOE and econometrics. We will not explore how to show causation in this course. 
 
 + If there is time, play the [correlation](https://moderndive.com/5-regression.html#reg-conclusion) game.
 
@@ -56,7 +56,7 @@ library(moderndive)
 
 - Spurious correlations (Objective 1) 
 
-Spend some time talking about confounding variables. The [spurious correlations](http://www.tylervigen.com/spurious-correlations) website may give you some ideas.
+Spend some time talking about confounding variables. The [spurious correlations](http://www.tylervigen.com/spurious-correlations) website is always a cadet favorite.
 
 ***
 

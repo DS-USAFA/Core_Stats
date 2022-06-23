@@ -62,8 +62,6 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7Bcounter%2Dreset%3A%20li%3B%20%7Dh1%20%7Bfont%2Dfamily%3AArial%2C%20Helvetica%2C%20sans%2Dserif%3Bfont%2Dweight%3Abold%3B%7Dh2%20%7Bfont%2Dfamily%3AArial%2C%20Helvetica%2C%20sans%2Dserif%3Bfont%2Dweight%3Abold%3Bmargin%2Dtop%3A%2024px%3B%7Dol%20%7Bmargin%2Dleft%3A0%3B%20padding%2Dleft%3A0%3B%20%7Dol%20%3E%20li%20%7Bposition%3Arelative%3B%20margin%3A0%200%2010px%202em%3B%20padding%3A10px%2080px%3B%20list%2Dstyle%3Anone%3B%20border%2Dtop%3A2px%20solid%20%23317EAC%3Bbackground%3Argba%2849%2C%20126%2C%20172%2C%200%2E1%29%3B%7Dol%20%3E%20li%3Abefore%20%7Bcontent%3A%22Objective%20%22%20counter%28li%29%3B%20counter%2Dincrement%3Ali%3B%20position%3Aabsolute%3Btop%3A%2D2px%3Bleft%3A%2D2em%3B%2Dmoz%2Dbox%2Dsizing%3Aborder%2Dbox%3B%2Dwebkit%2Dbox%2Dsizing%3Aborder%2Dbox%3Bbox%2Dsizing%3Aborder%2Dbox%3Bwidth%3A7em%3Bmargin%2Dright%3A8px%3Bpadding%3A4px%3Bborder%2Dtop%3A2px%20solid%20%23317EAC%3Bcolor%3A%23fff%3Bbackground%3A%23317EAC%3Bfont%2Dweight%3Abold%3Bfont%2Dfamily%3A%22Helvetica%20Neue%22%2C%20Arial%2C%20sans%2Dserif%3Btext%2Dalign%3Acenter%3B%7Dli%20ol%2Cli%20ul%20%7Bmargin%2Dtop%3A6px%3B%7Dol%20ol%20li%3Alast%2Dchild%20%7Bmargin%2Dbottom%3A0%3B%7D%2Eoyo%20ul%20%7Blist%2Dstyle%2Dtype%3Adecimal%3B%7Dhr%20%7Bborder%3A%201px%20solid%20%23357FAA%3B%7Ddiv%23boxedtext%20%7Bbackground%2Dcolor%3A%20rgba%2886%2C%20155%2C%20189%2C%200%2E2%29%3Bpadding%3A%2020px%3Bmargin%2Dbottom%3A%2020px%3Bfont%2Dsize%3A%2010pt%3B%7Ddiv%23template%20%7Bmargin%2Dtop%3A%2030px%3Bmargin%2Dbottom%3A%2030px%3Bcolor%3A%20%23808080%3Bborder%3A1px%20solid%20%23808080%3Bpadding%3A%2010px%2010px%3Bbackground%2Dcolor%3A%20rgba%28128%2C%20128%2C%20128%2C%200%2E2%29%3Bborder%2Dradius%3A%205px%3B%7Ddiv%23license%20%7B%20margin%2Dtop%3A%2030px%3Bmargin%2Dbottom%3A%2030px%3Bcolor%3A%20%234C721D%3Bborder%3A1px%20solid%20%234C721D%3Bpadding%3A%2010px%2010px%3Bbackground%2Dcolor%3A%20rgba%2876%2C%20114%2C%2029%2C%200%2E2%29%3Bborder%2Dradius%3A%205px%3B%7D" type="text/css" />
-
 
 
 <style type="text/css">
@@ -86,9 +84,6 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
 }
 pre code {
   padding: 0;
@@ -257,7 +252,7 @@ div.tocify {
 <h2>Objectives</h2>
 <ol style="list-style-type: decimal">
 <li><p>Explain and give an example of a confounding variable.</p></li>
-<li><p>In linear regression, explain what best fit means and calculate the sum of squared errors.</p></li>
+<li><p>In linear regression, explain what “best fit” means and calculate the sum of squared errors.</p></li>
 </ol>
 </div>
 <div id="reading" class="section level2">
@@ -268,17 +263,18 @@ div.tocify {
 <h2>Lesson</h2>
 <p>Work through the learning check LC5.8. Complete code as necessary.</p>
 <ul>
-<li><p>The correlation does not imply causation is an important idea, but decision makers and humans in general want to know causation. There are other courses that help, DOE and econometrics. We will not explore</p></li>
+<li><p>That correlation does not imply causation is an important idea, but decision makers and humans in general want to know causation. There are other courses that help, DOE and econometrics. We will not explore</p></li>
 <li><p>If there is time, play the <a href="https://moderndive.com/5-regression.html#reg-conclusion">correlation</a> game.</p></li>
 </ul>
 <div id="setup" class="section level3">
 <h3>Setup</h3>
 <pre class="r"><code>library(tidyverse)
 library(moderndive)</code></pre>
+<pre><code>## Warning: package &#39;moderndive&#39; was built under R version 4.1.3</code></pre>
 <ul>
 <li>Spurious correlations (Objective 1)</li>
 </ul>
-<p>Spend some time making sure your understand confounding variables. The <a href="http://www.tylervigen.com/spurious-correlations">spurious correlations</a> website may give you some ideas.</p>
+<p>Spend some time making sure you understand confounding variables. The <a href="http://www.tylervigen.com/spurious-correlations">spurious correlations</a> website may give you some ideas.</p>
 <hr />
 </div>
 <div id="lc-5.8-objective-2" class="section level3">
@@ -303,7 +299,7 @@ Regression line and two others.
 <p><span class="math display">\[
 \sum_{i=1}^{n}(y_i - \widehat{y}_i)^2 = (2.0-1.5)^2+(1.0-2.0)^2+(3.0-2.5)^2 = 1.5
 \]</span></p>
-<pre class="r"><code># Complete the code are remove the comment
+<pre class="r"><code># Complete the code and remove the comment
 #sum((c(2, 1, 3)-c(______,______,________))^2)</code></pre>
 <ul>
 <li>An arbitrarily chosen dotted line:</li>
@@ -311,7 +307,7 @@ Regression line and two others.
 <p><span class="math display">\[
 \sum_{i=1}^{n}(y_i - \widehat{y}_i)^2 = (2.0-2.5)^2+(1.00-2.5)^2+(3.0-2.5)^2 = 2.75
 \]</span></p>
-<pre class="r"><code># Complete the code are remove the comment
+<pre class="r"><code># Complete the code and remove the comment
 #sum((c(2, 1, 3)-c(______,______,________))^2)</code></pre>
 <ul>
 <li>Another arbitrarily chosen dashed line:</li>
@@ -319,15 +315,15 @@ Regression line and two others.
 <p><span class="math display">\[
 \sum_{i=1}^{n}(y_i - \widehat{y}_i)^2 = (2.0-2.0)^2+(1.0-1.5)^2+(3.0-1.0)^2 = 4.25
 \]</span></p>
-<pre class="r"><code># Complete the code are remove the comment
+<pre class="r"><code># Complete the code and remove the comment
 #sum((c(2, 1, 3)-c(______,______,________))^2)</code></pre>
 </div>
 </div>
 <div id="documenting-software" class="section level2">
 <h2>Documenting software</h2>
 <ul>
-<li>File creation date: 2022-06-03</li>
-<li>R version 4.1.3 (2022-03-10)</li>
+<li>File creation date: 2022-06-23</li>
+<li>R version 4.1.1 (2021-08-10)</li>
 <li><code>tidyverse</code> package version: 1.3.1</li>
 <li><code>moderndive</code> package version: 0.5.4</li>
 </ul>

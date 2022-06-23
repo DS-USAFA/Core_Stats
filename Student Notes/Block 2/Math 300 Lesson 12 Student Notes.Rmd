@@ -1,6 +1,6 @@
 ---
 title: "Math 300 Lesson 12 Notes"
-subtitle: "Simple Linear Regression - Discrete x"
+subtitle: "Simple Linear Regression - Discrete Predictor"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Explore the relationship between 2 variables, one numerical and one categorical, using summary statistics and visualizations in `R`.  
 
-2. Fit a linear regression model to two variables, one numerical and one categorical, using the `lm()` function and interpret the output. This includes the interpretation of baseline mean and offsets.    
+2. Fit a linear regression model to two variables, one numerical response and one categorical predictor, using the `lm()` function and interpret the output. This includes the interpretation of baseline mean and offsets. 
 
 3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
 

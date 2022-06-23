@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Explain and give an example of a confounding variable.   
 
-2.  In linear regression, explain what best fit means and calculate the sum of squared errors.   
+2. In linear regression, explain what "best fit" means and calculate the sum of squared errors.   
 
 ## Reading 
 
@@ -33,7 +33,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Work through the learning check LC5.8. Complete code as necessary.  
 
-+ The correlation does not imply causation is an important idea, but decision makers and humans in general want to know causation. There are other courses that help, DOE and econometrics. We will not explore   
++ That correlation does not imply causation is an important idea, but decision makers and humans in general want to know causation. There are other courses that help, DOE and econometrics. We will not explore   
 
 + If there is time, play the [correlation](https://moderndive.com/5-regression.html#reg-conclusion) game.
 
@@ -47,7 +47,7 @@ library(moderndive)
 
 - Spurious correlations (Objective 1) 
 
-Spend some time making sure your understand confounding variables. The [spurious correlations](http://www.tylervigen.com/spurious-correlations) website may give you some ideas.
+Spend some time making sure you understand confounding variables. The [spurious correlations](http://www.tylervigen.com/spurious-correlations) website may give you some ideas.
 
 ***
 
@@ -87,7 +87,7 @@ $$
 $$
 
 ```{r}
-# Complete the code are remove the comment
+# Complete the code and remove the comment
 #sum((c(2, 1, 3)-c(______,______,________))^2)
 ```
 
@@ -99,7 +99,7 @@ $$
 $$
 
 ```{r}
-# Complete the code are remove the comment
+# Complete the code and remove the comment
 #sum((c(2, 1, 3)-c(______,______,________))^2)
 ```
 
@@ -112,7 +112,7 @@ $$
 $$
 
 ```{r}
-# Complete the code are remove the comment
+# Complete the code and remove the comment
 #sum((c(2, 1, 3)-c(______,______,________))^2)
 ```
 

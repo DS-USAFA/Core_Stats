@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE, fig.width = 1
 # Introduction
 
 In this problem set we will work with a data set concerning hate crimes occurring in the US. For more context about these data, you can read a FiveThirtyEight article about these data that appeared in January of 2017: ["Higher Rates Of Hate Crimes Are Tied To Income
-Inequality"](https://fivethirtyeight.com/features/higher-rates-of-hate-crimes-are-tied-to-income-inequality/)
+Inequality"](https://fivethirtyeight.com/features/higher-rates-of-hate-crimes-are-tied-to-income-inequality/).
 
 Here are the first three paragraphs of the article for context:
 
@@ -35,7 +35,7 @@ Here are the first three paragraphs of the article for context:
 
 *An analysis of FBI and Southern Poverty Law Center data revealed one factor that stood out as a predictor of hate crimes and hate incidents in a given state: income inequality. States with more inequality were more likely to have higher rates of hate incidents per capita. This was true both before and after the election, and the connection held even after we controlled for other relevant variables.*
 
-In this problem set, we will develop a model these data using simple linear regression models with a single explanatory variable. These models are basic, but will allow us to practice using the tools and developing the skills we are learning. 
+In this problem set, we will model these data using simple linear regression models with a single explanatory variable. These models are basic, but will allow us to practice using the tools and developing the skills we are learning. 
 
 
 ## Markdown File
@@ -100,11 +100,10 @@ hate_crimes_ps <- hate_crimes %>%
 ## About the data set
 Each case/row in these data represents a state in the US. The response variable we will consider is `hate_crimes`, which is the number of hate crimes per 100k individuals in the 10 days after the 2016 US election as measured by the Southern Poverty Law Center (SPLC). 
 
-For this project week we will examine the explanatory strength of variables that represent the urbanization of the state. The first is numeric, `share_pop_metro` and the second is a categorical variable generated from the first, `urbanization`: 
+For this problem set we will examine the explanatory strength of variables that represent the urbanization of the state. The first is numeric, `share_pop_metro` and the second is a categorical variable generated from the first, `urbanization`: 
 
 * `share_pop_metro`: a numeric variable that is the proportion of the state population that lives in a urban metropolitan setting. 
-* `urbanization`: a categorical variable that is classifies the level of urbanization in a state (low or high; split below or above mean)
-
+* `urbanization`: a categorical variable that classifies the level of urbanization in a state (low or high; split below or above mean)
 
 ## Hate Crimes and Proportion of Population Living in Metropolitan Area
 
@@ -156,7 +155,7 @@ Let's start by modeling the relationship between:
 
 
 $$
-\widehat{y} = 0.191 + 0.269 \times 1_{\mbox{low support}}(x) + 0.031 \times 1_{\mbox{med support}}(x)
+\widehat{y} = 0.352 - 0.098 \times 1_{\mbox{low urbanization}}(x)
 $$
 
 Find the average value of hate crimes for a state with low urbanization.
