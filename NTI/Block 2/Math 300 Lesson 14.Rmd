@@ -22,11 +22,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. For numerical and categorical explanatory variables, generate, plot, and explain the interaction model.   
+1. Generate, plot, and explain the interaction model for two explanatory variables (one numerical and one categorical).
 
-2. For numerical and categorical explanatory variables, generate, plot, and explain the parallel slopes model.   
+2. Generate, plot, and explain the parallel slopes model for two explanatory variables (one numerical and one categorical). 
 
-3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
+3. Generate a table of observations, fitted values, and residuals from a linear regression object.   
 
 ## Reading 
 
@@ -74,7 +74,6 @@ evals_ch6 %>%
   sample_n(size = 5)
 ```
 
-
 - Interaction Model (Objective 1)
 
 In this model we allow a different slope and intercept for each gender. 
@@ -94,14 +93,12 @@ To get the model in `R`, we use the `*` which is not multiplication but an inter
 score_model_interaction <- lm(score ~ age * gender, data = evals_ch6)
 ```
 
-
 ```{r}
 # Get regression table:
 get_regression_table(score_model_interaction)
 ```
 
-
-Go through and explain this table. From the reading *We say there is an interaction effect if the associated effect of one variable depends on the value of another variable.* 
+Go through and explain this table. From the reading: *We say there is an interaction effect if the associated effect of one variable depends on the value of another variable.* 
 
 + What is the intercept for the males?  
 + What is the slope for the males?  
@@ -140,7 +137,9 @@ get_regression_table(score_model_parallel_slopes)
 + What is the slope for the males?  
 + Interpret the slope for the female instructors?  
 
-### LC 5.4 (Objective 3)
+Why would we do this? It seems like we lose information if we force the two slopes to be the same. This is true, and for these data, we would not want to make this assumption. In a later section, we will discuss a case where we would want to force the slopes to be the same. 
+
+### LC 6.1 (Objective 3)
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Compute the observed values, fitted values, and residuals not for the interaction model as we just did, but rather for the parallel slopes model we saved in `score_model_parallel_slopes`.
 
@@ -148,7 +147,6 @@ get_regression_table(score_model_parallel_slopes)
 ```{r}
 regression_points_parallel <- get_regression_points(score_model_parallel_slopes)
 ```
-
 
 ```{r}
 head(regression_points_parallel)

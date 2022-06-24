@@ -1,6 +1,6 @@
 ---
 title: "Math 300 NTI Lesson 15"
-subtitle: "Multiple Regression - Two Numerical"
+subtitle: "Multiple Regression - Two Numerical Predictors"
 author: "Professor Bradley Warner"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:

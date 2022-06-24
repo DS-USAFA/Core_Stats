@@ -21,9 +21,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. For numerical and categorical explanatory variables, generate, plot, and explain the interaction model.   
+1. Generate, plot, and explain the interaction model for two explanatory variables (one numerical and one categorical).
 
-2. For numerical and categorical explanatory variables, generate, plot, and explain the parallel slopes model.   
+2. Generate, plot, and explain the parallel slopes model for two explanatory variables (one numerical and one categorical). 
 
 3. Generate a table of observations, fitted values, and residuals from a linear regression object.  
 
@@ -96,10 +96,14 @@ To get the model in `R`, we use the `*` which is not multiplication but an inter
 
 
 
-As a check, answer the following questions. Note from the reading *We say there is an interaction effect if the associated effect of one variable depends on the value of another variable.* 
+As a check, answer the following questions. Note from the reading: *We say there is an interaction effect if the associated effect of one variable depends on the value of another variable.* 
 
 + What is the intercept for the males?  
+
+
 + What is the slope for the males?  
+
+
 + Interpret the slope for the female instructors?  
 
 *** 

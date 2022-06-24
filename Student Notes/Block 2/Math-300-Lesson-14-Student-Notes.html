@@ -12,7 +12,7 @@
 <meta name="author" content="YOUR NAME HERE" />
 
 
-<title>Math 300 Lesson 15 Notes</title>
+<title>Math 300 Lesson 14 Notes</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1533,8 +1533,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Math 300 Lesson 15 Notes</h1>
-<h3 class="subtitle">Multiple Regression - Two Numerical Predictors</h3>
+<h1 class="title toc-ignore">Math 300 Lesson 14 Notes</h1>
+<h3 class="subtitle">Multiple Linear Regression - Numerical &amp;
+Discrete</h3>
 <h4 class="author">YOUR NAME HERE</h4>
 <h4 class="date">June, 2022</h4>
 
@@ -1544,41 +1545,30 @@ div.tocify {
 <div id="objectives" class="section level2">
 <h2>Objectives</h2>
 <ol style="list-style-type: decimal">
-<li><p>For two numerical explanatory variables in a linear regression
-model, conduct exploratory analysis and explain the relationship between
-the variables.</p></li>
-<li><p>Fit a linear regression model to two numerical explanatory
-variables using the <code>lm()</code> function and interpret the
-output.</p></li>
+<li><p>Generate, plot, and explain the interaction model for two
+explanatory variables (one numerical and one categorical).</p></li>
+<li><p>Generate, plot, and explain the parallel slopes model for two
+explanatory variables (one numerical and one categorical).</p></li>
+<li><p>Generate a table of observations, fitted values, and residuals
+from a linear regression object.</p></li>
 </ol>
 </div>
 <div id="reading" class="section level2">
 <h2>Reading</h2>
-<p><a href="https://moderndive.com/6-multiple-regression.html#model3">Chapter
-6.2</a></p>
+<p><a href="https://moderndive.com/6-multiple-regression.html">Chapter 6
+- 6.1</a></p>
 </div>
 <div id="lesson" class="section level2">
 <h2>Lesson</h2>
-<p>Work through the learning checks LC6.2 - 6.3. Complete the code as
+<p>Work through the learning check LC6.1. Complete the code blocks as
 necessary.</p>
 <ul>
-<li><p>We use <code>select()</code> to change the names of the variables
-as well as to select them.</p></li>
-<li><p>Collinearity (or multicollinearity) is a phenomenon where one
-explanatory variable in a multiple regression model is highly correlated
-with another. This course doesn’t discuss multicollinearity but it
-impacts the inference portion of the analysis cycle. Math 378 is a
-course that presents methods to handle multicollinearity.</p></li>
-<li><p>We preface our interpretation with the statement, “taking into
-account all the other explanatory variables in our model” in this
-section. This means we have to treat the other variables as at a
-constant value even though collinearity in practice may not allow this.
-It is only from an interpretation point of view that we use that
-statement.</p></li>
-<li><p>A phenomenon known as Simpson’s Paradox, whereby overall trends
-that exist in aggregate either disappear or reverse when the data are
-broken down into groups. The next lesson discusses this in more
-depth.</p></li>
+<li><p>Notice that the regression line for females stops at the extremes
+of the observed data in <code>ggplot2()</code>. You have to be careful
+about extrapolating. The assumption of linearity outside of the observed
+data is risky at best.</p></li>
+<li><p>The use of <code>+</code> and <code>*</code> in an <code>R</code>
+formula are not arithmetical operations but formula operations.</p></li>
 </ul>
 <div id="setup" class="section level3">
 <h3>Setup</h3>
@@ -1587,82 +1577,82 @@ library(moderndive)
 library(skimr)
 library(ISLR)</code></pre>
 <p><em>Recreate the analysis done in the book.</em></p>
-<pre class="r"><code>my_skim &lt;- skim_with(numeric = sfl(hist = NULL))</code></pre>
 <pre class="r"><code># Complete code and remove comment symbol
-#credit_ch6 &lt;- Credit %&gt;% as_tibble() %&gt;% 
-#  select(ID, debt = ________, credit_limit = Limit, 
-#         income = _______, credit_rating = ____________, age = Age)</code></pre>
+# evals_ch6 &lt;- evals %&gt;%
+#  select(ID, _______, age, _______)</code></pre>
 <p>Let’s look at 5 random rows of data.</p>
 <pre class="r"><code># Complete code and remove comment symbol
-#set.seed(507)
-#credit_ch6 %&gt;%
-#  sample_n(size = __________)</code></pre>
-<pre class="r"><code># Complete code and remove comment symbol
-#glimpse(___________)</code></pre>
-<pre class="r"><code># Complete code and remove comment symbol
-#credit_ch6 %&gt;% 
-#  select(debt, ___________, income) %&gt;% 
-#  my_skim() %&gt;%
-#  print()</code></pre>
-<pre class="r"><code># Complete code and remove comment symbol
-#credit_ch6 %&gt;% 
-#  select(debt, credit_limit, income) %&gt;% 
-#  _______() </code></pre>
-</div>
-<div id="lc-6.2-objective-1" class="section level3">
-<h3>LC 6.2 (Objective 1)</h3>
-<p><strong>(LC 6.2)</strong> Conduct a new exploratory data analysis
-with the same outcome variable <span class="math inline">\(y\)</span>
-being <code>debt</code> but with <code>credit_rating</code> and
-<code>age</code> as the new explanatory variables <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. Remember, this involves three
-things:</p>
+set.seed(941)
+#evals_ch6 %&gt;%
+#  sample_n(size = _______________) </code></pre>
 <ul>
-<li>Most crucially: Looking at the raw data values.</li>
-<li>Computing summary statistics, such as means, medians, and
-interquartile ranges.</li>
-<li>Creating data visualizations.</li>
+<li>Interaction Model (Objective 1)</li>
 </ul>
-<p>What can you say about the relationship between a credit card
-holder’s debt and their credit rating and age?</p>
-<p><strong>Solution</strong>:</p>
-<ul>
-<li>Most crucially: Looking at the raw data values.</li>
-</ul>
-<p><strong>Computing summary statistics, such as means, medians, and
-interquartile ranges.</strong></p>
-<ul>
-<li>Creating data visualizations.</li>
-</ul>
+<p>In this model we allow a different slope and intercept for each
+gender.</p>
 <pre class="r"><code># Complete code and remove comment symbol
-# ggplot(credit_ch6, aes(x = ____________, y = debt)) +
-#   geom_point() +
-#   labs(
-#     x = &quot;Credit rating&quot;, y = &quot;Credit card debt (in $)&quot;,
-#     title = &quot;Debt and credit rating&quot;
-#   ) +
-#   geom_smooth(method = &quot;lm&quot;, se = ________)</code></pre>
-<pre class="r"><code># Repeat for age and debt</code></pre>
-<p>It seems that there is a positive relationship between one’s credit
-rating and their debt, and very little relationship between one’s age
-and their debt. The is a slight linear relationship between
-<code>age</code> and <code>credit_rating</code>.</p>
-</div>
-<div id="lc-6.3-objective-2" class="section level3">
-<h3>LC 6.3 (Objective 2)</h3>
-<p><strong>(LC 6.3)</strong> Fit a new simple linear regression using
-<code>lm(debt ~ credit_rating + age, data = credit_ch6)</code> where
-<code>credit_rating</code> and <code>age</code> are the new numerical
-explanatory variables <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. Get information about the
-“best-fitting” regression plane from the regression table by applying
-the <code>get_regression_table()</code> function. How do the regression
-results match up with the results from your previous exploratory data
-analysis?</p>
+#ggplot(___________, aes(x = age, y = score, color = ______________)) +
+#  geom_point() +
+#  labs(x = &quot;_________&quot;, y = &quot;Teaching Score&quot;, color = &quot;_______________&quot;) +
+#  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+#  theme_bw()</code></pre>
+<p>To get the model in <code>R</code>, we use the <code>*</code> which
+is not multiplication but an interaction term in the model formula.</p>
 <pre class="r"><code># Complete code and remove comment symbol
 # Fit regression model:
-# debt_model_2 &lt;- lm(_________ ~ ___________ + _________, data = credit_ch6)</code></pre>
-<pre class="r"><code># Get regression table:
-# Complete code and remove comment symbol
-# get_regression_table(_______________)</code></pre>
+#score_model_interaction &lt;- lm(_________ ~ age * gender, data = ____________)</code></pre>
+<pre class="r"><code># Complete code and remove comment symbol
+# Get regression table:
+#get_regression_table(_________________________)</code></pre>
+<p>As a check, answer the following questions. Note from the reading:
+<em>We say there is an interaction effect if the associated effect of
+one variable depends on the value of another variable.</em></p>
+<ul>
+<li><p>What is the intercept for the males?</p></li>
+<li><p>What is the slope for the males?</p></li>
+<li><p>Interpret the slope for the female instructors?</p></li>
+</ul>
+<hr />
+<ul>
+<li>Parallel Slopes Model (Objective 2)</li>
+</ul>
+<p>The parallel slopes model assumes that there is no interaction
+between the two explanatory variables. Their impact on the response is
+not related to the values of the other variable.</p>
+<p>We will use the same data, but just build a different model.</p>
+<pre class="r"><code># Complete code and remove comment symbol
+#ggplot(evals_ch6, aes(x = ________, y = score, color = ____________)) +
+# geom_point() +
+# labs(x = &quot;Age&quot;, y = &quot;Teaching Score&quot;, color = &quot;________________&quot;) +
+# geom_parallel_slopes(se = ______________) +
+# theme_bw()</code></pre>
+<ul>
+<li>Notice that the line for females stops at the extremes of the
+observed data.</li>
+</ul>
+<pre class="r"><code># Complete code and remove comment symbol
+# Fit regression model:
+# score_model_parallel_slopes &lt;- lm(score ~ ________ + ______________, data = evals_ch6)</code></pre>
+<pre class="r"><code># Complete code and remove comment symbol
+# Get regression table:
+# get_regression_table(score_model_parallel_slopes)</code></pre>
+<ul>
+<li><p>What is the intercept for the males?</p></li>
+<li><p>What is the slope for the males?</p></li>
+<li><p>Interpret the slope for the female instructors?</p></li>
+</ul>
+</div>
+<div id="lc-5.4-objective-3" class="section level3">
+<h3>LC 5.4 (Objective 3)</h3>
+<p><strong>(LC 5.4)</strong> Compute the observed values, fitted values,
+and residuals not for the interaction model as we just did, but rather
+for the parallel slopes model we saved in
+<code>score_model_parallel_slopes</code>.</p>
+<p><strong>Solution</strong>:</p>
+<pre class="r"><code># Complete code and remove comment symbol
+# regression_points_parallel &lt;- _____________________________</code></pre>
+<pre class="r"><code># Complete code and remove comment symbol
+#head(_________________________)</code></pre>
 </div>
 </div>
 <div id="documenting-software" class="section level2">
