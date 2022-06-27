@@ -4,12 +4,12 @@ subtitle: "Multiple Regression - Related Topics"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     theme: lumen
     toc: yes
     toc_float: yes
-  pdf_document:
-    toc: yes
 ---
 
 
@@ -38,11 +38,11 @@ There are no learning checks for this lesson, so work through the code and ideas
 
 + The book discusses Occam's razor, which states that given the choice between a complex model and simple model pick the simple. This assumes similar performance. One way to measure performance is with R-squared. This is an internal measure of performance, it uses the data that was used to build the model. In a machine learning class, students can learn other ways to pick a model. 
 
-+ R-squared always decreases when we add a variable. Adjusted R-squared puts in a penalty for adding a variable. This penalty is just a heuristic. Analysts often use adjusted R-squared instead of R-squared.   
++ R-squared always increases when we add a variable. Adjusted R-squared puts in a penalty for adding a variable. This penalty is just a heuristic. Analysts often use adjusted R-squared instead of R-squared.   
 
 + We preface our interpretation with the statement, “taking into account all the other explanatory variables in our model” in this section. This means we have to treat the other variables as at a constant value even though collinearity in practice may not allow this. It is only from an interpretation point of view that we use that statement. 
 
-+ A phenomenon known as Simpson’s Paradox, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups. The next lesson discusses this in more depth.  
++ We must be aware of a phenomenon known as Simpson’s Paradox, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups. We will discuss this today or next lesson.
 
 ### Setup
 

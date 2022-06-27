@@ -106,7 +106,7 @@ We will start by modeling the relationship between:
 
 
 
-1. Create a data visualization comparing median household `income` at "low" and "high" levels of urbanization (you do not need to include the `hs` variable in this plot). Please include axis labels and title.
+1. Create a data visualization comparing median household `income` at "low" and "high" levels of urbanization (do not include the `hs` variable in this plot). Please include axis labels and title.
 
 
 

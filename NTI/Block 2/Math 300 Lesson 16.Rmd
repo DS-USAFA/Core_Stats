@@ -35,15 +35,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Lesson 
 
-There are no learning checks for this lesson, so work through the code and ideas in the reading. 
+There are no learning checks for this lesson, so work through the code and ideas in the reading. Keep in mind there is no new additional material next lesson, so you'll have time next lesson to finish this document.  
 
 + The book discusses Occam's razor, which states that given the choice between a complex model and simple model pick the simple. This assumes similar performance. One way to measure performance is with R-squared. This is an internal measure of performance, it uses the data that was used to build the model. In a machine learning class, students can learn other ways to pick a model. 
 
-+ R-squared always decreases when we add a variable. Adjusted R-squared puts in a penalty for adding a variable. This penalty is just a heuristic. Analysts often use adjusted R-squared instead of R-squared.   
++ R-squared always increases when we add a variable. Adjusted R-squared puts in a penalty for adding a variable. This penalty is just a heuristic. Analysts often use adjusted R-squared instead of R-squared.   
 
 + We preface our interpretation with the statement, “taking into account all the other explanatory variables in our model” in this section. This means we have to treat the other variables as at a constant value even though collinearity in practice may not allow this. It is only from an interpretation point of view that we use that statement. 
 
-+ A phenomenon known as Simpson’s Paradox, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups. The next lesson discusses this in more depth.  
++ We must be aware of a phenomenon known as Simpson’s Paradox, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups. We will discuss this today or next lesson.  
 
 ### Setup
 
@@ -106,6 +106,7 @@ In this model we allow a different slope and intercept for each gender.
 ```{r message=FALSE}
 ggplot(evals_ch6, aes(x = age, y = score, color = gender)) +
   geom_point() +
+  # I suggest adding jitter (geom_point(position=))
   labs(x = "Age", y = "Teaching Score", color = "Gender") +
   geom_smooth(method = "lm", se = FALSE) +
   theme_bw()
@@ -161,11 +162,11 @@ get_regression_summaries(score_model_interaction) %>%
   select(model,r_squared,adj_r_squared)
 ```
 
-Neither model is great since the R-squared is so small, we are only explaining 5 percent of the variation in the teacher score with our model. However, the more complex interaction model is better than the parallel slope model.  
+Neither model is great since the R-squared is so small; we are only explaining 5 percent of the variation in the teacher score with our model. However, the more complex interaction model is better than the parallel slope model.  
 
 ### Simpson's paradox
 
-It is key in modeling to account for lurking variable. This [site](https://towardsdatascience.com/simpsons-paradox-and-interpreting-data-6a0443516765) Simpson's paradox. 
+It is key in modeling to account for lurking variables. This [site](https://towardsdatascience.com/simpsons-paradox-and-interpreting-data-6a0443516765) Simpson's paradox. 
 
 Here is a nice example from the `palmerpenguins` data package.
 
