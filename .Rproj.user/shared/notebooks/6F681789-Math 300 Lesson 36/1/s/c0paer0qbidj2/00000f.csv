@@ -1,0 +1,5 @@
+"0","set.seed(839)"
+"0","bootstrap_distn_corr <- evals_ch5 %>%"
+"0","  specify(formula = score ~ bty_avg) %>%"
+"0","  generate(reps = 1000, type = ""bootstrap"") %>%"
+"0","  calculate(stat = ""correlation"")"
