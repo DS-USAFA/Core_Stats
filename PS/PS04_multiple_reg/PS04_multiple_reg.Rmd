@@ -27,11 +27,11 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE, fig.width = 1
 
 We will again use the hate crimes data we used in Problem Set 03. The FiveThirtyEight article article about those data are in the Jan. 23, 2017 article ["Higher Rates Of Hate Crimes Are Tied To Income Inequality"](https://fivethirtyeight.com/features/higher-rates-of-hate-crimes-are-tied-to-income-inequality/). For this project, we will use these data  to run regression models with a single **categorical** predictor (explanatory) variable **and** a single **numeric** predictor (explanatory) variable. 
 
-Remember you can knit this file to see the instructions. You can type your answers again right into this file, knit the final draft with all your answers. Please submit the `pdf` file on gradescope. 
+Remember you can knit this file to see the instructions. 
 
 ## Markdown File
 
-Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS04_lastname_firstname_section**
+Just like the first problem set, you will create a new rmarkdown file; you can refer to the first problem set for instructions. Name your file with the following format **PS04_lastname_firstname_section**
 
 Fill in your answers to the exercises below with a corresponding exercise header in your rmarkdown file. Be sure to include text *and* code where necessary.
 

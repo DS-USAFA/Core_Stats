@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 2. Explain the impact of sample size on the sample distribution and number of replications on the sampling procedure.  
 
-3. Use and explain the terms accuracy and precision as it relates to sampling. 
+3. Use and explain the terms accuracy and precision in the context of sampling. 
 
 ## Reading 
 
@@ -40,11 +40,11 @@ Work through the learning checks LC7.8 - 7.20. Complete the code as necessary.
 
 What you have been performing is statistical inference. This is one of the most important concepts in all of statistics. So much so, we included this term in the title of our book: “Statistical Inference via Data Science”. More generally speaking,
 
-- If the sampling of a sample of size *n*  is done at random, then
-- the sample is unbiased and representative of the population of size *N*, thus
-- any result based on the sample can generalize to the population, thus
-- the point estimate is a “good guess” of the unknown population parameter, thus
-- instead of performing a census, we can infer about the population using sampling.
+-- If the sampling of a sample of size *n*  is done at random, then
+-- the sample is unbiased and representative of the population of size *N*, thus
+-- any result based on the sample can generalize to the population, thus
+-- the point estimate is a “good guess” of the unknown population parameter, thus
+-- instead of performing a census, we can infer about the population using sampling.
 
 + Try to use the terminology and notation as much as possible from this point on. You can use the bin or red and white balls as an example to go back to. 
 
@@ -52,11 +52,42 @@ What you have been performing is statistical inference. This is one of the most 
 
 ### Setup
 
+*Code to setup the learning checks. Complete the code and remove extra comment symbols.*
 
 ```{r message=FALSE}
 library(tidyverse)
 library(moderndive)
 ``` 
+
+```{r}
+# Segment 2: sample size = 50 ------------------------------
+# Virtually use shovel 1000 times
+#set.seed(107)
+# virtual_samples_50 <- bowl %>% 
+#  rep_sample_n(size = ____________, reps = 1000)
+```
+
+
+```{r}
+# Compute resulting 1000 replicates of proportion red
+# virtual_prop_red_50 <- virtual_samples_50 %>% 
+#   group_by(_______________) %>% 
+#   summarize(red = sum(color == "______________")) %>% 
+#   mutate(prop_red = ___________ / 50)
+```
+
+```{r}
+#summary(virtual_prop_red_50)
+```
+
+
+```{r}
+#Plot distribution via a histogram
+# ggplot(virtual_prop_red_50, aes(x = ________)) +
+#   geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
+#   labs(x = "Proportion of 50 balls that were red", title = "50")  +
+#   theme_classic()
+```
 
 ### LC 7.8 (Objective 1)
 
@@ -221,7 +252,7 @@ For the following four learning checks, let the *estimate* be the sample proport
    ggtitle("High precision, high accuracy")
 
 # p2 <- ggplot(data = data.frame(x = xlim), aes(x)) +
-#   stat_function(fun = dnorm, n = 101, args = list(mean = XXXXX, sd = .5)) +
+#   stat_function(fun = dnorm, n = 101, args = list(mean = _________, sd = .5)) +
 #   ylab("") +
 #   # scale_y_continuous(breaks = NULL)+
 #   geom_vline(xintercept = 0, linetype = "dotted") +
@@ -229,7 +260,7 @@ For the following four learning checks, let the *estimate* be the sample proport
 #   ggtitle("High precision, low accuracy")
 #
 # p3 <- ggplot(data = data.frame(x = xlim), aes(x)) +
-#   stat_function(fun = dnorm, n = 101, args = list(mean = XXXXX, sd = 1.5)) +
+#   stat_function(fun = dnorm, n = 101, args = list(mean = _________, sd = 1.5)) +
 #   ylab("") +
 #   # scale_y_continuous(breaks = NULL)+
 #   geom_vline(xintercept = 0, linetype = "dotted") +
@@ -237,7 +268,7 @@ For the following four learning checks, let the *estimate* be the sample proport
 #   ggtitle("Low precision, high accuracy")
 # 
 # p4 <- ggplot(data = data.frame(x = xlim), aes(x)) +
-#   stat_function(fun = dnorm, n = 101, args = list(mean = XXXXX, sd = 1.5)) +
+#   stat_function(fun = dnorm, n = 101, args = list(mean = _________, sd = 1.5)) +
 #   ylab("") +
 #   # scale_y_continuous(breaks = NULL)+
 #   geom_vline(xintercept = 0, linetype = "dotted") +

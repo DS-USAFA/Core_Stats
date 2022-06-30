@@ -56,13 +56,16 @@ library(tidyverse)
 library(moderndive)
 ``` 
 
-Here is the data from the reading and the histogram.
+Here is the data from the reading and the histogram. 
 
 ```{r}
 head(tactile_prop_red)
 ```
 
 - What is each row in the data? 
+
+Take a moment to really emphasize this. Each row represents one random sample of size 50 from the bucket. In reality, we won't have many such samples, but just one. The purpose of this exercise is to demonstrate how that sampling distribution behaves. 
+
 - Is this data tidy?  
 
 ```{r}

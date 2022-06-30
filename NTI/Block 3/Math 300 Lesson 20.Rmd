@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 2. Explain the impact of sample size on the sample distribution and number of replications on the sampling procedure.  
 
-3. Use and explain the terms accuracy and precision as it relates to sampling. 
+3. Use and explain the terms accuracy and precision in the context of sampling. 
 
 ## Reading 
 
@@ -42,17 +42,19 @@ Work through the learning checks LC7.8 - 7.20.
 
 What you have been performing is statistical inference. This is one of the most important concepts in all of statistics. So much so, we included this term in the title of our book: “Statistical Inference via Data Science”. More generally speaking,
 
-- If the sampling of a sample of size *n*  is done at random, then
-- the sample is unbiased and representative of the population of size *N*, thus
-- any result based on the sample can generalize to the population, thus
-- the point estimate is a “good guess” of the unknown population parameter, thus
-- instead of performing a census, we can infer about the population using sampling.
+  - If the sampling of a sample of size *n*  is done at random, then
+  - the sample is unbiased and representative of the population of size *N*; thus,
+  - any result based on the sample can generalize to the population; thus,
+  - the point estimate is a “good guess” of the unknown population parameter; thus,
+  - instead of performing a census, we can infer about the population using sampling. 
 
 + Try to use the terminology and notation as much as possible from this point on. You can use the bin or red and white balls as an example to go back to so that the students have an example to use. 
 
 + Standard error and standard deviation can get confused. The standard error is simply the standard deviation of the point estimate. 
 
 ### Setup
+
+First, remind them of the example from last time. This will provide good context for the learning checks in this lesson. 
 
 ```{r, include=FALSE, purl=FALSE}
 chap <- 7
@@ -63,6 +65,37 @@ lc <- 7
 library(tidyverse)
 library(moderndive)
 ``` 
+
+```{r}
+# Segment 2: sample size = 50 ------------------------------
+# Virtually use shovel 1000 times
+set.seed(107)
+virtual_samples_50 <- bowl %>% 
+  rep_sample_n(size = 50, reps = 1000)
+```
+
+
+```{r}
+# Compute resulting 1000 replicates of proportion red
+virtual_prop_red_50 <- virtual_samples_50 %>% 
+  group_by(replicate) %>% 
+  summarize(red = sum(color == "red")) %>% 
+  mutate(prop_red = red / 50)
+```
+
+```{r}
+summary(virtual_prop_red_50)
+```
+
+
+```{r}
+#Plot distribution via a histogram
+ggplot(virtual_prop_red_50, aes(x = prop_red)) +
+  geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
+  labs(x = "Proportion of 50 balls that were red", title = "50")  +
+  theme_classic()
+```
+
 
 ### LC 7.8 (Objective 1)
 
@@ -78,7 +111,7 @@ library(moderndive)
   
   **Solution**: 
   
-  Performing a census in our bowl activity correspond to counting the total number of red balls in all balls, We did not perform a census because it would be too much repetitive work and it is unnecessary if we conduct a proper sample.
+  Performing a census in our bowl activity correspond to counting the total number of red balls in the bowl. We did not perform a census because it would be too much repetitive work and it is unnecessary if we conduct a proper sample.
   
 ### LC 7.10 (Objective 1)
 
@@ -95,7 +128,7 @@ library(moderndive)
 
 **Solution**: 
 
-We literally shuffle the sample each time. 
+We literally shuffle the sample each time (mix up the balls in the bowl). 
 
 ### LC 7.12 (Objective 1)
 

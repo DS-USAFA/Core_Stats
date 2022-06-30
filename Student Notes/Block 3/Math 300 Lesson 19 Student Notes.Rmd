@@ -33,8 +33,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Lesson 
 
-*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
-
 Work through the learning checks LC7.1 - 7.7.
 
 + Learning checks 7.3 - 7.5 are not in the book but are in the notes for students. We are not sure why they were dropped. 
@@ -108,7 +106,7 @@ ggplot(tactile_prop_red, aes(x = prop_red)) +
 
 ### LC 7.5 (Objective 3)
 
-*Code for this problem. Complete the code and remove extra comment symbols*
+*Code for this problem. Complete the code and remove extra comment symbols.*
 
 ```{r}
 # Segment 2: sample size = 50 ------------------------------
@@ -155,7 +153,7 @@ ggplot(tactile_prop_red, aes(x = prop_red)) +
 - B. vary by the same amount, or
 - C. vary more?
   
-  **Solution**: 
+**Solution**: 
   
  
 

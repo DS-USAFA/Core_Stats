@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Given a sampling scenario, discuss issues such as accuracy and precision as they relate to generalization to the population of interest.
+1. Given a sampling scenario, discuss issues such as accuracy and precision as they relate to generalization to the population of interest. 
 
 ## Reading 
 
