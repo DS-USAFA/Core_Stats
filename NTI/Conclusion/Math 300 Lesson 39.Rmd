@@ -1,0 +1,279 @@
+---
+title: "Math 300 NTI Lesson 39"
+subtitle: "Case Study"
+author: "Professor Bradley Warner"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+1. Using all the tools and ideas from the course, complete a study that uses the complete data analysis cycle.
+
+## Reading
+
+[Chapter 11 - 11.2](https://moderndive.com/11-thinking-with-data.html#review)
+
+## Lesson
+
+Complete learning check 11.1.
+
++ By completing the entire data analysis cycle, we will review many of the ideas from the course. This will help prepare us for the final.  
+
+
+------------------------------------------------------------------------
+
+### Libraries
+
+```{r warning=FALSE,message=FALSE}
+library(tidyverse)
+library(broom)
+library(infer)
+library(moderndive)
+library(skimr)
+```
+
+## Case Study
+
+First let's work through the case study in the reading.
+
+The `house_prices` dataset consists of 21,613 houses and 21 variables describing the sale prices of homes sold between May 2014 and May 2015 in King County, Washington, US (for a full list and description of these variables, see the help file by running ?house_prices in the console). In this case study, we’ll create a multiple regression model where:
+
+The outcome variable $y$ is the sale `price` of houses.
+Two explanatory variables:
+- A numerical explanatory variable $x_1$: house size `sqft_living` as measured in square feet of living space. Note that 1 square foot is about 0.09 square meters.
+- A categorical explanatory variable $x_2$: house `condition`, a categorical variable with five levels where `1` indicates “poor” and `5` indicates “excellent.”
+
+### Exploratory
+
+Let's get the data and explore them.
+
+Recall the three common steps in an exploratory data analysis we introduced in Subsection 5.1.1:
+
+- Looking at the raw data values.  
+- Computing summary statistics.  
+- Creating data visualizations.  
+
+```{r}
+glimpse(house_prices)
+```
+Now summary statistics.
+
+
+```{r}
+my_skim<-skim_with(numeric = sfl(hist = NULL))
+```
+
+```{r}
+house_prices %>% 
+  select(price, sqft_living, condition) %>% 
+  my_skim() %>%
+  print()
+```  
+
+Let’s now perform the last of the three common steps in an exploratory data analysis: creating data visualizations.
+
+```{r}
+# Histogram of house price:
+ggplot(house_prices, aes(x = price)) +
+  geom_histogram(color = "black", fill = "cyan") +
+  labs(x = "price (USD)", title = "House price") +
+  theme_classic()
+```
+
+
+```{r}
+# Histogram of sqft_living:
+ggplot(house_prices, aes(x = sqft_living)) +
+  geom_histogram(color = "black", fill = "cyan") +
+  labs(x = "living space (square feet)", title = "House size") +
+  theme_classic()
+```
+
+
+```{r}
+# Density plot of sqft_living:
+ggplot(house_prices, aes(x = sqft_living)) +
+  geom_density(color = "black", fill = "cyan") +
+  labs(x = "living space (square feet)", title = "House size") +
+  theme_classic()
+```
+
+```{r}
+# Barplot of condition:
+ggplot(house_prices, aes(x = condition)) +
+  geom_bar(color = "black", fill = "cyan") +
+  labs(x = "condition", title = "House condition") +
+  theme_classic()
+```
+
+The distribution of the variables are skewed, so let's transform the variables. Let’s create new log10 transformed versions of the right-skewed variable `price` and `sqft_living` using the `mutate()` function from Section 3.5, but we’ll give the latter the name `log10_size`, which is shorter and easier to understand than the name `log10_sqft_living`.
+
+```{r}
+house_prices_reduced <- house_prices %>%
+  mutate(
+    log10_price = log10(price),
+    log10_size = log10(sqft_living)) %>%
+  select(log10_price, log10_size, condition)
+```
+
+Let's plot the new variables.
+
+```{r}
+# Density plot of log10 sqft_living:
+ggplot(house_prices_reduced, aes(x = log10_size)) +
+  geom_density(color = "black", fill = "cyan") +
+  labs(x = "log10 living space (square feet)", title = "House size") +
+  theme_classic()
+```
+
+
+```{r}
+# Density plot of log10 price:
+ggplot(house_prices_reduced, aes(x = log10_price)) +
+  geom_density(color = "black", fill = "cyan") +
+  labs(x = "log10 price (USD)", title = "House size") +
+  theme_classic()
+```
+
+These variables seem to be more symmetrical.
+
+We are going to revise our multiple regression model to use our new variables:
+
+The outcome variable $y$ is the sale `log10_price` of houses.
+Two explanatory variables:  
+- A numerical explanatory variable $x_1$: house size `log10_size` as measured in log base 10 square feet of living space.  
+- A categorical explanatory variable $x_2$: house `condition`, a categorical variable with five levels where `1` indicates “poor” and `5` indicates “excellent.”  
+
+### Multivariate
+
+Let's explore regression models using scatterplots.
+
+```{r}
+# Plot interaction model
+ggplot(house_prices_reduced, 
+       aes(x = log10_size, y = log10_price, col = condition)) +
+  geom_point(alpha = 0.05) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(y = "log10 price", 
+       x = "log10 size", 
+       title = "House prices in Seattle")
+```
+
+
+```{r}
+# Plot parallel slopes model
+ggplot(house_prices_reduced, 
+       aes(x = log10_size, y = log10_price, col = condition)) +
+  geom_point(alpha = 0.05) +
+  geom_parallel_slopes(se = FALSE) +
+  labs(y = "log10 price", 
+       x = "log10 size", 
+       title = "House prices in Seattle")
+```
+
+Let's create a faceted plot of the interaction model.
+
+```{r}
+ggplot(house_prices_reduced, 
+       aes(x = log10_size, y = log10_price, col = condition)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(y = "log10 price", 
+       x = "log10 size", 
+       title = "House prices in Seattle") +
+  facet_wrap(~ condition)
+```
+
+### Regression model
+
+Let's build the interaction model.
+
+```{r}
+# Fit regression model:
+price_interaction <- lm(log10_price ~ log10_size * condition, 
+                        data = house_prices_reduced)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(price_interaction)
+```
+
+It is not clear that the interaction model is needed. At most, maybe for a house in condition 5. A machine learning class will help with making a better prediction model.
+
+### Predicting 
+
+Let's use the model to make predictions.  Say you’re a realtor and someone calls you asking you how much their home will sell for. They tell you that it’s in `condition` = 5 and is sized 1900 square feet. Let’s use the interaction model we fit to make predictions! We will use the `augment()` function.
+
+```{r}
+price_interaction %>%
+  augment(newdata=tibble(condition="5",log10_size=log10(1900)))
+```
+
+So the predicted price is
+
+```{r}
+10^5.724213	
+```
+
+## LC 11.1 (Objective 1)
+
+
+```{r, include=FALSE, purl=FALSE}
+chap <- 11
+lc <- 0
+```
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Repeat the regression modeling in Subsection 11.2.3 and the prediction making you just did on the house of condition 5 and size 1900 square feet in Subsection 11.2.4, but using the parallel slopes model you visualized in Figure 11.6. 
+
+```{r}
+# Fit regression model:
+price_parallel <- lm(log10_price ~ log10_size + condition,
+  data = house_prices_reduced)
+```
+
+
+```{r}
+# Get regression table:
+get_regression_table(price_parallel)
+```
+
+```{r}
+price_parallel %>%
+  augment(newdata=tibble(condition="5",log10_size=log10(1900))) %>%
+  summarize(price=10^.fitted)
+```
+
+Using the rounded numbers from the table:
+
+```{r}
+10^(2.88 + 0.096 + 0.837 * log10(1900))
+```
+
+***
+
+
+## Documenting software
+
+-   File creation date: `r Sys.Date()`
+-   `r R.version.string`
+-   `tidyverse` package version: `r packageVersion("tidyverse")`
+-   `moderndive` package version: `r packageVersion("moderndive")`
+-   `skimr` package version: `r packageVersion("skimr")`
+-   `broom` package version: `r packageVersion("broom")`
+

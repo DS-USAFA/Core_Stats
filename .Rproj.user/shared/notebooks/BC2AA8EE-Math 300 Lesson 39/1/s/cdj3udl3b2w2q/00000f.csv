@@ -1,0 +1,5 @@
+"0","# Density plot of log10 price:"
+"0","ggplot(house_prices_reduced, aes(x = log10_price)) +"
+"0","  geom_density(color = ""black"", fill = ""cyan"") +"
+"0","  labs(x = ""log10 price (USD)"", title = ""House size"") +"
+"0","  theme_classic()"

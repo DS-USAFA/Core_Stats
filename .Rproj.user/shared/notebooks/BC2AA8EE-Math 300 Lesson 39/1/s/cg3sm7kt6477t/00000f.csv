@@ -1,0 +1,3 @@
+"0","# Fit regression model:"
+"0","price_parallel <- lm(log10_price ~ log10_size + condition,"
+"0","  data = house_prices_reduced)"
