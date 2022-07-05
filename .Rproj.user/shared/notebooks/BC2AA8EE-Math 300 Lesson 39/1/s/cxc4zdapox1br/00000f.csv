@@ -1,0 +1,7 @@
+"0","# Histogram of sqft_living:"
+"0","ggplot(house_prices, aes(x = sqft_living)) +"
+"0","  geom_histogram(color = ""black"", fill = ""cyan"") +"
+"0","  labs(x = ""living space (square feet)"", title = ""House size"") +"
+"0","  theme_classic()"
+"2","`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+"

@@ -1,0 +1,2 @@
+"0","price_interaction %>%"
+"0","  augment(newdata=tibble(condition=""5"",log10_size=log10(1900)))"

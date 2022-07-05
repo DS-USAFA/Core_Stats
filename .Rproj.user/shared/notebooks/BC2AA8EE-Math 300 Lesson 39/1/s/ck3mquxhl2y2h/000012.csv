@@ -1,0 +1,25 @@
+"0","house_prices %>% "
+"0","  select(price, sqft_living, condition) %>% "
+"0","  my_skim()"
+"1","-- Data Summary ------------------------
+"
+"1","                           Values    
+"
+"1","Name                       Piped data
+"
+"1","Number of rows             21613     
+"
+"1","Number of columns          3         
+"
+"1","_______________________              
+"
+"1","Column type frequency:               
+"
+"1","  factor                   1         
+"
+"1","  numeric                  2         
+"
+"1","________________________             
+"
+"1","Group variables            None      
+"
