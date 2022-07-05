@@ -1,0 +1,1 @@
+"0","score_model <- lm(score ~ bty_avg, data = evals_ch5)"

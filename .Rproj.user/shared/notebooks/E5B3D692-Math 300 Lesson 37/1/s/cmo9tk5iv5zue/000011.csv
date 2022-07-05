@@ -1,0 +1,5 @@
+"0","get_regression_table(score_model) %>%"
+"0","  filter(term==""bty_avg"") %>%"
+"0","  summarize(n=nrow(evals_ch5),"
+"0","            lower_ci=estimate-std_error*qt(.975,df=n-2),"
+"0","            upper_ci=estimate+std_error*qt(.975,df=n-2))"
