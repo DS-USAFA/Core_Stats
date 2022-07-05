@@ -33,7 +33,7 @@ If you get stuck as you are working through this problem set, it will likely be 
 
 ## Key Symbols: 
 
-Symbol           | Population Parameter               | Point Estimate
+Symbol           | Population                         | Sample
 ---------------- | ---------------------------------- | --------------
 Number of cases  | $N$                                | $n$
 Proportion       | $p$                                | $\hat{p}$
@@ -41,7 +41,7 @@ Standard error   | $SE$                               | $\widehat{SE}$
 
 ## Markdown File
 
-Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS05_lastname_firstname_section**
+Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS05_lastname_firstname_section**.
 
 Fill in your answers to the exercises below with a corresponding exercise header in your rmarkdown file. Be sure to include text *and* code where necessary.
 
@@ -53,7 +53,7 @@ Fill in your answers to the exercises below with a corresponding exercise header
 
 * Each exercise is worth 3 points. 
 
-* Be sure to **make a header to label each Exercise**, this means using # followed by the word Exercise and the exercise number. 
+* Be sure to **make a header to label each Exercise**; this means using # followed by the word Exercise and the exercise number. 
 
 * Please type your code to answer the questions in a code chunk (gray part), under the exercise headers and type (**BRIEF**) answers to any interpretation questions in the white part under the headers. 
 
@@ -101,7 +101,7 @@ gss_14  %>%
 
 ## Setting a seed for your computer's Random Number Generator  
 
-In this problem set, will take some random samples of data using R. In order to make sure R takes the same random sample every time you run your code (so you can reproduce your work), you can do what is called "setting a seed". Do this in any code chunk where you take a random sample! Otherwise, the answers you write down might accidentally become out of sync with the output of your code when your knit your document!
+In this problem set, you will take some random samples of data using R. In order to make sure R takes the same random sample every time you run your code (so you can reproduce your work), you can do what is called "setting a seed". Do this in any code chunk where you take a random sample! Otherwise, the answers you write down might accidentally become out of sync with the output of your code when your knit your document!
 
 You can control your computer's random number generator by providing a number to using the `set.seed` function. Any number will do - in the example below, we use 45 as our seed value.
 
@@ -121,7 +121,7 @@ gss_14 %>%
   mutate(p = divorced / N)
 ```
 
-> Note that we used $N$ (the size of the full population, 2,538 people) and computed $p$ (not $\hat{p}$ ). And, no inference from sample to the population is needed. This is because we're working with the **entire population** of interest. We do not need to *estimate* the true proportion, or infer something about the true population proportion of divorced people in this neighborhood in 2014, because in this case, we can compute it directly (just like counting all red balls in the bowl). Thus, we know that $p$ is exactly 0.16. In other words, this situation is not a realistic reflection of a real life problem. 
+> Note that we used $N$ (the size of the full population, 2,538 people) and computed $p$ (not $\hat{p}$). Also, no inference from sample to the population is needed. This is because we're working with the **entire population** of interest. We do not need to *estimate* the true proportion, or infer something about the true population proportion of divorced people in this neighborhood in 2014, because in this case, we can compute it directly (just like counting all red balls in the bowl). Thus, we know that $p$ is exactly 0.16. In other words, this situation is not a realistic reflection of a real life problem. 
 
 For the rest of this problem set, we will be *simulating* the act of sampling from this neighborhood population to understand and study how factors like sample size influence **sampling variation**.
 
@@ -167,11 +167,11 @@ n50_3rep <- gss_14 %>%
 
 ## Estimating $\widehat{SE}$ from a single sample
 
-Typically we only have the opportunity to collect **one sample** for our study, and so we have to use the amount of variability in our **single sample** as an estimate of the amount of variability we might expect in our results if we had taken a random sample of 50 different people. The $\widehat{SE}_{\hat{p}}$ serves as an **ESTIMATE**  of **sampling variability** if you only have a **single sample**. The formula for estimating the standard error of $\hat{p}$ is the following:
+Typically we only have the opportunity to collect **one sample** for our study, and so we have to use the amount of variability in our **single sample** as an estimate of the amount of variability we might expect in our results if we had taken many random samples of 50 different people. The $\widehat{SE}_{\hat{p}}$ serves as an **ESTIMATE** of **sampling variability** if you only have a **single sample**. The formula for estimating the standard error of $\hat{p}$ is the following:
 
 $$\widehat{SE}_{\hat{p}}  \approx  \sqrt{\frac{\hat{p} \times (1-\hat{p})}{n}}$$
 
-> Note that we use $n$ to represent the size of the sample and we that use $\hat{p}$ to represent the proportion of divorced people because we are ESTIMATING a proportion based on only a sample. Likewise, the SE "wears a hat" because we are ESTIMATING the true standard error based on a sample. 
+> Note that we use $n$ to represent the size of the sample and we use $\hat{p}$ to represent the proportion of divorced people because we are ESTIMATING a proportion based on only a sample. Likewise, the SE "wears a hat" because we are ESTIMATING the true standard error based on a sample. 
 
 
 The standard error of $\hat{p}$ can be estimated in R like so:

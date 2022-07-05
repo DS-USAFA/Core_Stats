@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Reading 
 
-[Chapter 7.4](https://moderndive.com/7-sampling.html#sampling-conclusion-central-limit-theorem)
+[Chapter 7.5](https://moderndive.com/7-sampling.html#sampling-conclusion-central-limit-theorem)
 
 [Appendix A.2](https://moderndive.com/A-appendixA.html#appendix-normal-curve)
 
@@ -39,9 +39,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Work through the learning checks LCA.1 - LCA.2.
 
-+ The central limit theorem is difficult. The key idea is that if we create a point estimate that is using summation, then the **distribution of this point estimate** tends to be normal. The larger he sample, the closer the distribution is to being normal. If we are finding a mean, then the larger the sample, the smaller the standard error.
++ The central limit theorem is difficult. The key idea is that if we create a point estimate that is using summation, then the **distribution of this point estimate** tends to be normal. The larger the sample, the closer the distribution is to being normal. If we are describing a sample mean, then the larger the sample, the smaller the standard error.
 
-+ Use `R` to find probabilities. This implies the use of `pnorm()` and `qnorm()`. You will need to spend time on the use of this functions. 
++ Use `R` to find probabilities. This implies the use of `pnorm()` and `qnorm()`. You will need to spend time on the use of these functions. 
 
 ***
 
@@ -59,6 +59,8 @@ set.seed(316)
 (time<-round(runif(4,5,6),2))
 ```
 We are generating 4 random numbers in the interval 5 to 6. We record these and find the average.
+
+Take a note to explain `runif(4,5,6)`. We are selecting 4 numbers at random between the values 5 and 6. Using `set.seed(316)` ensures we all end up with the same four numbers in this exercise. 
 
 ```{r}
 mean(time)
@@ -83,7 +85,7 @@ ggplot(rep_data,aes(x=ave)) +
   theme_classic()
 ```
 
-Notice how this distribution of is approximately normal. That is the central limit theorem. If we used 10 points per sample instead of 4, the standard error would be smaller. 
+Notice how this distribution of is approximately normal. This is a demonstration of the central limit theorem. If we used 10 points per sample instead of 4, the standard error would be smaller. 
 
 ```{r}
 # Repeat this 1000 times
@@ -98,7 +100,7 @@ ggplot(rep_data2,aes(x=ave)) +
   theme_classic()
 ```
 
-- Run the code again, but change the sample size.
+- Run the code again, but change the sample size to something larger.
 
 
 ```{r, include=FALSE, purl=FALSE}
@@ -110,7 +112,7 @@ lc <- 0
 
 ### LC A.1 (Objective 2)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Say you have a normal distribution with mean $\mu=6$ and standard deviation $\sigma=3$. What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?
 
 **Solution:**
 
@@ -121,7 +123,7 @@ pnorm(3,mean=6,sd=3)
 ```
 
 
-* Greater than 12: 12 is two standard deviations greater than the mean of 6, since $\frac{12 - \mu}{\sigma} = \frac{12-6}{3} = +2$, we compute the area to the right of z = +2 in Figure A.2: 2.35% + 0.15% = 2.5%.
+* Greater than 12: 12 is two standard deviations greater than the mean of 6, since $\frac{12 - \mu}{\sigma} = \frac{12-6}{3} = 2$, we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.
 
 ```{r}
 pnorm(12,mean=6,sd=3,lower.tail = FALSE)
@@ -137,7 +139,7 @@ pnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)
 
 ### LC A.2 (Objective 2)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?
 
 **Solution:**
 
