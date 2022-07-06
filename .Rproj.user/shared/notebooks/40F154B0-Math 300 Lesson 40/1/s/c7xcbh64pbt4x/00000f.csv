@@ -1,0 +1,3 @@
+"0","ggplot(data = age_at_marriage, mapping = aes(x = age)) +"
+"0","  geom_histogram(binwidth = 3, color = ""black"", fill = ""cyan"") +"
+"0","  theme_classic()"

@@ -1,0 +1,8 @@
+"0","set.seed(2018)"
+"0","null_distn_one_mean <- age_at_marriage %>%"
+"0","  specify(response = age) %>%"
+"0","  hypothesize(null = ""point"", mu = 23) %>%"
+"0","  generate(reps = 10000) %>%"
+"0","  calculate(stat = ""mean"")"
+"2","Setting `type = ""bootstrap""` in `generate()`.
+"

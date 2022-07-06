@@ -1,0 +1,4 @@
+"0","age_at_marriage %>%"
+"0","  filter(age!=23) %>%"
+"0","  mutate(delta=age-23,n=n(),diff_sign=if_else(delta<0,-1,1)) %>%"
+"0","  summarize(test_stat=sum(diff_sign))"

@@ -1,0 +1,4 @@
+"0","boot_distn_one_mean <- age_at_marriage %>%"
+"0","  specify(response = age) %>%"
+"0","  generate(reps = 10000, type=""bootstrap"") %>%"
+"0","  calculate(stat = ""mean"")"

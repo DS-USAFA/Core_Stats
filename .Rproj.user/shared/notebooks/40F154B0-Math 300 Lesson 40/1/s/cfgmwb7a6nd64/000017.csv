@@ -1,0 +1,2 @@
+"0","samp_dist %>%"
+"0","  summarize(p_value=sum(stat_count>=-176)/10000)"

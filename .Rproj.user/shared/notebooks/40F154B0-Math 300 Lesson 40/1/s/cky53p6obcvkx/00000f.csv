@@ -1,0 +1,11 @@
+"0","age_at_marriage <- read_csv(""https://moderndive.com/data/ageAtMar.csv"")"
+"1","[1mRows: [22m[34m5534[39m [1mColumns: [22m[34m1[39m
+"
+"1","[36m--[39m [1mColumn specification[22m [36m----------------------------------------------------------------------[39m
+[1mDelimiter:[22m "",""
+[32mdbl[39m (1): age
+"
+"1","
+[36mi[39m Use `spec()` to retrieve the full column specification for this data.
+[36mi[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"
