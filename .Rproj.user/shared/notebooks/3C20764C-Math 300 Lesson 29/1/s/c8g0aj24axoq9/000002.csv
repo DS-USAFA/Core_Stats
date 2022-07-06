@@ -1,3 +1,0 @@
-"0","promotions %>% "
-"0","  group_by(gender, decision) %>%"
-"0","  tally()"

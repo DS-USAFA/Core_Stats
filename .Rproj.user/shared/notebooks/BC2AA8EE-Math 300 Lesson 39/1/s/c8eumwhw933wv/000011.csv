@@ -1,7 +1,0 @@
-"0","# Histogram of house price:"
-"0","ggplot(house_prices, aes(x = price)) +"
-"0","  geom_histogram(color = ""black"", fill = ""cyan"") +"
-"0","  labs(x = ""price (USD)"", title = ""House price"") +"
-"0","  theme_classic()"
-"2","`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-"

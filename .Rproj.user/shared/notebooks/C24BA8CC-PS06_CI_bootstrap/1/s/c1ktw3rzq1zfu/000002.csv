@@ -1,5 +1,0 @@
-"0","# Recall that loading the tidyverse ""umbrella"" package loads ggplot2, dplyr, and"
-"0","# readr all at once. Feel free to load these packages any way you choose."
-"0","library(tidyverse)"
-"0","library(forcats)"
-"0","library(moderndive)"

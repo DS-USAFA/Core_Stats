@@ -1,5 +1,0 @@
-"0","null_distn_corr %>% "
-"0","  get_p_value(obs_stat = observed_corr, direction = ""both"")"
-"2","Warning:"
-"2"," Please be cautious in reporting a p-value of 0. This result is an approximation based on the number of `reps` chosen in the `generate()` step. See `?get_p_value()` for more information.
-"

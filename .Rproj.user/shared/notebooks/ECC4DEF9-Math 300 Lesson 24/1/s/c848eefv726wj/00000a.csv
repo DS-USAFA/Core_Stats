@@ -1,4 +1,0 @@
-"0","bootstrap_dist %>%"
-"0","  summarize(center=mean(ave),"
-"0","            lower=quantile(ave,probs=0.25),"
-"0","            upper=quantile(ave,probs=.975))"

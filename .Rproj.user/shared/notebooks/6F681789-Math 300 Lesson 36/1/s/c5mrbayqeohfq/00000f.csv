@@ -1,5 +1,0 @@
-"0","null_distn_slope <- evals %>% "
-"0","  specify(score ~ bty_avg) %>%"
-"0","  hypothesize(null = ""independence"") %>% "
-"0","  generate(reps = 1000, type = ""permute"") %>% "
-"0","  calculate(stat = ""slope"")"

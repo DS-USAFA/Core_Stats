@@ -1,4 +1,0 @@
-"0","(standard_error_ci <- boot_dist_mean %>% "
-"0","  get_confidence_interval(type = ""se"", point_estimate = mean_pennies))"
-"2","Using `level = 0.95` to compute confidence interval.
-"

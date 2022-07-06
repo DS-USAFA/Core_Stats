@@ -1,3 +1,0 @@
-"0","set.seed(911)"
-"0","sample1<-bowl %>%"
-"0","    rep_sample_n(size = 100, reps = 1, replace = FALSE)"

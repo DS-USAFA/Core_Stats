@@ -1,5 +1,0 @@
-"0","ggplot(data = movies_sample, aes(x = rating)) +"
-"0","  geom_density(fill=""cyan"") +"
-"0","  facet_wrap(~genre)+"
-"0","  labs(x = ""IMDb rating"") +"
-"0","  theme_classic()"

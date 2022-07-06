@@ -1,6 +1,0 @@
-"0","set.seed(126)"
-"0","bootstrap_distn_slope <- pen %>% "
-"0","  specify(formula = body_mass_g ~ flipper_length_mm) %>%"
-"0","  generate(reps = 1000, type = ""bootstrap"") %>% "
-"0","  calculate(stat = ""slope"")"
-"0","visualize(bootstrap_distn_slope)"

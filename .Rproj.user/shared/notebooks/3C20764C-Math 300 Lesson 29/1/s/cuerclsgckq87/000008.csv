@@ -1,4 +1,0 @@
-"0","promotions %>% "
-"0","  group_by(gender, decision) %>%"
-"0","  tally() %>%"
-"0","  mutate(perc = round(n / sum(n)*100,2))"

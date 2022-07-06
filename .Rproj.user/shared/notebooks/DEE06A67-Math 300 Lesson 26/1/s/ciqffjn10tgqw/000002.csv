@@ -1,2 +1,0 @@
-"0","bowl %>%"
-"0","  summarize(red=mean(color==""red""),total=n(),num_red=sum(color==""red""))"

@@ -1,5 +1,0 @@
-"0","pennies_resamples %>%"
-"0","  filter(replicate==1) %>%"
-"0","  ggplot(aes(x = year)) +"
-"0","  geom_histogram(binwidth = 10, color = ""white"") +"
-"0","  theme_classic()"

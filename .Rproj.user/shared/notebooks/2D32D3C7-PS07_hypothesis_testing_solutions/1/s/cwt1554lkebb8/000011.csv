@@ -1,5 +1,0 @@
-"0","ggplot(sat_gpa, aes(x = gpa_fy)) + "
-"0","  geom_histogram(fill = ""cyan"",color=""black"") + "
-"0","  facet_wrap(~sex)"
-"2","`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-"

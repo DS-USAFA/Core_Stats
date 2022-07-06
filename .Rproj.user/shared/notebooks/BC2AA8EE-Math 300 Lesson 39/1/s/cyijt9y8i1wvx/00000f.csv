@@ -1,5 +1,0 @@
-"0","# Barplot of condition:"
-"0","ggplot(house_prices, aes(x = condition)) +"
-"0","  geom_bar(color = ""black"", fill = ""cyan"") +"
-"0","  labs(x = ""condition"", title = ""House condition"") +"
-"0","  theme_classic()"

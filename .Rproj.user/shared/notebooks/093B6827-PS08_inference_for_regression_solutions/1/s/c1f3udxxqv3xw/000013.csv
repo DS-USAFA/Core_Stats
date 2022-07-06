@@ -1,4 +1,0 @@
-"0","ggplot(regression_points, aes(x = residual)) +"
-"0","  geom_histogram(binwidth = 150, color = ""black"", fill=""cyan"") +"
-"0","  labs(x = ""Residual"") +"
-"0","  theme_classic()"

@@ -1,8 +1,0 @@
-"0","ggplot(data = pen, aes(y = body_mass_g, x = flipper_length_mm)) + "
-"0","  geom_point() + "
-"0","  geom_smooth(method = ""lm"", se = FALSE) +"
-"0","  labs(x = ""Flipper length (millimeters)"", "
-"0","       y = ""Body mass (grams)"", "
-"0","       title = ""Flipper Length and Body Mass of Three Species of Penguins"") "
-"2","`geom_smooth()` using formula 'y ~ x'
-"

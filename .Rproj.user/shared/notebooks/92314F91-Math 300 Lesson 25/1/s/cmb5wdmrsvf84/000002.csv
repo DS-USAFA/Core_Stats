@@ -1,3 +1,0 @@
-"0","visualize(bootstrap_distribution) + "
-"0","  shade_confidence_interval(endpoints = percentile_ci) +"
-"0","  theme_classic()"

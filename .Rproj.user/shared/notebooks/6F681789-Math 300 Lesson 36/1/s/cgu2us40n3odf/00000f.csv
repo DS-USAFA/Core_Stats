@@ -1,7 +1,0 @@
-"0","(observed_corr <- evals %>%"
-"0","  specify(score ~ bty_avg) %>%"
-"0","  calculate(stat = ""correlation""))"
-"1","Response: score (numeric)
-Explanatory: bty_avg (numeric)"
-"1","
-"

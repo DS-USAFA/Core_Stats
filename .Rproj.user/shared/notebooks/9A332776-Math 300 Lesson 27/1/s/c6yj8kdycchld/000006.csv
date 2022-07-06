@@ -1,4 +1,0 @@
-"0","bowl_sample_1 %>%"
-"0","  summarize(prop=mean(color==""red""),total=n()) %>%"
-"0","  mutate(lower_ci=prop-qnorm(.975)*sqrt(prop*(1-prop)/total),"
-"0","         upper_ci=prop+qnorm(.975)*sqrt(prop*(1-prop)/total))"

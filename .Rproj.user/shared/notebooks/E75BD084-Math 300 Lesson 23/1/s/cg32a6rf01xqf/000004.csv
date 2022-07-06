@@ -1,5 +1,0 @@
-"0","# The bootstrap distribution"
-"0","ggplot(virtual_resampled_means, aes(x = mean_year)) +"
-"0","  geom_histogram(binwidth = 1, color = ""white"", boundary = 1990) +"
-"0","  labs(x = ""sample mean"") +"
-"0","  theme_classic()"

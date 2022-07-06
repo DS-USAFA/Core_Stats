@@ -1,5 +1,0 @@
-"0","# Visualize p-value. Observing this difference in medians under H0"
-"0","# is very unlikely! Suggesting H0 is false, similarly to when we used"
-"0","# ""diff in means"" as the test statistic. "
-"0","visualize(null_distribution_movies_median, bins = 10) + "
-"0","  shade_p_value(obs_stat = obs_diff_medians, direction = ""both"")"

@@ -1,2 +1,0 @@
-"0","pen_model <- lm(body_mass_g ~ flipper_length_mm, data = pen)"
-"0","get_regression_table(pen_model)"

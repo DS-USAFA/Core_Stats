@@ -1,6 +1,0 @@
-"0","# Get the null distribution"
-"0","null_dist_permute <- flight_sample %>% "
-"0","  specify(formula = arr_delay ~ carrier) %>% "
-"0","  hypothesize(null = ""independence"") %>% "
-"0","  generate(reps = 1000, type = ""permute"") %>% "
-"0","  calculate(stat = ""diff in means"", order = c(""DL"", ""UA""))"

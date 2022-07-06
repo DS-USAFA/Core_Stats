@@ -1,4 +1,0 @@
-"0","set.seed(7620)"
-"0","# Repeat resampling 1000 times"
-"0","virtual_resamples <- tibble(value = c(-1,1)) %>% "
-"0","  rep_sample_n(size = 5534, replace = TRUE, reps = 10000)"

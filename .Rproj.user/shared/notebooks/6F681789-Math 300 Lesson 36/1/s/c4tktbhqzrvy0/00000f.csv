@@ -1,7 +1,0 @@
-"0","(observed_slope <- evals %>% "
-"0","  specify(score ~ bty_avg) %>% "
-"0","  calculate(stat = ""slope""))"
-"1","Response: score (numeric)
-Explanatory: bty_avg (numeric)"
-"1","
-"

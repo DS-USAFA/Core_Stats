@@ -1,5 +1,0 @@
-"0","mythbusters_yawn %>% "
-"0","  group_by(group, yawn) %>% "
-"0","  summarize(count = n()) %>%"
-"0","  mutate(prop = count / sum(count))"
-"2","`summarise()` has grouped output by 'group'. You can override using the `.groups` argument."

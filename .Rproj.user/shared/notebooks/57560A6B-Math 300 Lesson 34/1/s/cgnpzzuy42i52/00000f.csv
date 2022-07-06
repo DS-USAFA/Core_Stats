@@ -1,3 +1,0 @@
-"0","ev_chp10 <- ev_charging %>%"
-"0","  select(kwh_total,dollars) %>%"
-"0","  filter(dollars>0.5)"

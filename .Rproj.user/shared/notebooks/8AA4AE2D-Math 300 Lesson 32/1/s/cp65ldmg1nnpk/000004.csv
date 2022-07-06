@@ -1,4 +1,0 @@
-"0","ggplot(data = action_romance, aes(x = genre,y=rating)) +"
-"0","  geom_boxplot() +"
-"0","  labs(y = ""IMDb rating"") +"
-"0","  theme_classic()"

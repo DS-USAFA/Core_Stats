@@ -1,6 +1,0 @@
-"0","visualize(gpa_diff_under_null) +"
-"0","   shade_p_value(obs_stat = obs_diff_gpa_sex, direction = ""both"") +"
-"0","   labs(x = ""Difference in mean GPA for males and females"", y = ""Count"","
-"0","        title = ""Null distribution of differences in male and female GPAs"","
-"0","        subtitle = ""Actual difference observed in the data is marked in red"") +"
-"0","   theme_classic()"

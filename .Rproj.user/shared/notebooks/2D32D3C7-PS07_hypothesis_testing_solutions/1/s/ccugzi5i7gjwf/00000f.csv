@@ -1,2 +1,0 @@
-"0","gpa_diff_under_null %>% "
-"0","  get_pvalue(obs_stat = obs_diff_gpa_sex, direction = ""both"") "

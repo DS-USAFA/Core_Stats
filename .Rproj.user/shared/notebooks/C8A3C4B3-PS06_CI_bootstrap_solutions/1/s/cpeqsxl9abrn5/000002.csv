@@ -1,5 +1,0 @@
-"0","set.seed(504)"
-"0","infer_boot<-gss_sample %>%"
-"0","  specify(formula=race~NULL,succes=""POC"") %>%"
-"0","  generate(reps = 1000, type = ""bootstrap"") %>%"
-"0","  calculate(stat=""prop"")"

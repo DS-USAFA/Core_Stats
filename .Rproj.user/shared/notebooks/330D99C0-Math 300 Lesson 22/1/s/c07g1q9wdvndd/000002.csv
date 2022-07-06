@@ -1,2 +1,0 @@
-"0","# Repeat this 1000 times"
-"0","rep_data2<-tibble(ave=replicate(1000,mean(round(runif(10,5,6),2))))"

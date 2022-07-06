@@ -1,2 +1,0 @@
-"0","pennies_sample %>% "
-"0","  summarize(mean_year = mean(year))"

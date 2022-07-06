@@ -1,5 +1,0 @@
-"0","set.seed(612)"
-"0","bootstrap_distribution_promotions <- promotions %>% "
-"0","  specify(formula = decision ~ gender, success = ""promoted"") %>% "
-"0","  generate(reps = 1000, type = ""bootstrap"") %>% "
-"0","  calculate(stat = ""diff in props"", order = c(""male"", ""female""))"

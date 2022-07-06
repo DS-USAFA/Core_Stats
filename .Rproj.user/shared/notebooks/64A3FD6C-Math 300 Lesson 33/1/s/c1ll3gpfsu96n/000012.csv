@@ -1,7 +1,0 @@
-"0","set.seed(90)"
-"0","flight_sample <- flights %>%"
-"0","  select(arr_delay, carrier,origin) %>%"
-"0","  filter(carrier%in%c(""DL"",""UA"")) %>%"
-"0","  group_by(carrier) %>%"
-"0","  slice_sample(n=50) %>%"
-"0","  ungroup()"

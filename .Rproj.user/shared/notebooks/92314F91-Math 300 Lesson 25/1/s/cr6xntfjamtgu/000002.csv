@@ -1,4 +1,0 @@
-"0","pennies_sample %>% "
-"0","  specify(formula=year~NULL) %>% "
-"0","  generate(reps = 1000, type = ""bootstrap"") %>%"
-"0","  head()"

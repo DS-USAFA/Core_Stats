@@ -1,4 +1,0 @@
-"0","shuffled_data_tidy  <- gender_promotions_shuffles %>%"
-"0","  pivot_longer(cols=-c(""id"", ""decision""),"
-"0","               names_to = ""team"", values_to = ""gender"") %>%"
-"0","  mutate(replicate = rep(1:16, times = 48)) "

@@ -1,6 +1,0 @@
-"0","pennies_sample %>%"
-"0","  specify(formula=year~NULL) %>%"
-"0","  head()"
-"1","Response: year (numeric)"
-"1","
-"

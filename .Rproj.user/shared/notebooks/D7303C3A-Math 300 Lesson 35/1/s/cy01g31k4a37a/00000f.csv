@@ -1,4 +1,0 @@
-"0","ggplot(score_regression_points, aes(x = bty_avg, y = residual)) +"
-"0","  geom_point() +"
-"0","  labs(x = ""Beauty Score"", y = ""Residual"") +"
-"0","  geom_hline(yintercept = 0, col = ""blue"", size = 1)"

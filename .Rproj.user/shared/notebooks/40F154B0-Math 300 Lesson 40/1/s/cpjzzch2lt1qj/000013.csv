@@ -1,4 +1,0 @@
-"0","# Compute 10000 sample statistics"
-"0","samp_dist <- virtual_resamples %>% "
-"0","  group_by(replicate) %>% "
-"0","  summarize(stat_count = sum(value))"

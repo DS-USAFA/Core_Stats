@@ -1,4 +1,0 @@
-"0","ggplot(data = age_at_marriage, mapping = aes(sample = age)) +"
-"0","  stat_qq() +"
-"0","  stat_qq_line() +"
-"0","  theme_classic()"

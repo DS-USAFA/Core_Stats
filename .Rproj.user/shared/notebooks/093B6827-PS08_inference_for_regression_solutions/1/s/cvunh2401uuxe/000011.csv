@@ -1,6 +1,0 @@
-"0","#Add code to check this condition:"
-"0","ggplot(regression_points_par, aes(x = bill_length_mm, y = residual, color =species)) +"
-"0","  geom_point() +"
-"0","  labs(x = ""bill Length in mm "", y = ""Residual"") +"
-"0","  geom_hline(yintercept = 0, col = ""blue"", size = 1) +"
-"0","  theme_classic()"

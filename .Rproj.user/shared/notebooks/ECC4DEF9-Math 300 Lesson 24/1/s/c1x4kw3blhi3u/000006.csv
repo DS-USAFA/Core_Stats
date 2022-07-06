@@ -1,5 +1,0 @@
-"0","set.seed(52249)"
-"0","bootstrap_dist<-pennies_sample %>%"
-"0","  rep_sample_n(size = 50, replace = TRUE, reps = 1000) %>%"
-"0","  group_by(replicate) %>%"
-"0","  summarize(ave=mean(year))"

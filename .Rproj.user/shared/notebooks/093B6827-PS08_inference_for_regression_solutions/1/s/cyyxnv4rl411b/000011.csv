@@ -1,4 +1,0 @@
-"0",""
-"0","# Get regression points:"
-"0","regression_points_par <- get_regression_points(pen_parallel)"
-"0",""
