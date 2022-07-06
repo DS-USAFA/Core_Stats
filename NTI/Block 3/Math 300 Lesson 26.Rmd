@@ -52,9 +52,9 @@ library(infer)
 ```
 
 
-### Understanding confidence interval.
+### Understanding confidence intervals
 
-Interpretation of a confidence interval relates to the entire process of collecting data and building a confidence interval. In practice we do this process only once. However, in a simulation we can repeat the process. We will do this in this lesson.
+The interpretation of a confidence interval relates to the entire process of collecting data and building a confidence interval. In practice we do this process only once. However, in a simulation we can repeat the process. We will do this in this lesson.
 
 Let's use the bin of red and white balls. The population is a set of 2400 balls where 900 are red and 1500 are white. We already know more than we would in practice since we have a census.
 
@@ -73,7 +73,7 @@ bowl %>%
 
 This information will give us knowledge about the population that is not known in practice. 
 
-Let's take a sample of size 100 from the population.
+Let's take a sample of size 100 from the population and summarize that sample.
 
 ```{r}
 set.seed(911)
@@ -88,10 +88,9 @@ sample1 %>%
   summarize(red=mean(color=="red"),total=n(),num_red=sum(color=="red"))
 ```
 
-In this sample we see that we have 42 red balls out of 100. Why is this not .375?
+In this sample we see that we have 42 red balls out of 100, for a proportion of 0.42. Why is this not .375? (Because this is a proportion based on a random sample, not the entire population.)
 
-Let's construct a 90% confidence interval. Pay attention options used in each function call.
-
+Let's construct a 90% confidence interval. Pay attention to the options used in each function call.
 
 ```{r}
 (bootstrap_dist1<-sample1 %>%
@@ -107,7 +106,6 @@ percentile_ci_1 <- bootstrap_dist1 %>%
   get_confidence_interval(level = 0.90, type = "percentile")
 ```
 
-
 ```{r}
 percentile_ci_1
 ```
@@ -116,7 +114,7 @@ percentile_ci_1
 
 **Answer:**
 
-We are 90% that the true proportion of red balls in the population is between 0.34 and 0.5. 
+We are 90% confident that the true proportion of red balls in the population is between 0.34 and 0.5. 
 
 - What is wrong with the following statement?
 
@@ -124,7 +122,7 @@ We are 90% that the true proportion of red balls in the population is between 0.
 
 **Answer:**
 
-The interval 0.34 to 0.5 has no random component. The interval either contains the value or it does not, in this case it does. We thus don't want to use the word probability.
+The population proportion has no random component. The interval 0.34 to 0.5 either contains the value or it does not; in this case it does. We don't want to use the word probability.
 
 ***
 
@@ -151,7 +149,7 @@ bowl %>%
     get_confidence_interval(level = 0.90, type = "percentile")
 ```
 
-We could just keep doing a cut and paste, but let's write a function that will automate this process. You are not expected to generate this code but it is presented if you are interesting in learning about more sophisticated coding in `R`.
+We could just keep doing a cut and paste, but let's write a function that will automate this process. You are not expected to generate this code but it is presented if you are interested in learning about more sophisticated coding in `R`.
 
 First we write a function that 
 
@@ -192,7 +190,7 @@ sim_cis %>%
   summarize(coverage=sum(captured))
 ```
 
-This means that 89 out of the 100 simulated confidence intervals included the true population proportion. Why is it not 90?
+This means that 89 out of the 100 simulated confidence intervals included the true population proportion. Why is it not 90? 
 
 Let's plot all the intervals.
 
@@ -222,7 +220,7 @@ ggplot(sim_cis) +
   )
 ```
 
-- Interpret this plot in terms of a confidence interval.
+- Interpret this plot in terms of a confidence interval. (For about 90% of random samples, the 90% confidence interval will capture the true proportion.)
 
 ***
 

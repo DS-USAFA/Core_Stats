@@ -50,9 +50,9 @@ library(infer)
 ```
 
 
-### Understanding confidence interval.
+### Understanding confidence intervals
 
-Interpretation of a confidence interval relates to the entire process of collecting data and building a confidence interval. In practice we do this process only once. However, in a simulation we can repeat the process. We will do this in this lesson.
+The interpretation of a confidence interval relates to the entire process of collecting data and building a confidence interval. In practice we do this process only once. However, in a simulation we can repeat the process. We will do this in this lesson.
 
 Let's use the bin of red and white balls. The population is a set of 2400 balls where 900 are red and 1500 are white. We already know more than we would in practice since we have a census.
 
@@ -71,7 +71,7 @@ bowl %>%
 
 This information will give us knowledge about the population that is not known in practice. 
 
-Let's take a sample of size 100 from the population.
+Let's take a sample of size 100 from the population and summarize that sample.
 
 ```{r}
 set.seed(911)
@@ -86,10 +86,9 @@ sample1 %>%
   summarize(red=mean(color=="red"),total=n(),num_red=sum(color=="red"))
 ```
 
-In this sample we see that we have 42 red balls out of 100. Why is this not .375?
+In this sample we see that we have 42 red balls out of 100, for a proportion of 0.42. Why is this not .375?
 
-Let's construct a 90% confidence interval. Pay attention options used in each function call.
-
+Let's construct a 90% confidence interval. Pay attention to the options used in each function call.
 
 ```{r}
 (bootstrap_dist1<-sample1 %>%
@@ -145,9 +144,9 @@ Notice that this interval also included the true value but it was a different in
 # Add code here
 ```
 
-We could just keep doing a cut and paste, but let's write a function that will automate this process. You are not expected to generate this code but it is presented if you are interesting in learning about more sophisticated coding in `R`.
+We could just keep doing a cut and paste, but let's write a function that will automate this process. You are not expected to generate this code but it is presented if you are interested in learning about more sophisticated coding in `R`.
 
-First we write a function that 
+First we write a function that builds a confidence interval using the bootstrap method for a given random sample. 
 
 ```{r}
 # Function to find a confidence interval

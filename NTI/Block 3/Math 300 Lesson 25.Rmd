@@ -39,7 +39,7 @@ Work through the learning check LC 8.5.
 
 + The `infer` package gives a framework to think about and conduct inference. It makes hypothesis testing and confidence interval construction more structured and puts computational resources at the center versus mathematical tools.
 
-+ the `infer` package uses the verbs `specify()`, `generate()`, `calculate()`, and `visualize()` to complete the construction process.
++ The `infer` package uses the verbs `specify()`, `generate()`, `calculate()`, and `visualize()` to complete the construction process.
 
 
 ***
@@ -81,14 +81,16 @@ bootstrap_dist %>%
   theme_classic()
 ```
 
+Now let's obtain a 95% confidence interval using the percentile method. 
+
 ```{r}
 bootstrap_dist %>%
   summarize(center=mean(ave),
-            lower=quantile(ave,probs=0.25),
+            lower=quantile(ave,probs=0.025),
             upper=quantile(ave,probs=.975))
 ```
 
-The standard error method.
+Now use the standard error method.
 
 ```{r}
 bootstrap_dist %>%
@@ -99,12 +101,11 @@ bootstrap_dist %>%
 
 ### Steps from the `infer` package
 
-- First specify the response variable, and explanatory variables if present. We like to use the `formula` option.
+- First specify the response variable, and explanatory variables if present. We like to use the `formula` option. 
 
 ```{r}
 pennies_sample %>%
-  specify(formula=year~NULL) %>%
-  head()
+  specify(formula=year~NULL)
 ```
 
 It is similar to using `select()` but note the meta data has also changed.
@@ -114,8 +115,7 @@ It is similar to using `select()` but note the meta data has also changed.
 ```{r}
 pennies_sample %>% 
   specify(formula=year~NULL) %>% 
-  generate(reps = 1000, type = "bootstrap") %>%
-  head()
+  generate(reps = 1000, type = "bootstrap") 
 ```
 
 Compare this code with that using `rep_sample_n()`.
@@ -126,11 +126,10 @@ Compare this code with that using `rep_sample_n()`.
 pennies_sample %>% 
   specify(formula=year~NULL) %>% 
   generate(reps = 1000, type = "bootstrap") %>% 
-  calculate(stat = "mean") %>%
-  head()
+  calculate(stat = "mean") 
 ```
 
-- Using results of bootstrap distribution
+- Using results of bootstrap distribution. Let's save this tibble of means to `boot_dist_mean`. 
  
 ```{r}
 boot_dist_mean <- pennies_sample %>% 
@@ -153,12 +152,15 @@ visualize(boot_dist_mean) +
 
 Or if we want the standard error method.
 
+First, find the center of our interval, $\bar{x}$. 
+
 ```{r}
 (mean_pennies <- pennies_sample %>%
   summarize(ave=mean(year)) %>%
   pull())
 ```
 
+Now use `get_confidence_interval()`: 
 
 ```{r}
 (standard_error_ci <- boot_dist_mean %>% 
@@ -168,7 +170,7 @@ Or if we want the standard error method.
 
 ### LC 8.5 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Construct a 95% confidence interval for the *median* year of minting of *all* US pennies? Use the percentile method and, if appropriate, then use the standard-error method.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Construct a 95% confidence interval for the *median* year of minting of *all* US pennies. Use the percentile method and, if appropriate, use the standard-error method.
 
 **Solution**: 
 

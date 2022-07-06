@@ -35,7 +35,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Work through the learning checks LC 8.1 - LC 8.2. Complete code as necessary. 
 
-+ The bootstrap samples with replacement. You must sample as you did with the original sample. If you sampled 50 data points in the original sample, sample 50 in the bootstrap sample.
++ The bootstrap samples with replacement. Each bootstrap sample has the same size as the original sample. If you sampled 50 data points in the original sample, sample 50 in the bootstrap sample.
 
 + The key idea of the bootstrap is that it gives an estimate of the standard error of a point estimate.  
 
@@ -58,7 +58,7 @@ Here is the original data.
 head(pennies_sample)
 ```
 
-
+Find the mean minting year of our sample and visualize the distribution of the minting years. 
 
 ```{r}
 # Complete the code and remove the comment symbol
@@ -80,7 +80,7 @@ In our sample, the average year of minting was 1995.44. It is not an integer sin
 - What is the population parameter?
 - What is the point estimate?
 
-Now if we sampled with replacement from this sample, we would get a bootstrap sample. this was done 35 times.
+Now if we sampled with replacement from this sample, we would get a bootstrap sample. In the reading, this was done 35 times.
 
 ```{r}
 head(pennies_resamples)

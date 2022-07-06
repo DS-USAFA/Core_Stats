@@ -21,9 +21,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Explain how to construct a confidence interval using both the percentile method and the standard error method including assumptions.    
+1. Explain how to construct a confidence interval using both the percentile method and the standard error method including assumptions.
 
-2. Explain the impact of changing the confidence level of the resulting confidence interval. 
+2. Explain how changing the confidence level impacts the width of a confidence interval. 
 
 
 ## Reading 
@@ -37,7 +37,7 @@ Work through the learning checks LC 8.3 - LC 8.4.
 
 + All confidence intervals have the same interpretation. It is the construction that may differ.
 
-+ The reason we use an interval is because an point estimate has variation. Once we know the sampling distribution, we can construct an interval. Using the bootstrap gives us an estimate of the sampling distribution of the point estimate. 
++ The reason we use an interval is because a point estimate has variation. Once we know the sampling distribution, we can construct an interval. Using the bootstrap gives us an estimate of the sampling distribution of the point estimate. 
 
 + We are going to do a look ahead and use `R` to construct the percentile method confidence interval.  
 
@@ -61,7 +61,7 @@ As a review, let's construct the bootstrap distribution of the sample mean for o
 head(pennies_sample)
 ```
 
-Create a bootstrap distribution of the sample mean.
+Create and visualize a bootstrap distribution of the sample mean.
 
 ```{r}
 set.seed(52249)
@@ -81,17 +81,22 @@ set.seed(52249)
 #   theme_classic()
 ```
 
+#### Confidence Interval, Percentile Method 
+
+Use the percentile method to find a 95% confidence interval for the mean. 
+
 ```{r}
-# Percentil Method
+# Percentile Method
 # bootstrap_dist %>%
 #   summarize(center=mean(ave),
 #             lower=quantile(ave,probs=_______),
 #             upper=quantile(ave,probs=________))
 ```
 
-This distribution tends to be a little skewed to the right. 
+This distribution seems to be roughly symmetric. 
 
-The standard error method.
+#### Confidence Interval, standard error method 
+
 
 ```{r}
 # Standard Error Method

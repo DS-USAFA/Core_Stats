@@ -36,7 +36,7 @@ Work through the learning check LC 8.5.
 
 + The `infer` package gives a framework to think about and conduct inference. It makes hypothesis testing and confidence interval construction more structured and puts computational resources at the center versus mathematical tools.
 
-+ the `infer` package uses the verbs `specify()`, `generate()`, `calculate()`, and `visualize()` to complete the construction process.
++ The `infer` package uses the verbs `specify()`, `generate()`, `calculate()`, and `visualize()` to complete the construction process.
 
 
 ***
@@ -74,14 +74,17 @@ bootstrap_dist %>%
   theme_classic()
 ```
 
+Now let's obtain a 95% confidence interval using the percentile method. 
+
+
 ```{r}
 bootstrap_dist %>%
   summarize(center=mean(ave),
-            lower=quantile(ave,probs=0.25),
+            lower=quantile(ave,probs=0.025),
             upper=quantile(ave,probs=.975))
 ```
 
-The standard error method.
+Now use the standard error method.
 
 ```{r}
 bootstrap_dist %>%
@@ -92,13 +95,12 @@ bootstrap_dist %>%
 
 ### Steps from the `infer` package
 
-- First specify the response variable, and explanatory variables if present. We like to use the `formula` option. Why do we pipe to the `heaD()` function?
+- First specify the response variable, and explanatory variables if present. We like to use the `formula` option. 
 
 ```{r}
 # Complete the code and remove the comment symbols
 # pennies_sample %>%
-#   specify(formula=______~NULL) %>%
-#   head()
+#   specify(formula=______~NULL)
 ```
 
 It is similar to using `select()` but note the meta data has also changed.
@@ -109,8 +111,7 @@ It is similar to using `select()` but note the meta data has also changed.
 # Complete the code and remove the comment symbols
 # pennies_sample %>% 
 #   specify(formula=______~NULL) %>% 
-#   generate(reps = _________, type = "___________") %>%
-#   head()
+#   generate(reps = _________, type = "___________") 
 ```
 
 Compare this code with that using `rep_sample_n()`.
@@ -122,11 +123,10 @@ Compare this code with that using `rep_sample_n()`.
 # pennies_sample %>% 
 #   specify(formula=_______~NULL) %>% 
 #   generate(reps = ________, type = "___________") %>% 
-#   calculate(stat = "________") %>%
-#   head()
+#   calculate(stat = "________") 
 ```
 
-- Using results of bootstrap distribution
+- Using results of bootstrap distribution. Let's save this tibble of means to `boot_dist_mean`. 
  
 ```{r}
 # Complete the code and remove the comment symbols
@@ -136,12 +136,15 @@ Compare this code with that using `rep_sample_n()`.
 #   calculate(stat = "_________")
 ```
 
+- Use the percentile method to obtain a confidence interval. 
+
 ```{r}
 # Complete the code and remove the comment symbols
 # (percentile_ci <- boot_dist_mean %>% 
 #   get_confidence_interval(level = 0.95, type = "____________"))
 ```
 
+- Visualize the bootstrap distribution and confidence interval. 
 
 ```{r}
 # Visualize the results
@@ -149,7 +152,9 @@ Compare this code with that using `rep_sample_n()`.
 #   shade_confidence_interval(endpoints = __________________)
 ```
 
-Or if we want the standard error method.
+Or if we want the standard error method:
+
+First, find the center of our interval, $\bar{x}$. 
 
 ```{r}
 # Remove the comment symbols
@@ -158,6 +163,7 @@ Or if we want the standard error method.
 #   pull())
 ```
 
+Now use `get_confidence_interval()`: 
 
 ```{r}
 # Complete the code and remove the comment symbols
@@ -168,7 +174,7 @@ Or if we want the standard error method.
 
 ### LC 8.5 (Objective 1)
 
-**(LC 8.5)** Construct a 95% confidence interval for the *median* year of minting of *all* US pennies? Use the percentile method and, if appropriate, then use the standard-error method.
+**(LC 8.5)** Construct a 95% confidence interval for the *median* year of minting of *all* US pennies. Use the percentile method and, if appropriate, use the standard-error method.
 
 **Solution**: 
 

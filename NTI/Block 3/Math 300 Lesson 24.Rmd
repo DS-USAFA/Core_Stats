@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Explain how to construct a confidence interval using both the percentile method and the standard error method including assumptions.    
 
-2. Explain the impact of changing the confidence level of the resulting confidence interval. 
+2. Explain how changing the confidence level impacts the width of a confidence interval. 
 
 
 ## Reading 
@@ -38,9 +38,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Work through the learning checks LC 8.3 - LC 8.4.
 
-+ All confidence intervals have the same interpretation. It is the construction that may differ.
++ All confidence intervals have the same interpretation. It is the construction that may differ. INSTRUCTORS NOTE: the text defers discussion on confidence interval interpretation to section 8.5. Feel free to discuss interpretation now if it comes up. Most importantly, emphasize that the interval DOES NOT tell us that there's a 95% probability that $\mu$ falls in this range. 
 
-+ The reason we use an interval is because an point estimate has variation. Once we know the sampling distribution, we can construct an interval. Using the bootstrap gives us an estimate of the sampling distribution of the point estimate. 
++ The reason we use an interval is because a point estimate has variation. Once we know the sampling distribution, we can construct an interval. Using the bootstrap gives us an estimate of the sampling distribution of the point estimate. 
 
 + We are going to do a look ahead and use `R` to construct the percentile method confidence interval.  
 
@@ -84,16 +84,18 @@ bootstrap_dist %>%
   theme_classic()
 ```
 
+#### Confidence Interval, Percentile Method
+
 ```{r}
 bootstrap_dist %>%
   summarize(center=mean(ave),
-            lower=quantile(ave,probs=0.25),
+            lower=quantile(ave,probs=0.025),
             upper=quantile(ave,probs=.975))
 ```
 
-This distribution tends to be a little skewed to the right. 
+This distribution seems to be roughly symmetric. 
 
-The standard error method.
+#### Confidence Interval, standard error method
 
 ```{r}
 bootstrap_dist %>%

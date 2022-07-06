@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Explain the concept of a bootstrap distribution using proper terminology and notation.  
 
-2. Use `R`, to find the bootstrap distribution of the sample statistic.
+2. Use `R` to find the bootstrap distribution of a sample statistic.
 
 
 ## Reading 
@@ -40,7 +40,7 @@ Work through the learning checks LC 8.1 - LC 8.2.
 
 + This is a great deal of material. We think it is worth going through the bootstrap example from the reading and talking about the steps. Have the students recreate the notes.
 
-+ The bootstrap samples with replacement. You must sample as you did with the original sample. If you sampled 50 data points in the original sample, sample 50 in the bootstrap sample.
++ The bootstrap samples with replacement. Each bootstrap sample has the same size as the original sample. If you sampled 50 data points in the original sample, sample 50 in the bootstrap sample.
 
 + The key idea of the bootstrap is that it gives an estimate of the standard error of a point estimate.  
 
@@ -79,9 +79,11 @@ ggplot(pennies_sample, aes(x = year)) +
 
 In our sample, the average year of minting was 1995.44. It is not an integer since it is an average. 
 
-- What is the population of interest? 
-- What is the population parameter?
-- What is the point estimate?
+Discussion:
+
+- What is the population of interest? (All pennies currently in circulation.) 
+- What is the population parameter? (The overall mean minting year of pennies currently in circulation.)
+- What is the point estimate? (The sample mean minting year in our observed sample of size 50.)
 
 Now if we sampled with replacement from this sample, we would get a bootstrap sample. this was done 35 times.
 
@@ -89,10 +91,12 @@ Now if we sampled with replacement from this sample, we would get a bootstrap sa
 head(pennies_resamples)
 ```
 
-- Explain this tibble. 
-- Is it tidy? 
-- How was the data obtained? 
-- What is a bootstrap sample in this tibble?
+Discussion: 
+
+- Explain this tibble. (This tibble shows the bootstrap sample obtained by each of the 35 students.)
+- Is it tidy? (Yes.)
+- How was the data obtained? (Each student drew a "penny", with replacement, and recorded the year.)
+- What is a bootstrap sample in this tibble? (A bootstrap sample is the set of 50 observed minting years for an individual student.)
 
 ```{r}
 pennies_resamples %>%
@@ -112,6 +116,8 @@ pennies_resamples %>%
   geom_histogram(binwidth = 1, color = "white", boundary = 1990) +
   theme_classic()
 ```
+
+Discussion: the difference between the two histograms is that the first is the distribution of just one bootstrap sample. The second is the distribution of the means of all 35 bootstrap samples. 
 
 Now let's use the computer to find the bootstrap distribution. (Objective 2)
 
@@ -133,6 +139,8 @@ virtual_resampled_means <- pennies_sample %>%
 ```{r}
 head(virtual_resampled_means)
 ```
+
+Discussion: Note that each row represents the mean of a bootstrap sample of size 50. 
 
 ```{r}
 # The bootstrap distribution
