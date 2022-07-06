@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Calculate, both percentile and standard error method, confidence intervals for a difference of two proportions.   
+1. Calculate, using both percentile and standard error methods, confidence intervals for a difference of two proportions.   
 
 2. Calculate a normal-based, theory-based, confidence interval for a single proportion or mean.
 
@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Reading 
 
-[Chapter 8.6](https://moderndive.com/8-confidence-intervals.html#case-study-two-prop-ci)
+[Chapter 8.6-8.7](https://moderndive.com/8-confidence-intervals.html#case-study-two-prop-ci)
 
 
 ## Lesson 
@@ -65,9 +65,11 @@ mythbusters_yawn %>%
   mutate(prop = count / sum(count))
 ```
 
-- What does this summary tell the reader? This is finding proportions conditioned on groups.
+- What does this summary tell the reader? 
 
 **Answer:** 
+
+
 
 Now another summary is as follows:
 
@@ -89,7 +91,7 @@ Now another summary is as follows:
 **Answer:** 
 
 
-Let's determine how the `infer` package sample the data.
+Let's determine how the `infer` package samples the data.
 
 
 ```{r}
@@ -111,16 +113,12 @@ The numbers in the control and seed group changed. The sample is with replacemen
 
 ```{r}
 # Complete the code
-# bootstrap_distribution_yawning <- mythbusters_yawn %>% 
+# (bootstrap_distribution_yawning <- mythbusters_yawn %>% 
 #   specify(formula = yawn ~ group, success = "_______") %>% 
 #   generate(reps = 1000, type = "bootstrap") %>% 
-#   calculate(stat = "___________", order = c("_______", "________"))
+#   calculate(stat = "___________", order = c("_______", "________")))
 ```
 
-
-```{r}
-#head(bootstrap_distribution_yawning)
-```
 
 #### Visualize the results.
 
@@ -187,7 +185,7 @@ head(bowl_sample_1)
 # get_ci(bootstrap_dist,type="_________")
 ```
 
-- Find the bootstrap percentile confidence interval for this problem.
+- Find the bootstrap standard error confidence interval for this problem.
 
 **Answer:**
 
