@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Correctly use terminology and notation of hypothesis testing.     
 
-2.  Using the `infer` package, conduct a hypothesis test and interpret the results.
+2. Using the `infer` package, conduct a hypothesis test and interpret the results.
 
 3. Compare and contrast confidence intervals and hypothesis tests.
 
@@ -43,7 +43,7 @@ Work through the learning checks LC 9.1 - LC 9.4.
 
 + Spend time on the terminology. There are many new terms.
 
-+ Try to write your own code for hypothesis tests and confidence from scratch using the `infer` package.  
++ Try to write your own code for hypothesis tests and confidence intervals from scratch using the `infer` package.  
 
 + Spend time interpreting p-values in the context of the problem.  We are trying to make a decision and the p-value and confidence interval help us.
 
@@ -70,8 +70,6 @@ lc <- 0
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why does the following code produce an error? In other words, what about the response and predictor variables make this not a possible computation with the `infer` package?
 
 ```{r, eval=FALSE}
-library(moderndive)
-library(infer)
 null_distribution_mean <- promotions %>%
   specify(formula = decision ~ gender, success = "promoted") %>% 
   hypothesize(null = "independence") %>% 
@@ -79,7 +77,7 @@ null_distribution_mean <- promotions %>%
   calculate(stat = "diff in means", order = c("male", "female"))
 ```
 
-**Solution**: Because the `decision` outcome variable is categorical and we can't compute a difference in means of a categorical variable. We can however compute the `diff in props` instead. 
+**Solution**: Because the `decision` outcome variable is categorical and we can't compute a difference in means of a categorical variable. We can however compute the `diff in props` instead. (Note that if the cadets try to execute this, the resulting error message will help us determine the cause of the error.)
 
 ### LC 9.2 (Objective 1)
 
@@ -95,7 +93,7 @@ We are only confident if the sample is representative of the population.
 
 **Solution**:  
 
-The $p$-value represents that given there is no difference in promotion rates for males and females, it is the probability that the difference is as large or larger than the observed difference. 
+Given there is no difference in promotion rates for males and females, the $p$-value represents the probability that the difference is as large or larger than the observed difference. 
 
 ### LC 9.4 (Objective 1)
 
@@ -103,11 +101,11 @@ The $p$-value represents that given there is no difference in promotion rates fo
 
 **Solution**:  
 
-We use the `promotions` dataset as the input for test statistic. The $H_0$ model is "there is no difference between promotion rates of males and females". We simulate data by shuffling the gender labels. This gives us the null distribution. We find the p-value by calculating how many simulated values were as large or larger than the observed value. We reject the $H_0$ model and conclude that there is a statistical difference existed between the promotion rate of males and females with males having a higher promotion rate.  
+We use the `promotions` dataset as the input for test statistic. The $H_0$ model is "there is no difference between promotion rates of males and females". We simulate data by shuffling the gender labels. This gives us the null distribution. We find the p-value by calculating how many simulated values were as large or larger than the observed value. Because this value is low, we reject the $H_0$ model and conclude that there is a statistical difference existed between the promotion rate of males and females with males having a higher promotion rate.  
 
 ***
 
-### Using `infer`
+### Using `infer` (Objective 2)
 
 Use `infer` to create a hypothesis and confidence interval for the promotion data set. Try to not use the book but using the following figure and the help menu. The data object is `promotions`.
 
@@ -126,7 +124,7 @@ null_dist <- promotions %>%
 ```
 
 ```{r}
-visualise(null_dist,bins=10)
+visualize(null_dist,bins=10)
 ```
 
 Use code to get observed value.
@@ -138,14 +136,14 @@ obs_value <- promotions %>%
 ```
 
 
-Get p-value
+Get p-value.
 
 ```{r}
 null_dist %>% 
   get_p_value(obs_stat = obs_value, direction = "right")
 ```
 
-Confidence interval
+Confidence interval.
 
 ```{r}
 boot_dist <- promotions %>%

@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Correctly use terminology and notation of hypothesis testing.     
 
-2.  Using the `infer` package, conduct a hypothesis test and interpret the results.
+2. Using the `infer` package, conduct a hypothesis test and interpret the results.
 
 3. Compare and contrast confidence intervals and hypothesis tests.
 
@@ -39,9 +39,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Work through the learning checks LC 9.1 - LC 9.4.
 
-+ Spend time on the terminology. There are many new terms.
++ Focus on the terminology. There are many new terms.
 
-+ Try to write your own code for hypothesis tests and confidence from scratch using the `infer` package.  
++ Try to write your own code for hypothesis tests and confidence intervals from scratch using the `infer` package.  
 
 ***
 
@@ -66,8 +66,6 @@ lc <- 0
 **(LC 9.1)** Why does the following code produce an error? In other words, what about the response and predictor variables make this not a possible computation with the `infer` package?
 
 ```{r, eval=FALSE}
-library(moderndive)
-library(infer)
 null_distribution_mean <- promotions %>%
   specify(formula = decision ~ gender, success = "promoted") %>% 
   hypothesize(null = "independence") %>% 
@@ -103,7 +101,7 @@ null_distribution_mean <- promotions %>%
 
 ***
 
-### Using `infer`
+### Using `infer` (Objective 2)
 
 Use `infer` to create a hypothesis and confidence interval for the promotion data set. Try to not use the book but using the following figure and the help menu. The data object is `promotions`.
 
@@ -113,13 +111,13 @@ Use `infer` to create a hypothesis and confidence interval for the promotion dat
 head(promotions)
 ```
 
-- Find null distribtuion
+- Find null distribtuion.
 
 ```{r}
 
 ```
 
-- Visualize the results
+- Visualize the results.
 
 ```{r}
 
@@ -132,13 +130,13 @@ head(promotions)
 ```
 
 
-- Get p-value
+- Get p-value.
 
 ```{r}
 
 ```
 
-Find bootstrap percentile confidence interval
+Find bootstrap percentile confidence interval.
 
 - Get bootstrap distribution
 

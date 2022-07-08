@@ -34,7 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 There are no learning checks for this lesson. 
 
-+ This is a key idea from the reading *The same can be said for confidence intervals. There was one general framework that applies to all confidence intervals and the `infer` package was designed around this framework. While the specifics may change slightly for different types of confidence intervals, the general framework stays the same. We believe that this approach is much better for long-term learning than focusing on specific details for specific confidence intervals using theory-based approaches. As you’ll now see, we prefer this general framework for hypothesis tests as well.*
++ This is a key idea from the reading: *The same can be said for confidence intervals. There was one general framework that applies to all confidence intervals and the `infer` package was designed around this framework. While the specifics may change slightly for different types of confidence intervals, the general framework stays the same. We believe that this approach is much better for long-term learning than focusing on specific details for specific confidence intervals using theory-based approaches. As you’ll now see, we prefer this general framework for hypothesis tests as well.*
 
 + *Computer-based methods using randomization, simulation, and bootstrapping have much fewer restrictions.*
 
@@ -70,6 +70,8 @@ promotions %>%
 - What is the impact of changing the order of the variables in the `group_by()` function and which is better for a decision maker based on the research question?
 
 **Answer:** 
+
+
 #### Visulaizing data
 
 - Create a barchart to summarize the data.
@@ -97,8 +99,17 @@ set.seed(612)
 
 - Visualize the results.
 
+```{r}
+
+
+```
 
 - Get confidence interval
+
+```{r}
+
+
+```
 
 ***
 
@@ -161,7 +172,7 @@ Get the data in tidy form.
 # Complete the code
 # shuffled_data_tidy  <- gender_promotions_shuffles %>%
 #   pivot_longer(cols=-c("id", "decision"),
-#                names_to = "______", values_to = "gender") %>%
+#                names_to = "team", values_to = "gender") %>%
 #   mutate(replicate = rep(1:16, times = 48)) 
 ```
 

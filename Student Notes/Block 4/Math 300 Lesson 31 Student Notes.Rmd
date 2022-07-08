@@ -37,15 +37,15 @@ Work through the learning checks LC 9.5 - LC 9.8.
 
 + This section is conceptually difficult. We are setting up a contradiction but it is based on empirical data. Thus the language becomes somewhat confusing. The criminal trial analogy is a good reference to put the ideas into context. There is a large number of terms.  
 
-+ The fail to reject idea is tricky since people want to "accept the null hypothesis". Remember there is a difference between "not guilty" and "innocent" in a trial. 
++ The "fail to reject" idea is tricky since people want to "accept the null hypothesis". Remember there is a difference between "not guilty" and "innocent" in a trial. 
 
 + This framework helps:  
-a - The defendant is truly either “innocent” or “guilty.” Two possible outcomes of the test.  
-b - The defendant is presumed “innocent until proven guilty.” The null hypothesis.   
+a - The defendant is truly either “innocent” or “guilty.” These are the two possible outcomes of the test.  
+b - The defendant is presumed “innocent until proven guilty.” "Innocent" is the null hypothesis.   
 c - The defendant is found guilty only if there is strong evidence that the defendant is guilty. The phrase “beyond a reasonable doubt” is often used as a guideline for determining a cutoff for when enough evidence exists to find the defendant guilty. "Beyond a reasonable doubt" is the level of significance $\alpha$.  
-d - The defendant is found to be either “not guilty” or “guilty” in the ultimate verdict. This is "reject" or "fail to reject". 
+d - The defendant is found to be either “not guilty” or “guilty” in the ultimate verdict. This is "reject" or "fail to reject". Note that we do not find a defendant "innocent". Note that "fail to reject" is a weak conclusion. 
 
-+ Write conclusion in the context of the problem. For example "We found enough evidence in this data to suggest that there was gender discrimination at play in bank promotions."  
++ Write conclusion in the context of the problem. For example "We found enough evidence in this data to suggest that there was gender discrimination at play in bank promotions" or "we did not find enough evidence to conclude gender discrimination was at play."   
 
 + The names **Type I** and **Type II** are not informative. False positive and false negative make more sense in the context that a positive is rejecting the null hypothesis. 
 
@@ -70,7 +70,7 @@ lc <- 4
 ### LC 9.5 (Objective 1)
 
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What is wrong about saying, "The defendant is innocent." based on the US system of criminal trials?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What is wrong about saying, "the defendant is innocent," based on the US system of criminal trials?
 
 **Solution**:  
 
@@ -86,7 +86,7 @@ lc <- 4
 
 ### LC 9.7 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What are some flaws with hypothesis testing?  How could we alleviate them?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What are some flaws with hypothesis testing? How could we alleviate them?
 
 **Solution**:  
 
