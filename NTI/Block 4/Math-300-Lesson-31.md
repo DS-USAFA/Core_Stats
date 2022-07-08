@@ -2,7 +2,7 @@
 title: "Math 300 NTI Lesson 31"
 subtitle: "Interpreting Hypothesis Tests"
 author: "Professor Bradley Warner"
-date: "`r format(Sys.time(), '%B, %Y')`"
+date: "July, 2022"
 output:
   html_document: 
     theme: lumen
@@ -15,11 +15,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-library(knitr)
-library(kableExtra)
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 ## Objectives
 
@@ -56,7 +52,8 @@ d - The defendant is found to be either “not guilty” or “guilty” in the 
 
 ### Libraries 
 
-```{r warning=FALSE,message=FALSE}
+
+```r
 library(tidyverse)
 library(infer)
 library(moderndive)
@@ -65,15 +62,12 @@ library(ggplot2movies)
 ```
 
 
-```{r, include=FALSE, purl=FALSE}
-chap <- 9
-lc <- 4
-```
+
 
 ### LC 9.5 (Objective 1)
 
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What is wrong about saying, "the defendant is innocent," based on the US system of criminal trials?
+**(LC9.5)**  What is wrong about saying, "the defendant is innocent," based on the US system of criminal trials?
 
 
 **Solution**:  
@@ -82,7 +76,7 @@ Failing to prove the defendant is guilty is not equivalent to proving that the d
 
 ### LC 9.6 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What is the purpose of hypothesis testing?
+**(LC9.6)**  What is the purpose of hypothesis testing?
 
 **Solution**:  
 
@@ -90,7 +84,7 @@ The purpose of hypothesis testing is to determine whether there is enough statis
 
 ### LC 9.7 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What are some flaws with hypothesis testing? How could we alleviate them?
+**(LC9.7)**  What are some flaws with hypothesis testing? How could we alleviate them?
 
 **Solution**:  
 
@@ -98,7 +92,7 @@ The use of a $p$-value and the binary decision of rejecting or failing to reject
 
 ### LC 9.8 (Objective 1)
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Consider two $\alpha$ significance levels of 0.1 and 0.01. Of the two, which would lead to a more *liberal* hypothesis testing procedure? In other words, one that will, all things being equal, lead to more rejections of the null hypothesis $H_0$.
+**(LC9.8)**  Consider two $\alpha$ significance levels of 0.1 and 0.01. Of the two, which would lead to a more *liberal* hypothesis testing procedure? In other words, one that will, all things being equal, lead to more rejections of the null hypothesis $H_0$.
 
 **Solution**:  
 
@@ -108,9 +102,9 @@ The greater $\alpha$ of 0.1 will lead to a more liberal hypothesis testing proce
 
 ## Documenting software 
 
-  * File creation date: `r Sys.Date()`
-  * `r R.version.string`
-  * `tidyverse` package version: `r packageVersion("tidyverse")`
-  * `moderndive` package version: `r packageVersion("moderndive")`
-  * `infer` package version: `r packageVersion("infer")`
+  * File creation date: 2022-07-08
+  * R version 4.1.3 (2022-03-10)
+  * `tidyverse` package version: 1.3.1
+  * `moderndive` package version: 0.5.4
+  * `infer` package version: 1.0.2
 
