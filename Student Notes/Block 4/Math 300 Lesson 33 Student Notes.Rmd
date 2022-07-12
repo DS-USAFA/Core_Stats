@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Standardize a variable.       
 
-2. Find percentile and probabilities for the t distribution, this includes determining the correct degrees of freedom.  
+2. Find percentile and probabilities for the t distribution; this includes determining the correct degrees of freedom.  
 
 3. Use the `infer` package to conduct a theory-based hypothesis test. 
 
@@ -43,8 +43,7 @@ There are no learning checks for this section.
 
 *These traditional theory-based methods have been used for decades mostly because researchers didn’t have access to computers that could run thousands of calculations quickly and efficiently. Now that computing power is much cheaper and more accessible, simulation-based methods are much more feasible. However, researchers in many fields continue to use theory-based methods. Hence, we make it a point to include an example here.*
 
-+ We have to standardize to get a mathematical solution for the sampling distribution of the difference in means, the t distribution.  
-
++ Often, when using traditional methods, we have to *standardize* a variable to get a mathematical solution for the sampling distribution of that variable (i.e., difference in means, the t distribution). Standardization can be helpful in other ways as well, such as comparisons between two quantities on different scales (ACT vs SAT scores). Note that we don't have to standardize when using computational methods. 
 
 + Spend time on the problem with p-values. Read the papers and point out key ideas from the reading.
 

@@ -24,13 +24,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Conduct and interpret a hypothesis test for the difference of two means.      
 
-2.  Calculate and interpret a confidence interval for the difference of two means.
+2. Calculate and interpret a confidence interval for the difference of two means.
 
 
 ## Reading 
 
 [Chapter 9.5](https://moderndive.com/9-hypothesis-testing.html#ht-case-study)
-
 
 ## Lesson 
 
@@ -38,7 +37,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Work through the learning checks LC 9.9 - LC 9.15.
 
-+ This is a two-sided test. The p-value calculation is a little different. This is a nice discussion point.  
++ This is a two-sided test. The p-value calculation is a little different. Take some time to discuss the difference between a one-sided and a two-sided test.  
 
 + Interpret the p-value in context of the problem.
 
@@ -142,7 +141,7 @@ ggplot(data = movies_sample, aes(x = rating)) +
   labs(x = "IMDb rating")
 ```
 
-Histograms are limited as they depend on the number of bins and bin location. There is not much that you can tell in the histograms that you can tell in the boxplots.  If the data was multi-modal, you could tell this in the histogram and not the boxplots.
+Histograms are limited as they depend on the number of bins and bin location. There is not much that you can tell in the histograms that you couldn't tell from the boxplots. If the data was multi-modal, you could tell this in the histogram and not the boxplots.
 
 A density plot might be better.
 
@@ -247,7 +246,7 @@ ggplot(data = action_romance, aes(x = genre,y=rating)) +
   theme_classic()
 ```
 
-Looks like romance movies have a higher median rating in the population.
+Looks like romance movies have a higher median rating in the population. These plots are similar to what we saw earlier. However, these plots are based on all the data, not just the smaller sample. These plots tell us that our sample seems to be a good representation of the population. 
 
 ***
 

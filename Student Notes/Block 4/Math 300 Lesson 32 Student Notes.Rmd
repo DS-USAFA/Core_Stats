@@ -24,16 +24,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Conduct and interpret a hypothesis test for the difference of two means.      
 
-2.  Calculate and interpret a confidence interval for the differnce of two means.
-
+2. Calculate and interpret a confidence interval for the difference of two means.
 
 ## Reading 
 
 [Chapter 9.5](https://moderndive.com/9-hypothesis-testing.html#ht-case-study)
 
-
 ## Lesson 
-
 
 Work through the learning checks LC 9.9 - LC 9.15.
 
