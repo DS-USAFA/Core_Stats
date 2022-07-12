@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Standardize a variable.
+1. Standardize a variable. 
 
 2. Find percentile and probabilities for the t distribution; this includes determining the correct degrees of freedom.
 
