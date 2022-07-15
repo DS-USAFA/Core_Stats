@@ -30,9 +30,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Lesson
 
-Work through the learning check LC 10.1
+Work through the learning check LC 10.1.
 
-+ **LINE** is mnemonic to help remember the assumptions. Linearity, Independence, Normality, and Equality of variance.
++ **LINE** is a mnemonic to help remember the assumptions. Linearity, Independence, Normality, and Equality of variance.
 
 + Residuals are the key element used to check assumptions. Note that independence is difficult to check unless there is a time element to the data collection which often happens in experiments. 
 
@@ -90,8 +90,9 @@ ggplot(evals_ch5,
   theme_classic()
 ```
 
-The `loess` function let's a plot a smoother through the data. The linearity assumption is not bad, there is a small issue at the lowest beauty score. We could also plot the residuals.
+The `loess` function plots a smoother through the data, giving us a good indication as to the true linearity of the observed data. In this case, the linearity assumption is not bad, but there could be a small issue at the lowest beauty scores. 
 
+We could also plot the residuals to assess linearity:
 
 ```{r message=FALSE,warning=FALSE}
 ggplot(score_regression_points, 
@@ -105,7 +106,7 @@ ggplot(score_regression_points,
   theme_classic()
 ```
 
-We see a similar result except now we can generalize to multiple predictors.  
+We see a similar result; we prefer to use residual plots to check linearity because they allow us to generalize to multiple predictors. 
 
 ### Normality
 
@@ -122,7 +123,7 @@ There is a skew to the left.
 
 ### Equality of Variance 
 
-We could use the fitted vs residuals plot again for this or for simple linear regression we plot the explanatory variable against the residual. We want an equal spread around the horizontal line centered at zero. 
+For simple linear regression, we could use the original scatterplot of the data. However, we generally like to use the residuals vs fitted plot because we can extend to multiple regression. We want an equal spread around the horizontal line centered at zero. 
 
 ```{r}
 ggplot(score_regression_points, aes(x = bty_avg, y = residual)) +
@@ -174,7 +175,7 @@ evals_ch5 %>%
 
 The relationship between score and age does seem to be linear. 
 
-The second condition is that the residuals must be **I**ndependent. In other words, the different observations in our data must be independent of one another. As explained in the reading,  "we say there exists *dependence* between observations".
+The second condition is that the residuals must be **I**ndependent. In other words, the different observations in our data must be independent of one another. As explained in the reading, "we say there exists *dependence* between observations".
 
 The third condition is that the residuals should follow a **N**ormal distribution.  
 

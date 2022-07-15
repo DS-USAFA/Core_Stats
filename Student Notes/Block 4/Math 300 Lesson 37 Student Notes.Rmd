@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1. Use the output of a regression table to conduct a hypothesis test and confidence interval of the slope parameter from a linear regression model.
+1. Use the output of a regression table to conduct a hypothesis test and build a confidence interval for the slope parameter from a linear regression model.
 
 ## Reading
 
@@ -76,7 +76,7 @@ And the regression summary.
 The hypothesis test is
 
 $$
-H_O:\beta_1=0
+H_0:\beta_1=0
 $$
 
 $$
@@ -88,10 +88,10 @@ Under the null, there is no linear relationship between teaching scores and beau
 The test statistic is
 
 $$
-t= \frac{b_1-\beta_1}{\sigma_{n-2}}
+t= \frac{b_1-\beta_1}{\text{SE}_{b_1}}
 $$
 
-where $b_1$ is estimated slope, $\beta_1$ is the slope under the null hypothesis, $\sigma$ is the standard error of the slope estimate, and $n-2$ is the degrees of freedom, the number of data points, $n$, minus 2. In words, the test statistic measure the distance between observed and hypothesized values as measured in the number of standard deviations. 
+where $b_1$ is estimated slope, $\beta_1$ is the slope under the null hypothesis, $\text{SE}$ is the standard error of the slope estimate. In words, the test statistic measures the distance between observed and hypothesized values as measured in the number of standard deviations. Under $H_0$, this test statistic follows the $t$ distribution with $n-2$ degrees of freedom, where $n$ is the number of data points.
 
 For our example, we have
 
@@ -109,7 +109,7 @@ The regression table gives us this output without us having to perform the compu
 Notice that if we want to test the hypothesis where the null had a value other than zero. We could use the formula we just reviewed. As an example, suppose we wanted to test:
 
 $$
-H_O:\beta_1=0.1
+H_0:\beta_1=0.1
 $$
 
 $$

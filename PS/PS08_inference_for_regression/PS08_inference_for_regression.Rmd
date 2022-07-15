@@ -22,13 +22,13 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-For this problem set you will apply statistical inference to a linear modeling and explore methods to check the required conditions.  To start we will build a model using data from the `palmerpenguins` package. The `penguins` data contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. 
+For this problem set you will apply statistical inference to a linear model and explore methods to check the required conditions. To start we will build a model using data from the `palmerpenguins` package. The `penguins` data contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. 
 
 First we will start with our typical exploratory data analysis and then build our linear model.  From there we will use our new skills to make inferences about our regression model and check the necessary conditions.   
 
 ## Markdown File
 
-Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS08_lastname_firstname_section**
+Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format: **PS08_lastname_firstname_section**
 
 Fill in your answers to the exercises below with a corresponding exercise header in your rmarkdown file. Be sure to include text *and* code where necessary.
 
@@ -57,7 +57,7 @@ library(infer)
 library(palmerpenguins)
 ```
 
-### The data
+## The data
 
 
 ```{r message = F}
@@ -76,7 +76,7 @@ For our lab we will focus on four variables, the explanatory variables include:
 The outcome variable `body_mass_g` is an integer denoting body mass (grams).
 
 
-### Visualization
+## Visualization
 
 We will start by investigating the relationship between 'flipper_length_mm' and 'body_mass_g'. 
 
@@ -92,7 +92,6 @@ ggplot(data = pen, aes(y = body_mass_g, x = flipper_length_mm)) +
 
 1. Does the relationship appear to be positive or negative? Does it look to be reasonably linear? 
 
-**Answer:**
 
 
 ## Create a linear regression model
@@ -103,9 +102,8 @@ pen_model <- lm(body_mass_g ~ flipper_length_mm, data = pen)
 get_regression_table(pen_model)
 ```
 
-1. Using our shorthand interpretation for confidence intervals and the regression table, write a sentence interpreting the 95% confidence interval for $\beta_1$? 
+1. Using our shorthand interpretation for confidence intervals and the regression table, write a sentence interpreting the 95% confidence interval for $\beta_1$. 
 
-**Answer:**
 
 
 
@@ -113,7 +111,6 @@ get_regression_table(pen_model)
 $$\begin{aligned} H_0:&\beta_{1} = 0 \\\ \mbox{vs }H_A:& \beta_{1} \neq 0 \end{aligned}$$
 Write up the results & conclusions for this hypothesis test.
 
-**Answer:**
 
 
 You may remember that this hypothesis test is only valid if certain "conditions for inference for regression" are met.  Let's take a closer look those conditions. 
@@ -127,17 +124,16 @@ You may remember that this hypothesis test is only valid if certain "conditions 
 
 1. Did you say that the relationship between `flipper_length_mm` and `body_mass_g` appears to be linear?
 
-**Answer:**
 
 
 ## Independence of the residuals
 
-The observations in our data must be independent of one another.   In this data, we can not be sure this is case, for example, some of the penguins included may be related (siblings, parents).  We are not given enough information to verify this condition has been met.
+The observations in our data must be independent of one another. In this data, we can not be sure this is case. For example, some of the penguins included may be related (siblings, parents). We are not given enough information to verify this condition has been met.
 
 
 ## Normality of the residuals
 
-The third condition is that the residuals should follow a Normal distribution centered 0.  To check for normality, create a histogram.   
+The third condition is that the residuals should follow a normal distribution centered 0. To check for normality, create a histogram.   
 
 The code to get the residuals is given. 
 
@@ -153,13 +149,12 @@ regression_points <- get_regression_points(pen_model)
 
 ```
 
-**Answer:**
 
 
 
 ## Equality of variance of the residuals
 
-The final condition says that the residual should exhibit equal variance across all of the values of the explanatory variable.   
+The final condition says that the residuals should exhibit equal variance across all of the values of the explanatory variable.   
 
  To check this condition we can create a scatterplot that has our explanatory variable, `flipper_length_mm`, on the x-axis and our residuals on the y-axis.
 
@@ -173,17 +168,12 @@ ggplot(regression_points, aes(x = flipper_length_mm, y = residual)) +
 
 1. Does this model meet the equality of variance of residuals condition?
 
-**Answer:**
 
-
-
-
-1. Find a 95% confidence interval
+## Find a 95% confidence interval
 
 Now let's circle back and take a second look at the confidence intervals.  Using this bootstrap distribution, we’ll construct the 95% confidence interval using the percentile method and (if appropriate) the standard error method as well.  We can compare our results to the results from R (which uses mathematical formula to construct confidence intervals.)
 
 ### Step 1: Calculate the bootstrap statistic and Visualize the bootstrap distribution
-
 
 ```{r}
 set.seed(126)
@@ -194,18 +184,27 @@ bootstrap_distn_slope <- pen %>%
 visualize(bootstrap_distn_slope)
 ```
 
-### Step 2: Calculate CI from the a bootstap resample two ways
+### Step 2: Calculate CI from the a bootstrap resample two ways
 
-Find a 95% CI using percentile method
+Find a 95% CI using the percentile method.
 ```{r}
 #finish the code here:
 #bootstrap_distn_slope %>%
 ```
 
+Find a 95% CI using the standard error method.
+```{r}
+#finish the code here:
+#observed_slope <- pen %>% 
+#bootstrap_distn_slope %>%
+```
 
-## Part 2
+1. Report the 95% confidence intervals that you found using the two bootstrap methods. 
 
-For the next part you will check the conditions for regression inference for a new model. This model will have `bill_length_mm` and `species` as explanatory variables, and we'll use the parallel slopes model. Let's fit the parallel slopes model
+
+## Another Model
+
+For the next part you will check the conditions for regression inference for a new model. This model will have `bill_length_mm` and `species` as explanatory variables, and we'll use the parallel slopes model. Let's fit the parallel slopes model.
 
 ```{r}
 # Fit regression model:
@@ -236,7 +235,7 @@ Let us once again inspect the conditions necessary for inference with regression
 
 **Check for Independence of the residuals **
 
-This is the same as the first model that we looked it. The observations in our data must be independent of one another.   In this data, we can not be sure this is case, for example, some of the penguins included may be related (siblings, parents).  We are not given enough information to verify this condition has been met.
+This is the same as the first model that we looked it. The observations in our data must be independent of one another. In this data, we can not be sure this is case, for example, some of the penguins included may be related (siblings, parents). We are not given enough information to verify this condition has been met.
 
 1. Check Normality of the residuals (and they should be centered at 0.)
 

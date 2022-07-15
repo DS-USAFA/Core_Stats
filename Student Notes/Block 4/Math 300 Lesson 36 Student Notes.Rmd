@@ -31,11 +31,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Lesson
 
-Work through the learning check LC 10.2
+Work through the learning check LC 10.2.
 
-+ We don't have to worry about normality and equality of variance for this lesson.
++ We don't have to worry about normality and equality of variance for this lesson. Those assumptions are only required to conduct inference using theory-based methods. Simulation-based methods do not require these assumptions. 
 
-+ The confidence intervals are similar to what we have done before. The permutation test requires to be careful and think about the procedure. 
++ The confidence intervals are similar to what we have done before. The permutation test requires careful thought about the procedure. 
 
 ------------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ $$
 H_A:\beta_1\neq0
 $$
 
-Under the null, there is no linear relationship between teaching scores and beauty scores. Thus under the null hypothesis, we could just shuffle the beauty scores and calculate the slope. This would give us an estimate of the sampling distribution of the slope under the null hypothesis.
+Under the null, there is no linear relationship between teaching scores and beauty scores. Thus under the null hypothesis, we could just repeatedly shuffle the beauty scores and calculate the slope. This would give us an estimate of the sampling distribution of the slope under the null hypothesis.
 
 Here is the code from the `infer` package:
 
@@ -104,7 +104,7 @@ set.seed(50)
 #visualize(__________________)
 ```  
 
-It is centered at zero since this is the assumed value under the null distribution.
+The distribution is centered at zero since this is the assumed value under the null distribution.
 
 To find the p-value, we need the observed slope.
 
@@ -139,7 +139,7 @@ Based on the data we reject the null hypothesis of no linear relationship betwee
 
 **(LC 10.2)** Repeat the inference but this time for the correlation coefficient instead of the slope. Note the implementation of `stat = "correlation"` in the `calculate()` function of the `infer` package.
 
-### Confidence Intervale
+### Confidence Intervals
 
 ```{r}
 # Complete code
@@ -176,7 +176,7 @@ set.seed(839)
 
 ```{r}
 # Complete code
-# (std_err<-bootstrap_distn_corr %>% 
+# (std_err_ci<-bootstrap_distn_corr %>% 
 #   get_confidence_interval(point_estimate = _________________, type = "_________", level = 0.95))
 ```
 
