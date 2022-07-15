@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1.  Build and interpret a regression table and use correct terminology.
+1. Build and interpret a regression table and use correct terminology.
 
 2. Write the hypotheses from the regression table.
 
@@ -54,7 +54,7 @@ library(moderndive)
 
 ## Problem
 
-We will now use the inference tools we have developed in a regression settings. In this lesson we will review and spend some time on interpreting regression output.
+We will now use the inference tools we have developed in a regression setting. In this lesson we will review and spend some time on interpreting regression output.
 
 ### Data
 
@@ -68,7 +68,7 @@ glimpse(evals_ch5)
 
 ### EDA
 
-The scatterplot revealed what appeared to be a slight positive association between the two variables. But is this just to the randomness associated with sampling?
+The scatterplot revealed what appeared to be a slight positive association between the two variables. But is this due to the randomness associated with sampling?
 
 ```{r message=FALSE,warning=FALSE}
 ggplot(evals_ch5, 
@@ -97,19 +97,21 @@ get_regression_table(score_model)
 
 - Some review:
 
+- How do we interpret the $0.067$ value in the `estimate` column? 
+
 > For every increase of one unit in “beauty” rating, there is an associated increase, on average, of 0.067 units of evaluation score.
 
-The hypothesis test for the slope is:
+Note that this table has a column labeled `p-value`. This implies that we conducted a hypothesis test. The hypothesis test for the slope is: 
 
 $$
-H_O: \beta_1 = 0 
+H_0: \beta_1 = 0 
 $$
 
 $$
 H_A: \beta_1 \neq 0
 $$
 
-> A p-value is the probability of obtaining a test statistic just as extreme or more extreme than the observed test statistic assuming the null hypothesis  $H_O4  is true.
+> A p-value is the probability of obtaining a test statistic just as extreme or more extreme than the observed test statistic assuming the null hypothesis $H_0$ is true.
 
 ### Conclusion 
 
@@ -117,9 +119,9 @@ Based on the data, there is sufficient evidence to conclude there is a linear re
 
 ## Your turn
 
-In the `moderndive` package is a dataset on electric vehicle charging seesions for a workplace charging program.
+In the `moderndive` package is a dataset on electric vehicle charging sessions for a workplace charging program.
 
-We are interested in there is an association between the total energy used at a station, `kwh_total`, and the amount paid for a charging session, `dollars`. We are only interested those workers that paid more than $0.50 for a session. Repeat the analysis from the book on this dataset. 
+We are interested in whether there is an association between the total energy used at a station, `kwh_total`, and the amount paid for a charging session, `dollars`. We are only interested in those workers that paid more than $0.50 for a session. Repeat the analysis from the book on this dataset. 
 
 ### Data
 
@@ -133,15 +135,9 @@ ev_chp10 <- ev_charging %>%
 glimpse(ev_chp10)
 ```
 
-
-
-
-
-
-
 ### EDA
 
-Scatterplot
+Build a scatterplot with energy used on the vertical axis and money paid on the horizontal axis.
 
 ```{r message=FALSE,warning=FALSE}
 ggplot(ev_chp10, 

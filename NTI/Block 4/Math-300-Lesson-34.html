@@ -1537,7 +1537,7 @@ div.tocify {
 <h1 class="title toc-ignore">Math 300 NTI Lesson 34</h1>
 <h3 class="subtitle">Interpreting Regression Tables</h3>
 <h4 class="author">Professor Bradley Warner</h4>
-<h4 class="date">June, 2022</h4>
+<h4 class="date">July, 2022</h4>
 
 </div>
 
@@ -1580,7 +1580,7 @@ library(moderndive)</code></pre>
 <div id="problem" class="section level2">
 <h2>Problem</h2>
 <p>We will now use the inference tools we have developed in a regression
-settings. In this lesson we will review and spend some time on
+setting. In this lesson we will review and spend some time on
 interpreting regression output.</p>
 <div id="data" class="section level3">
 <h3>Data</h3>
@@ -1598,8 +1598,8 @@ glimpse(evals_ch5)</code></pre>
 <div id="eda" class="section level3">
 <h3>EDA</h3>
 <p>The scatterplot revealed what appeared to be a slight positive
-association between the two variables. But is this just to the
-randomness associated with sampling?</p>
+association between the two variables. But is this due to the randomness
+associated with sampling?</p>
 <pre class="r"><code>ggplot(evals_ch5, 
        aes(x = bty_avg, y = score)) +
   geom_point() +
@@ -1621,15 +1621,19 @@ get_regression_table(score_model)</code></pre>
 ## 1 intercept    3.88      0.076     51.0        0    3.73     4.03 
 ## 2 bty_avg      0.067     0.016      4.09       0    0.035    0.099</code></pre>
 <ul>
-<li>Some review:</li>
+<li><p>Some review:</p></li>
+<li><p>How do we interpret the <span class="math inline">\(0.067\)</span> value in the <code>estimate</code>
+column?</p></li>
 </ul>
 <blockquote>
 <p>For every increase of one unit in “beauty” rating, there is an
 associated increase, on average, of 0.067 units of evaluation score.</p>
 </blockquote>
-<p>The hypothesis test for the slope is:</p>
+<p>Note that this table has a column labeled <code>p-value</code>. This
+implies that we conducted a hypothesis test. The hypothesis test for the
+slope is:</p>
 <p><span class="math display">\[
-H_O: \beta_1 = 0
+H_0: \beta_1 = 0
 \]</span></p>
 <p><span class="math display">\[
 H_A: \beta_1 \neq 0
@@ -1637,7 +1641,7 @@ H_A: \beta_1 \neq 0
 <blockquote>
 <p>A p-value is the probability of obtaining a test statistic just as
 extreme or more extreme than the observed test statistic assuming the
-null hypothesis $H_O4 is true.</p>
+null hypothesis <span class="math inline">\(H_0\)</span> is true.</p>
 </blockquote>
 </div>
 <div id="conclusion" class="section level3">
@@ -1650,12 +1654,12 @@ instructor at UT - Austin.</p>
 <div id="your-turn" class="section level2">
 <h2>Your turn</h2>
 <p>In the <code>moderndive</code> package is a dataset on electric
-vehicle charging seesions for a workplace charging program.</p>
-<p>We are interested in there is an association between the total energy
-used at a station, <code>kwh_total</code>, and the amount paid for a
-charging session, <code>dollars</code>. We are only interested those
-workers that paid more than $0.50 for a session. Repeat the analysis
-from the book on this dataset.</p>
+vehicle charging sessions for a workplace charging program.</p>
+<p>We are interested in whether there is an association between the
+total energy used at a station, <code>kwh_total</code>, and the amount
+paid for a charging session, <code>dollars</code>. We are only
+interested in those workers that paid more than $0.50 for a session.
+Repeat the analysis from the book on this dataset.</p>
 <div id="data-1" class="section level3">
 <h3>Data</h3>
 <pre class="r"><code>ev_chp10 &lt;- ev_charging %&gt;%
@@ -1669,7 +1673,8 @@ from the book on this dataset.</p>
 </div>
 <div id="eda-1" class="section level3">
 <h3>EDA</h3>
-<p>Scatterplot</p>
+<p>Build a scatterplot with energy used on the vertical axis and money
+paid on the horizontal axis.</p>
 <pre class="r"><code>ggplot(ev_chp10, 
        aes(y = kwh_total, x = dollars)) +
   geom_point() +
@@ -1704,11 +1709,11 @@ session and the total energy used.</p>
 <div id="documenting-software" class="section level2">
 <h2>Documenting software</h2>
 <ul>
-<li>File creation date: 2022-06-20</li>
+<li>File creation date: 2022-07-15</li>
 <li>R version 4.1.3 (2022-03-10)</li>
 <li><code>tidyverse</code> package version: 1.3.1</li>
 <li><code>moderndive</code> package version: 0.5.4</li>
-<li><code>infer</code> package version: 1.0.0</li>
+<li><code>infer</code> package version: 1.0.2</li>
 </ul>
 </div>
 

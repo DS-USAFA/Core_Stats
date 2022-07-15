@@ -11,7 +11,7 @@
 
 
 
-<title>Problem Set 07: Hypothesis Testing (30pts)</title>
+<title>Problem Set 07: Hypothesis Testing (30 pts)</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1539,8 +1539,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Problem Set 07: Hypothesis Testing
-(30pts)</h1>
+<h1 class="title toc-ignore">Problem Set 07: Hypothesis Testing (30
+pts)</h1>
 <h3 class="subtitle">Authorized Resources: Anyone and anything.</h3>
 
 </div>
@@ -1555,7 +1555,7 @@ population.</p>
 <div id="markdown-file" class="section level2">
 <h2>Markdown File</h2>
 <p>Just like the first problem set, you will create an rmarkdown file;
-you can refer to the first problem set for instruction. Name your file
+you can refer to the first problem set for instructions. Name your file
 with the following format
 <strong>PS07_lastname_firstname_section</strong></p>
 <p>Fill in your answers to the exercises below with a corresponding
@@ -1595,7 +1595,7 @@ includes:</p>
 <li>the GPA range of each student in high school (categorized as “low”
 or “high”)</li>
 <li>the GPA of each student their first year of college on a numeric
-scale.</li>
+scale</li>
 </ul>
 <p>We will use hypothesis testing to answer the following questions:</p>
 <ul>
@@ -1613,8 +1613,8 @@ helpful to review Chapter 9 in ModernDive.</p>
 <div id="exploratory-data-analysis" class="section level2">
 <h2>Exploratory data analysis</h2>
 <ol style="list-style-type: decimal">
-<li><p>Calculate the mean GPA score for each gender, using the
-<code>group_by</code> and <code>summarize</code> commands from the
+<li><p>Calculate the mean first-year GPA score for each gender, using
+the <code>group_by</code> and <code>summarize</code> commands from the
 <code>dplyr</code> package.</p></li>
 <li><p>Generate a data visualization, faceted histograms, that displays
 the GPAs of the two groups. Be sure to include a title and label your
@@ -1679,10 +1679,10 @@ distribution.</li>
 <h3>Step 3. Visualize how the observed difference compares to the null
 distribution</h3>
 <ol style="list-style-type: decimal">
-<li>When completed, the following plots the difference in means values
-we calculated for each of the different “shuffled” replicates. This is
-the null distribution of the difference in means. The red line will show
-the observed difference between male and female scores in the data.</li>
+<li>When completed, the following plots the difference in means we
+calculated for each of the different “shuffled” replicates. This is the
+null distribution of the difference in means. The red line will show the
+observed difference between male and female scores in the data.</li>
 </ol>
 <pre class="r"><code># Complete the code
 # visualize(gpa_diff_under_null) +
@@ -1706,7 +1706,7 @@ conclusions for this test:</p></li>
 </ol>
 <p>The mean GPA scores for females in our sample (<span class="math inline">\(\bar{x}\)</span> = ______) was
 <strong><em>(greater/less)</em></strong> than that of males (<span class="math inline">\(\bar{x}\)</span> = ______). This difference
-<strong>(was/was not)</strong>_ statistically significant at <span class="math inline">\(\alpha = 0.05\)</span>, (p = _______). Given this
+<strong>(was/was not)</strong> statistically significant at <span class="math inline">\(\alpha = 0.05\)</span>, (p = _______). Given this
 I <strong>(would/would not)</strong> reject the Null hypothesis and
 conclude that _____ have higher GPAs than _____ at the population
 level.</p>
@@ -1723,7 +1723,7 @@ the difference between mean GPA scores for males and females.</li>
 #   generate(reps = 5000, type = &quot;____________&quot;) %&gt;% 
 #   calculate(stat = &quot;_____________&quot;, order = c(&quot;_______&quot;, &quot;_________&quot;)) 
 
-# boot_gpa_means</code></pre>
+# head(boot_gpa_means)</code></pre>
 <ol style="list-style-type: decimal">
 <li><p>Find the 95% percentile bootstrap confidence interval.</p></li>
 <li><p>Plot the bootstrap sampling distribution and comment on whether
@@ -1754,10 +1754,10 @@ variance of the groups are met.</p>
 <div id="documenting-software" class="section level2">
 <h2>Documenting software</h2>
 <ul>
-<li>File creation date: 2022-06-20</li>
+<li>File creation date: 2022-07-12</li>
 <li>R version 4.1.3 (2022-03-10)</li>
 <li><code>tidyverse</code> package version: 1.3.1</li>
-<li><code>infer</code> package version: 1.0.0</li>
+<li><code>infer</code> package version: 1.0.2</li>
 </ul>
 <style type="text/css">
 h1 {  color: Blue;} p {font-size: 18px;}

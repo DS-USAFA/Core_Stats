@@ -1,5 +1,5 @@
 ---
-title: "Problem Set 07: Hypothesis Testing (30pts)"
+title: "Problem Set 07: Hypothesis Testing (30 pts)"
 subtitle: "Authorized Resources: Anyone and anything."
 output:
   html_document:
@@ -28,7 +28,7 @@ In this problem set we will use a small dataset that contains grade point averag
 
 ## Markdown File
 
-Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instruction. Name your file with the following format **PS07_lastname_firstname_section**
+Just like the first problem set, you will create an rmarkdown file; you can refer to the first problem set for instructions. Name your file with the following format **PS07_lastname_firstname_section**
 
 Fill in your answers to the exercises below with a corresponding exercise header in your rmarkdown file. Be sure to include text *and* code where necessary.
 
@@ -65,7 +65,7 @@ Each row or case in this data frame is a student. The data includes:
  - the (binary) gender of each student
  - the math, verbal and total SAT scores for each student
  - the GPA range of each student in high school (categorized as "low" or "high")
- - the GPA of each student their first year of college on a numeric scale.
+ - the GPA of each student their first year of college on a numeric scale
 
 We will use hypothesis testing to answer the following questions:
 
@@ -81,7 +81,7 @@ For this question, let's use a pre-determined $\alpha$ significance-level of 0.0
 
 ## Exploratory data analysis
 
-1. Calculate the mean GPA score for each gender, using the `group_by` and `summarize` commands from the `dplyr` package.
+1. Calculate the mean first-year GPA score for each gender, using the `group_by` and `summarize` commands from the `dplyr` package.
 
 ```{r}
 
@@ -143,7 +143,7 @@ set.seed(8)
 
 ### Step 3. Visualize how the observed difference compares to the null distribution
 
-1. When completed, the following plots the difference in means values we calculated for each of the different "shuffled" replicates. This is the null distribution of the difference in means. The red line will show the observed difference between male and female scores in the data. 
+1. When completed, the following plots the difference in means we calculated for each of the different "shuffled" replicates. This is the null distribution of the difference in means. The red line will show the observed difference between male and female scores in the data. 
 
 ```{r}
 # Complete the code
@@ -169,7 +169,7 @@ set.seed(8)
 
 1. Fill in the blanks below to write up the results & conclusions for this test:
 
-The mean GPA scores for females in our sample ($\bar{x}$ = ______) was ___(greater/less)___ than that of males ($\bar{x}$ = ______). This difference __(was/was not)___ statistically significant at  $\alpha = 0.05$, (p = _______).  Given this I __(would/would not)__ reject the Null hypothesis and conclude that _____ have higher GPAs than _____ at the population level. 
+The mean GPA scores for females in our sample ($\bar{x}$ = ______) was ___(greater/less)___ than that of males ($\bar{x}$ = ______). This difference __(was/was not)__ statistically significant at $\alpha = 0.05$, (p = _______).  Given this I __(would/would not)__ reject the Null hypothesis and conclude that _____ have higher GPAs than _____ at the population level. 
 
 ### Step 5: Calculate a confidence interval for the difference
 

@@ -1,7 +1,7 @@
 ---
 title: "Math 300 Lesson 34 Notes"
 subtitle: "Interpreting Regression Tables"
-author: "YOUR NAME HEREr"
+author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
   pdf_document:
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
-1.  Build and interpret a regression table and use correct terminology.
+1. Build and interpret a regression table and use correct terminology.
 
 2. Write the hypotheses from the regression table.
 
@@ -32,8 +32,6 @@ knitr::opts_chunk$set(echo = TRUE)
 [Chapter 10 - 10.2](https://moderndive.com/10-inference-for-regression.html)
 
 ## Lesson
-
-*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
 
 There are no learning checks for this section.
 
@@ -53,7 +51,7 @@ library(moderndive)
 
 ## Problem
 
-We will now use the inference tools we have developed in a regression settings. In this lesson we will review and spend some time on interpreting regression output.
+We will now use the inference tools we have developed in a regression setting. In this lesson we will review and spend some time on interpreting regression output.
 
 ### Data
 
@@ -67,7 +65,7 @@ glimpse(evals_ch5)
 
 ### EDA
 
-The scatterplot revealed what appeared to be a slight positive association between the two variables. But is this just to the randomness associated with sampling?
+The scatterplot revealed what appeared to be a slight positive association between the two variables. But is this due to the randomness associated with sampling?
 
 ```{r message=FALSE,warning=FALSE}
 # Complete the code
@@ -99,19 +97,21 @@ Let's build the linear regression model.
 
 - Some review:
 
+- How do we interpret the $0.067$ value in the `estimate` column? 
+
 > For every increase of one unit in “beauty” rating, there is an associated increase, on average, of 0.067 units of evaluation score.
 
-The hypothesis test for the slope is:
+Note that this table has a column labeled `p-value`. This implies that we conducted a hypothesis test. The hypothesis test for the slope is: 
 
 $$
-H_O: \beta_1 = 0 
+H_0: \beta_1 = 0 
 $$
 
 $$
 H_A: \beta_1 \neq 0
 $$
 
-> A p-value is the probability of obtaining a test statistic just as extreme or more extreme than the observed test statistic assuming the null hypothesis  $H_O4  is true.
+> A p-value is the probability of obtaining a test statistic just as extreme or more extreme than the observed test statistic assuming the null hypothesis $H_0$ is true.
 
 ### Conclusion 
 
@@ -119,9 +119,9 @@ $$
 
 ## Your turn
 
-In the `moderndive` package is a dataset on electric vehicle charging seesions for a workplace charging program.
+In the `moderndive` package is a dataset on electric vehicle charging sessions for a workplace charging program.
 
-We are interested in there is an association between the total energy used at a station, `kwh_total`, and the amount paid for a charging session, `dollars`. We are only interested those workers that paid more than $0.50 for a session. Repeat the analysis from the book on this dataset. 
+We are interested in whether there is an association between the total energy used at a station, `kwh_total`, and the amount paid for a charging session, `dollars`. We are only interested in those workers that paid more than $0.50 for a session. Repeat the analysis from the book on this dataset. 
 
 ### Data
 
@@ -136,24 +136,19 @@ glimpse(ev_chp10)
 ```
 
 
-
-
-
-
-
 ### EDA
 
-Scatterplot 
+Build a scatterplot with energy used on the vertical axis and money paid on the horizontal axis.
 
 ```{r message=FALSE,warning=FALSE}
-ggplot(ev_chp10, 
-       aes(y = kwh_total, x = dollars)) +
-  geom_point() +
-  labs(x = "Money Paid", 
-       y = "Total Energy",
-       title = "Relationship between money paid for charging session and total energy used") +  
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_classic()
+#ggplot(ev_chp10, 
+#       aes(y = ________, x = ________)) +
+#  geom_point() +
+#  labs(x = "Money Paid", 
+#       y = "Total Energy",
+#       title = "Relationship between money paid for charging session and total energy used") +  
+#  geom_smooth(method = "lm", se = FALSE) +
+#  theme_classic()
 ``` 
 
 ### Regression Model
